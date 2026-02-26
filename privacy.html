@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Protocol | Ideafridge</title>
+    <meta name="description" content="Ideafridge Privacy Protocol — how we collect, process, and protect your data in accordance with PIPEDA and BC PIPA.">
+    <meta name="theme-color" content="#050505">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧊</text></svg>">
+
+    <style>
+        :root {
+            --bg-color: #050505;
+            --surface-color: #0a0a0a;
+            --text-color: #ededed;
+            --text-mute: #888888;
+            --accent-color: #6366F1;
+            --accent-dark: #4338ca;
+            --accent-light: #818cf8;
+            --glass-border: rgba(255,255,255,0.08);
+            --font-main: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --easing: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.65;
+            letter-spacing: -0.01em;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 0; opacity: 0.4;
+        }
+        .grid-background {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: 50px 50px;
+            background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+            z-index: 0; pointer-events: none;
+            mask-image: radial-gradient(circle at 50% 30%, black 30%, transparent 100%);
+        }
+        .ambient-glow {
+            position: fixed; width: 600px; height: 600px; top: -200px; left: 50%;
+            transform: translateX(-50%);
+            background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%);
+            filter: blur(80px); z-index: 0; pointer-events: none;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%; padding: 20px 40px;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(5,5,5,0.8); backdrop-filter: blur(20px);
+            z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .logo-container { display: flex; align-items: center; gap: 12px; }
+        .logo { font-weight: 600; font-size: 18px; letter-spacing: -0.04em; color: #fff; text-decoration: none; }
+        .dot { color: var(--accent-color); }
+        .beta-tag {
+            font-size: 9px; font-family: var(--font-mono); border: 1px solid #333;
+            padding: 2px 6px; border-radius: 4px; color: #666; text-transform: uppercase;
+        }
+        .nav-back {
+            font-family: var(--font-mono); font-size: 11px; text-transform: uppercase;
+            letter-spacing: 0.1em; color: #666; text-decoration: none;
+            display: flex; align-items: center; gap: 8px; transition: color 0.2s;
+        }
+        .nav-back:hover { color: #fff; }
+        .nav-back::before { content: '←'; }
+
+        /* Page Layout */
+        .page-wrap {
+            max-width: 820px; margin: 0 auto; padding: 160px 24px 120px;
+            position: relative; z-index: 2;
+        }
+
+        /* Header */
+        .doc-header { margin-bottom: 64px; }
+        .doc-eyebrow {
+            font-family: var(--font-mono); font-size: 11px; text-transform: uppercase;
+            letter-spacing: 0.2em; color: var(--accent-color); margin-bottom: 20px;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .doc-eyebrow::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--accent-color); opacity: 0.4; }
+        .doc-title {
+            font-size: clamp(36px, 6vw, 56px); font-weight: 500; color: #fff;
+            letter-spacing: -0.04em; line-height: 1.05; margin-bottom: 24px;
+        }
+        .doc-meta {
+            display: flex; gap: 32px; flex-wrap: wrap;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            padding: 20px 0; margin-top: 32px;
+        }
+        .doc-meta-item { display: flex; flex-direction: column; gap: 4px; }
+        .doc-meta-label { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; letter-spacing: 0.15em; color: #555; }
+        .doc-meta-value { font-family: var(--font-mono); font-size: 12px; color: #aaa; }
+
+        /* TOC */
+        .toc {
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 8px; padding: 28px 32px; margin-bottom: 64px;
+        }
+        .toc-title {
+            font-family: var(--font-mono); font-size: 10px; text-transform: uppercase;
+            letter-spacing: 0.2em; color: #555; margin-bottom: 20px;
+        }
+        .toc ol { list-style: none; counter-reset: toc-counter; }
+        .toc li { counter-increment: toc-counter; }
+        .toc a {
+            display: flex; align-items: center; gap: 12px; padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 13px; color: #888;
+            text-decoration: none; transition: color 0.2s; font-family: var(--font-mono);
+        }
+        .toc li:last-child a { border-bottom: none; }
+        .toc a::before { content: counter(toc-counter, decimal-leading-zero); font-size: 10px; color: var(--accent-color); opacity: 0.7; min-width: 24px; }
+        .toc a:hover { color: #fff; }
+
+        /* Body Content */
+        .doc-section { margin-bottom: 56px; scroll-margin-top: 100px; }
+        .section-anchor {
+            font-family: var(--font-mono); font-size: 10px; text-transform: uppercase;
+            letter-spacing: 0.2em; color: var(--accent-color); opacity: 0.7;
+            margin-bottom: 12px; display: block;
+        }
+        .section-title { font-size: 22px; font-weight: 500; color: #fff; letter-spacing: -0.02em; margin-bottom: 20px; line-height: 1.2; }
+        .doc-body p { font-size: 15px; color: #aaa; line-height: 1.8; margin-bottom: 16px; }
+        .doc-body p:last-child { margin-bottom: 0; }
+        .doc-body strong { color: #ddd; font-weight: 500; }
+        .doc-body ul, .doc-body ol { margin: 16px 0 20px 0; padding-left: 0; list-style: none; }
+        .doc-body ul li, .doc-body ol li {
+            font-size: 14px; color: #999; line-height: 1.75; padding: 6px 0 6px 20px;
+            position: relative; border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        .doc-body ul li:last-child, .doc-body ol li:last-child { border-bottom: none; }
+        .doc-body ul li::before { content: '—'; color: var(--accent-color); position: absolute; left: 0; opacity: 0.6; }
+        .doc-body ol { counter-reset: list-counter; }
+        .doc-body ol li { counter-increment: list-counter; }
+        .doc-body ol li::before { content: counter(list-counter) '.'; color: var(--accent-color); position: absolute; left: 0; font-family: var(--font-mono); font-size: 11px; opacity: 0.7; top: 8px; }
+
+        .def-box {
+            background: rgba(99,102,241,0.05); border: 1px solid rgba(99,102,241,0.15);
+            border-left: 2px solid var(--accent-color); border-radius: 4px;
+            padding: 20px 24px; margin: 24px 0;
+        }
+        .def-box p { font-size: 14px; color: #aaa; margin: 0; }
+        .def-box strong { color: var(--accent-light); }
+
+        .alert-box {
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 6px; padding: 20px 24px; margin: 24px 0;
+        }
+        .alert-label {
+            font-family: var(--font-mono); font-size: 9px; text-transform: uppercase;
+            letter-spacing: 0.15em; color: #555; margin-bottom: 8px; display: block;
+        }
+        .alert-box p { color: #888; font-size: 14px; margin: 0; }
+
+        .section-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 56px 0; }
+
+        .contact-block {
+            background: rgba(20,20,20,0.6); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px; padding: 40px; margin-top: 64px;
+            display: flex; gap: 40px; align-items: flex-start;
+        }
+        .contact-icon { font-size: 28px; opacity: 0.6; flex-shrink: 0; }
+        .contact-label {
+            font-family: var(--font-mono); font-size: 10px; text-transform: uppercase;
+            letter-spacing: 0.15em; color: #555; margin-bottom: 8px; display: block;
+        }
+        .contact-block h4 { font-size: 16px; color: #fff; font-weight: 500; margin-bottom: 12px; }
+        .contact-block p { font-size: 14px; color: #888; line-height: 1.7; }
+        .contact-block a { color: var(--accent-light); text-decoration: none; }
+        .contact-block a:hover { color: #fff; }
+
+        /* Footer */
+        .page-footer { border-top: 1px solid rgba(255,255,255,0.05); padding: 40px 24px; position: relative; z-index: 2; }
+        .footer-inner {
+            max-width: 820px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 20px;
+        }
+        .footer-logo { font-weight: 600; font-size: 16px; letter-spacing: -0.04em; color: #fff; }
+        .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+        .footer-links a { font-size: 12px; color: #555; text-decoration: none; transition: color 0.2s; }
+        .footer-links a:hover { color: #fff; }
+        .footer-links a.active { color: var(--accent-light); }
+        .footer-copy { font-size: 11px; color: #444; font-family: var(--font-mono); }
+
+        .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.7s var(--easing), transform 0.7s var(--easing); }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+
+        @media (max-width: 700px) {
+            .navbar { padding: 15px 20px; }
+            .page-wrap { padding: 130px 20px 80px; }
+            .doc-meta { gap: 16px; }
+            .contact-block { flex-direction: column; gap: 20px; padding: 24px; }
+            .footer-inner { flex-direction: column; align-items: flex-start; }
+            .footer-links { flex-direction: column; gap: 12px; }
+            .toc { padding: 20px; }
+        }
+
+        @media (max-width: 400px) {
+            .doc-title { font-size: 30px; }
+            .section-title { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="noise-overlay"></div>
+    <div class="grid-background"></div>
+    <div class="ambient-glow"></div>
+
+    <nav class="navbar">
+        <div class="logo-container">
+            <a href="index.html" class="logo">ideafridge<span class="dot">.</span></a>
+            <div class="beta-tag">OS V.1.0</div>
+        </div>
+        <a href="index.html" class="nav-back">Back to System</a>
+    </nav>
+
+    <main class="page-wrap">
+
+        <header class="doc-header fade-in">
+            <div class="doc-eyebrow">Legal Protocol // Privacy</div>
+            <h1 class="doc-title">Privacy Protocol.</h1>
+            <p style="font-size:16px;color:#777;max-width:560px;line-height:1.7;">
+                This document governs how Ideafridge collects, processes, retains, and protects your data. We treat your information with the same precision we apply to your narrative.
+            </p>
+            <div class="doc-meta">
+                <div class="doc-meta-item">
+                    <span class="doc-meta-label">Effective Date</span>
+                    <span class="doc-meta-value">January 1, 2026</span>
+                </div>
+                <div class="doc-meta-item">
+                    <span class="doc-meta-label">Last Updated</span>
+                    <span class="doc-meta-value">January 1, 2026</span>
+                </div>
+                <div class="doc-meta-item">
+                    <span class="doc-meta-label">Jurisdiction</span>
+                    <span class="doc-meta-value">British Columbia, Canada</span>
+                </div>
+                <div class="doc-meta-item">
+                    <span class="doc-meta-label">Entity</span>
+                    <span class="doc-meta-value">Idea Fridge Media, Inc. (BC)</span>
+                </div>
+            </div>
+        </header>
+
+        <nav class="toc fade-in delay-1">
+            <div class="toc-title">// Table of Contents</div>
+            <ol>
+                <li><a href="#s1">Scope & Who This Applies To</a></li>
+                <li><a href="#s2">Information We Collect</a></li>
+                <li><a href="#s3">How We Use Your Information</a></li>
+                <li><a href="#s4">Legal Bases for Processing</a></li>
+                <li><a href="#s5">Data Sharing & Third Parties</a></li>
+                <li><a href="#s6">Data Retention</a></li>
+                <li><a href="#s7">Your Rights</a></li>
+                <li><a href="#s8">Security Architecture</a></li>
+                <li><a href="#s9">Cookies & Tracking</a></li>
+                <li><a href="#s10">Children's Privacy</a></li>
+                <li><a href="#s11">International Data Transfers</a></li>
+                <li><a href="#s12">Changes to This Policy</a></li>
+                <li><a href="#s13">Contact the Data Controller</a></li>
+            </ol>
+        </nav>
+
+        <section id="s1" class="doc-section fade-in delay-2">
+            <span class="section-anchor">// 01</span>
+            <h2 class="section-title">Scope & Who This Applies To</h2>
+            <div class="doc-body">
+                <p>This Privacy Protocol ("Policy") applies to all individuals and entities who interact with Idea Fridge Media, Inc. ("Ideafridge," "we," "our," or "us") — including visitors to our website (<strong>ideafridge.com</strong>), prospective clients who submit an availability inquiry, and active subscribers to any tier of the NarrativeOps platform (collectively, "you" or "Client").</p>
+                <p>Ideafridge is incorporated and operates from British Columbia, Canada. This Policy is governed by Canada's <strong>Personal Information Protection and Electronic Documents Act (PIPEDA)</strong> and British Columbia's <strong>Personal Information Protection Act (PIPA)</strong>. Where we serve clients in other jurisdictions — including the United States, the United Kingdom, or elsewhere in Canada — we apply these Canadian standards as our baseline and comply with applicable local requirements where they impose additional obligations.</p>
+                <p>This Policy does not apply to the content your organization creates, manages, or deploys through the platform. That content is governed by the applicable Master Services Agreement ("MSA") or Subscription Agreement between Ideafridge and your company.</p>
+                <div class="def-box">
+                    <p><strong>"Personal Information"</strong> means any information about an identifiable individual — including name, business email address, job title, IP address, usage data, and communications metadata — as defined under PIPEDA and BC PIPA.</p>
+                </div>
+                <p>By accessing or using any Ideafridge service, you acknowledge that you have read, understood, and agree to be bound by this Policy. If you are entering into this agreement on behalf of a company or other legal entity, you represent that you have the authority to bind that entity.</p>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <section id="s2" class="doc-section">
+            <span class="section-anchor">// 02</span>
+            <h2 class="section-title">Information We Collect</h2>
+            <div class="doc-body">
+                <p>We collect information in two primary ways: data you provide directly, and data we collect automatically as you interact with our platform.</p>
+                <p><strong>Information you provide directly:</strong></p>
+                <ul>
+                    <li>Work email address and professional contact information submitted via availability intake forms</li>
+                    <li>Company name, industry category, and GTM team size provided during onboarding</li>
+                    <li>Communications you send to us — including emails, support requests, and Slack messages exchanged as part of service delivery</li>
+                    <li>Content inputs you share for the purpose of narrative intelligence processing (e.g., Gong call transcripts, competitor intelligence, internal messaging briefs)</li>
+                    <li>Billing and payment information, processed exclusively through our PCI-DSS compliant payment processor</li>
+                </ul>
+                <p><strong>Information collected automatically:</strong></p>
+                <ul>
+                    <li>IP address, browser type, and device identifiers</li>
+                    <li>Pages visited, time spent, and interaction patterns on ideafridge.com</li>
+                    <li>Referring URLs and session data</li>
+                    <li>Timestamps of logins and platform actions where applicable</li>
+                </ul>
+                <div class="alert-box">
+                    <span class="alert-label">// Important Note</span>
+                    <p>We do not purchase third-party marketing lists. We do not collect data from social media platforms without your explicit authorization. We do not collect sensitive personal data (as defined under GDPR Article 9) through our standard intake processes.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <section id="s3" class="doc-section">
+            <span class="section-anchor">// 03</span>
+            <h2 class="section-title">How We Use Your Information</h2>
+            <div class="doc-body">
+                <p>We use your information for the following purposes, each tied to a legitimate operational need:</p>
+                <ul>
+                    <li><strong>Service delivery:</strong> To onboard, configure, and operate your NarrativeOps engagement — including deploying weekly narrative sprints, processing market signals, and generating role-specific content assets.</li>
+                    <li><strong>Communication:</strong> To send operational updates, Weekly Briefs, system deployment notifications, and account-related correspondence. We do not send unsolicited promotional emails.</li>
+                    <li><strong>Availability verification:</strong> To confirm that no conflicting Client in your market category is currently under an active exclusivity agreement.</li>
+                    <li><strong>Security and fraud prevention:</strong> To detect and prevent unauthorized access, spam submissions (including honeypot-filtered form entries), and abuse of platform resources.</li>
+                    <li><strong>Platform improvement:</strong> Aggregated and anonymized usage data may be used to improve service quality and refine deployment cycle performance. No individually identifiable data is used for this purpose without consent.</li>
+                    <li><strong>Legal compliance:</strong> To comply with applicable law, respond to lawful requests from public authorities, and enforce our agreements.</li>
+                </ul>
+                <p>We will not use your information for automated decision-making that produces legal or similarly significant effects without your knowledge and consent, unless required by applicable law.</p>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <section id="s4" class="doc-section">
+            <span class="section-anchor">// 04</span>
+            <h2 class="section-title">Legal Bases for Processing — PIPEDA Principles</h2>
+            <div class="doc-body">
+                <p>Under PIPEDA and BC PIPA, Ideafridge collects, uses, and discloses Personal Information only with your knowledge and consent, except where the law permits otherwise. Our processing is grounded in the following PIPEDA accountability principles:</p>
+                <ul>
+                    <li><strong>Consent:</strong> We obtain meaningful consent before or at the time of collection. For active clients, consent is obtained through your Subscription Agreement. For site visitors, consent is obtained through form submissions and cookie notices where applicable. You may withdraw consent at any time, subject to legal or contractual restrictions, on reasonable notice.</li>
+                    <li><strong>Contractual necessity:</strong> Processing required to deliver services under your active Subscription Agreement — including onboarding, deployment, invoicing, and weekly sprint delivery — does not require separate consent beyond your agreement to these Terms.</li>
+                    <li><strong>Legitimate business purposes:</strong> We process certain information for security, fraud prevention, and platform improvement where a reasonable person would consider it appropriate in the circumstances, consistent with PIPEDA's "reasonable purposes" standard.</li>
+                    <li><strong>Legal obligation:</strong> Processing required to comply with applicable Canadian law, including tax, financial reporting, and regulatory obligations under federal and British Columbia statutes.</li>
+                </ul>
+                <div class="alert-box">
+                    <span class="alert-label">// Note for US & UK Clients</span>
+                    <p>If you are located in the United States or the United Kingdom, your Personal Information is processed in Canada under Canadian privacy law. Canada is recognized by the UK and many international jurisdictions as providing an adequate level of data protection. US clients should be aware that Canadian privacy law governs this relationship, not US state privacy statutes.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <section id="s5" class="doc-section">
+            <span class="section-anchor">// 05</span>
+            <h2 class="section-title">Data Sharing & Third Parties</h2>
+            <div class="doc-body">
+                <p>Ideafridge does not sell, rent, or trade your Personal Data. We do not share your data with advertising networks or data brokers. Data is disclosed only in the following limited circumstances:</p>
+                <ul>
+                    <li><strong>Service providers and sub-processors:</strong> We engage third-party vendors to support platform operations — including cloud hosting, payment processing, email delivery, and analytics. All vendors are bound by Data Processing Agreements (DPAs) and may not use your data for their own purposes.</li>
+                    <li><strong>Professional advisors:</strong> Legal counsel, accountants, and auditors bound by confidentiality obligations, to the extent necessary to provide professional services to Ideafridge.</li>
+                    <li><strong>Business transfers:</strong> In the event of a merger, acquisition, asset sale, or reorganization, your data may be transferred to a successor entity. We will provide notice prior to any such transfer and inform you of any changes to this Policy.</li>
+                    <li><strong>Legal requirements:</strong> We may disclose your information where required by law, subpoena, court order, or governmental authority. Where legally permitted, we will notify you of such requests.</li>
+                </ul>
+                <div class="alert-box">
+                    <span class="alert-label">// Category Exclusivity Note</span>
+                    <p>Our category exclusivity model requires us to maintain a confidential registry of active Client categories. No personally identifiable information from that registry is shared with other Clients. Availability status queries are answered on a binary, non-attributive basis.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <section id="s6" class="doc-section">
+            <span class="section-anchor">// 06</span>
+            <h2 class="section-title">Data Retention</h2>
+            <div class="doc-body">
+                <p>We retain your Personal Information only for as long as necessary to fulfill the purposes outlined in this Policy, or as required by applicable Canadian law. Under PIPEDA and BC PIPA, we are required to retain information used to make a decision about an individual for a minimum period to allow that individual to exercise their right of access.</p>
+                <ul>
+                    <li><strong>Active Client data:</strong> Retained for the duration of the Subscription Agreement and for 36 months following termination, to allow for dispute resolution, re-engagement, and legal compliance.</li>
+                    <li><strong>Prospect and intake form data:</strong> Retained for 12 months from date of submission. If no Subscription Agreement is executed, data is deleted or anonymized thereafter.</li>
+                    <li><strong>Communication records:</strong> Retained for 24 months unless a longer period is required for legal or contractual compliance.</li>
+                    <li><strong>Billing and financial records:</strong> Retained for a minimum of 7 years in accordance with applicable tax and financial reporting requirements.</li>
+                    <li><strong>Security logs:</strong> Retained for 90 days, unless an active security incident requires extended preservation.</li>
+                </ul>
+                <p>Upon expiration of the applicable retention period, data is either securely deleted or irreversibly anonymized, at our discretion.</p>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <section id="s7" class="doc-section">
+            <span class="section-anchor">// 07</span>
+            <h2 class="section-title">Your Rights</h2>
+            <div class="doc-body">
+                <p>Under PIPEDA and BC PIPA, you have the following rights with respect to your Personal Information. We respond to all verifiable requests within 30 calendar days of receipt, or notify you if additional time is required.</p>
+                <ul>
+                    <li><strong>Right of Access:</strong> You may request access to the Personal Information we hold about you, including information about how it has been used and to whom it has been disclosed. We will provide this in an understandable form, subject to limited exceptions permitted by law (e.g., solicitor-client privilege, third-party personal information).</li>
+                    <li><strong>Right to Correction:</strong> If you believe Personal Information we hold about you is inaccurate, incomplete, or outdated, you may request that we correct it. Where we disagree with the correction, we will note your request in the file.</li>
+                    <li><strong>Right to Withdraw Consent:</strong> You may withdraw consent to the collection, use, or disclosure of your Personal Information at any time, subject to legal or contractual restrictions and reasonable notice. Withdrawal may affect our ability to continue delivering services.</li>
+                    <li><strong>Right to Challenge Compliance:</strong> You have the right to challenge our compliance with PIPEDA or BC PIPA by contacting us directly. If we cannot resolve your concern, you may escalate to the relevant Commissioner (see below).</li>
+                </ul>
+                <div class="alert-box">
+                    <span class="alert-label">// Supervisory Authorities</span>
+                    <p>If you are unsatisfied with our response to a privacy concern, you may file a complaint with the <strong>Office of the Privacy Commissioner of Canada (OPC)</strong> at priv.gc.ca, or with the <strong>Office of the Information and Privacy Commissioner for BC (OIPC)</strong> at oipc.bc.ca. UK-based clients may also contact the <strong>UK Information Commissioner's Office (ICO)</strong> at ico.org.uk.</p>
+                </div>
+                <p>To exercise any of these rights, contact us at <strong>privacy@ideafridge.com</strong>. We may require verification of your identity before processing your request.</p>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <section id="s8" class="doc-section">
+            <span class="section-anchor">// 08</span>
+            <h2 class="section-title">Security Architecture</h2>
+            <div class="doc-body">
+                <p>We implement technical and organizational measures designed to protect your Personal Information against unauthorized access, disclosure, alteration, and destruction, consistent with our obligations under PIPEDA and BC PIPA. These measures include, but are not limited to:</p>
+                <ul>
+                    <li>Encryption of data in transit using TLS 1.2 or higher</li>
+                    <li>Encryption of sensitive data at rest using AES-256</li>
+                    <li>Role-based access controls limiting data access to personnel with a documented operational need</li>
+                    <li>Regular vulnerability assessments and penetration testing of platform infrastructure</li>
+                    <li>Incident response procedures with defined SLAs for breach detection and notification</li>
+                </ul>
+                <p>In the event of a breach of security safeguards involving Personal Information that poses a <strong>real risk of significant harm</strong> to an individual (as defined under PIPEDA), we will notify affected individuals and the Office of the Privacy Commissioner of Canada as soon as feasible. We also maintain a record of all security breaches for a minimum of 24 months, as required by law.</p>
+                <div class="alert-box">
+                    <span class="alert-label">// Important Limitation</span>
+                    <p>No security system is impenetrable. While we take all reasonable precautions, we cannot guarantee absolute security of data transmitted over the internet. You transmit data to us at your own risk, and we encourage you to take appropriate steps to secure your own systems and credentials.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <section id="s9" class="doc-section">
+            <span class="section-anchor">// 09</span>
+            <h2 class="section-title">Cookies & Tracking</h2>
+            <div class="doc-body">
+                <p>Our website uses a minimal set of cookies and tracking technologies. We do not use advertising cookies or cross-site tracking pixels. The technologies we deploy are limited to:</p>
+                <ul>
+                    <li><strong>Strictly necessary cookies:</strong> Required for core site functionality such as session management and security. These cannot be disabled.</li>
+                    <li><strong>Analytics cookies:</strong> Aggregated, anonymized data used to understand how visitors interact with our site (e.g., pages visited, session duration). These are deployed only with your consent in jurisdictions that require it.</li>
+                </ul>
+                <p>You may manage cookie preferences through your browser settings or through any consent banner displayed upon your first visit. Note that disabling certain cookies may impact site functionality.</p>
+                <p>We do not use cookies to build advertising profiles, retarget users across third-party sites, or sell behavioral data to data brokers.</p>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <section id="s10" class="doc-section">
+            <span class="section-anchor">// 10</span>
+            <h2 class="section-title">Children's Privacy</h2>
+            <div class="doc-body">
+                <p>Ideafridge is a B2B platform designed exclusively for business professionals and organizations. Our services are not directed to, and we do not knowingly collect Personal Data from, individuals under the age of 16 (or the applicable age of digital consent in their jurisdiction).</p>
+                <p>If we become aware that we have inadvertently collected Personal Data from a minor, we will take immediate steps to delete that data. If you believe we may have collected information from a minor, please contact us at <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a8d8dac1dec9cbd1e8c1cccdc9cedac1cccfcd86cbc7c5">[email&#160;protected]</a></strong>.</p>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <section id="s11" class="doc-section">
+            <span class="section-anchor">// 11</span>
+            <h2 class="section-title">International Data Transfers</h2>
+            <div class="doc-body">
+                <p>Ideafridge is based in British Columbia, Canada. Personal Information is collected and primarily processed in Canada. However, some of our third-party service providers — including cloud hosting, payment processing, and analytics tools — may process data in the United States or other countries.</p>
+                <p>When Personal Information is transferred outside Canada, it becomes subject to the laws of the receiving country, which may differ from Canadian privacy law. We take contractual steps to require that all third-party processors apply protections substantially equivalent to those required under PIPEDA and BC PIPA.</p>
+                <p>For clients located in the <strong>United Kingdom</strong>: Canada is recognized by the UK as providing adequate data protection, meaning transfers from the UK to Canada do not require additional safeguards. Where we further transfer UK client data to sub-processors in countries without an adequacy finding, we rely on the UK's International Data Transfer Agreement (IDTA) or equivalent mechanisms.</p>
+                <p>For clients located in the <strong>United States</strong>: Your Personal Information is processed in Canada under Canadian law. You may request information about the specific countries in which your data is processed by contacting <strong>privacy@ideafridge.com</strong>.</p>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <section id="s12" class="doc-section">
+            <span class="section-anchor">// 12</span>
+            <h2 class="section-title">Changes to This Policy</h2>
+            <div class="doc-body">
+                <p>We reserve the right to update this Privacy Protocol at any time. When we make material changes, we will provide notice through one or more of the following methods: email to your registered address, a prominent notice on our website, or an in-platform notification.</p>
+                <p>The effective date at the top of this Policy reflects the most recent revision. Your continued use of Ideafridge services following notice of material changes constitutes your acceptance of the updated Policy. If you do not agree to the changes, you must discontinue use of our services and notify us of your intent to terminate your subscription in accordance with your Subscription Agreement.</p>
+                <p>We encourage you to review this Policy periodically. For non-material changes — such as corrections of typographical errors, formatting updates, or clarifications that do not alter your rights — we will update the Policy without separate notice.</p>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <section id="s13" class="doc-section">
+            <span class="section-anchor">// 13</span>
+            <h2 class="section-title">Contact the Data Controller</h2>
+            <div class="doc-body">
+                <p>Ideafridge, Inc. is the data controller for Personal Data processed in connection with our website and platform. If you have questions, concerns, or wish to exercise your data rights, you may reach us through the following channels:</p>
+            </div>
+            <div class="contact-block">
+                <div class="contact-icon">🔒</div>
+                <div>
+                    <span class="contact-label">// Data Controller Contact</span>
+                    <h4>Idea Fridge Media, Inc. — Privacy Office (British Columbia, Canada)</h4>
+                    <p>
+                        Email: <a href="/cdn-cgi/l/email-protection#39494b504f585a4079505d5c585f4b505d5e5c175a5654"><span class="__cf_email__" data-cfemail="09797b607f686a7049606d6c686f7b606d6e6c276a6664">[email&#160;protected]</span></a><br>
+                        Subject line: <strong style="color:#ccc;">"Privacy Request — [Your Name/Company]"</strong><br><br>
+                        We target a response time of <strong style="color:#ccc;">5 business days</strong> for all inquiries and are legally required to fulfill substantive data rights requests within 30 days of verified receipt.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="page-footer">
+        <div class="footer-inner">
+            <div class="footer-logo">ideafridge<span class="dot" style="color:var(--accent-color);">.</span></div>
+            <div class="footer-links">
+                <a href="privacy.html" class="active">Privacy Protocol</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="index.html">Back to System</a>
+            </div>
+            <div class="footer-copy">&copy; 2026 Ideafridge, Inc. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const els = document.querySelectorAll('.fade-in');
+            const obs = new IntersectionObserver((entries, o) => {
+                entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); o.unobserve(e.target); } });
+            }, { threshold: 0.1 });
+            els.forEach(el => obs.observe(el));
+        });
+    </script>
+</body>
+</html>
