@@ -37,8 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('mousemove', handleMouseMove);
 
     // --- 3. Mobile Menu Toggle ---
-    // FIX: was setting .style.transform on a NodeList (which silently fails).
-    // Now we toggle a class on the button and let CSS handle each span individually.
     const mobileBtn = document.querySelector('.mobile-menu-btn');
     const navLinks = document.querySelector('.nav-links');
 
@@ -96,16 +94,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- 5. Secure Form Handling (Simulated) ---
+    // --- 5. Secure Form Handling (Supabase Integration) ---
     const form = document.querySelector('.waitlist-form');
     
     if (form) {
-        const honeyInput = form.querySelector('#honeypot');
-        const button = form.querySelector('button');
-        const btnText = button.querySelector('span');
-
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            const honeyInput = form.querySelector('#honeypot');
+            const button = form.querySelector('button');
+            const btnText = button.querySelector('span');
+            
+            // Grab the actual text the user typed in
+            const email = form.querySelector('input[name="email"]').value;
+            const category = form.querySelector('input[name="category"]').value;
 
             // Spam trap check
             if (honeyInput && honeyInput.value !== '') {
@@ -119,8 +121,22 @@ document.addEventListener('DOMContentLoaded', () => {
             button.style.opacity = '0.7';
 
             try {
-                // Simulate Network Delay (Replace with actual Formspree/Netlify logic)
-                await new Promise(resolve => setTimeout(resolve, 2000));
+                // SUPABASE INTEGRATION
+                const SUPABASE_URL = 'https://itfjnqmwfjhptcopfacd.supabase.co';   // <-- Paste your Project URL here inside the quotes
+                const SUPABASE_ANON_KEY = 'sb_publishable_a7UeootOqf0KFd9rrroytQ_dbTSqNOg'; // <-- Paste your Anon Key here inside the quotes
+
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify({ email: email, category: category })
+                });
+
+                if (!response.ok) throw new Error('Network response was not ok');
 
                 // Success State
                 btnText.innerText = 'APPLICATION RECEIVED';
@@ -128,10 +144,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 button.style.color = '#000';
                 button.style.borderColor = '#fff';
                 
-                // Reset after delay
+                // Reset form back to normal after 4 seconds
                 setTimeout(() => {
                     form.reset();
-                    btnText.innerText = 'Check Availability';
+                    btnText.innerText = 'Apply for Access';
                     button.disabled = false;
                     button.style.background = ''; 
                     button.style.color = '';
