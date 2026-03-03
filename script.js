@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Loading State
-            btnText.innerText = 'INITIALIZING PROTOCOL...';
+            btnText.innerText = 'SECURING ALLOCATION...';
             button.disabled = true;
             button.style.opacity = '0.7';
 

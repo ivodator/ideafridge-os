@@ -3,223 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Protocol | Ideafridge</title>
+    <title>Privacy Protocol | Ideafridge Narrative GTM</title>
     <meta name="description" content="Ideafridge Privacy Protocol — how we collect, process, and protect your data in accordance with PIPEDA and BC PIPA.">
     <meta name="theme-color" content="#050505">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='none' stroke='%236366F1' stroke-width='8'/><circle cx='50' cy='50' r='15' fill='%236366F1'/></svg>">
-
-    <style>
-        :root {
-            --bg-color: #050505;
-            --surface-color: #0a0a0a;
-            --text-color: #ededed;
-            --text-mute: #888888;
-            --accent-color: #6366F1;
-            --accent-dark: #4338ca;
-            --accent-light: #818cf8;
-            --glass-border: rgba(255,255,255,0.08);
-            --font-main: 'Inter', sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
-            --easing: cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: var(--font-main);
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.65;
-            letter-spacing: -0.01em;
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
-        }
-
-        .noise-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-            pointer-events: none; z-index: 0; opacity: 0.4;
-        }
-        .grid-background {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-size: 50px 50px;
-            background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
-            z-index: 0; pointer-events: none;
-            mask-image: radial-gradient(circle at 50% 30%, black 30%, transparent 100%);
-        }
-        .ambient-glow {
-            position: fixed; width: 600px; height: 600px; top: -200px; left: 50%;
-            transform: translateX(-50%);
-            background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%);
-            filter: blur(80px); z-index: 0; pointer-events: none;
-        }
-
-        /* Navbar */
-        .navbar {
-            position: fixed; top: 0; left: 0; width: 100%; padding: 20px 40px;
-            display: flex; justify-content: space-between; align-items: center;
-            background: rgba(5,5,5,0.8); backdrop-filter: blur(20px);
-            z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .logo-container { display: flex; align-items: center; gap: 12px; }
-        .logo { font-weight: 600; font-size: 18px; letter-spacing: -0.04em; color: #fff; text-decoration: none; }
-        .dot { color: var(--accent-color); }
-        .beta-tag {
-            font-size: 9px; font-family: var(--font-mono); border: 1px solid #333;
-            padding: 2px 6px; border-radius: 4px; color: #666; text-transform: uppercase;
-        }
-        .nav-back {
-            font-family: var(--font-mono); font-size: 11px; text-transform: uppercase;
-            letter-spacing: 0.1em; color: #666; text-decoration: none;
-            display: flex; align-items: center; gap: 8px; transition: color 0.2s;
-        }
-        .nav-back:hover { color: #fff; }
-        .nav-back::before { content: '←'; }
-
-        /* Page Layout */
-        .page-wrap {
-            max-width: 820px; margin: 0 auto; padding: 160px 24px 120px;
-            position: relative; z-index: 2;
-        }
-
-        /* Header */
-        .doc-header { margin-bottom: 64px; }
-        .doc-eyebrow {
-            font-family: var(--font-mono); font-size: 11px; text-transform: uppercase;
-            letter-spacing: 0.2em; color: var(--accent-color); margin-bottom: 20px;
-            display: flex; align-items: center; gap: 12px;
-        }
-        .doc-eyebrow::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--accent-color); opacity: 0.4; }
-        .doc-title {
-            font-size: clamp(36px, 6vw, 56px); font-weight: 500; color: #fff;
-            letter-spacing: -0.04em; line-height: 1.05; margin-bottom: 24px;
-        }
-        .doc-meta {
-            display: flex; gap: 32px; flex-wrap: wrap;
-            border-top: 1px solid rgba(255,255,255,0.07);
-            border-bottom: 1px solid rgba(255,255,255,0.07);
-            padding: 20px 0; margin-top: 32px;
-        }
-        .doc-meta-item { display: flex; flex-direction: column; gap: 4px; }
-        .doc-meta-label { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; letter-spacing: 0.15em; color: #555; }
-        .doc-meta-value { font-family: var(--font-mono); font-size: 12px; color: #aaa; }
-
-        /* TOC */
-        .toc {
-            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.07);
-            border-radius: 8px; padding: 28px 32px; margin-bottom: 64px;
-        }
-        .toc-title {
-            font-family: var(--font-mono); font-size: 10px; text-transform: uppercase;
-            letter-spacing: 0.2em; color: #555; margin-bottom: 20px;
-        }
-        .toc ol { list-style: none; counter-reset: toc-counter; }
-        .toc li { counter-increment: toc-counter; }
-        .toc a {
-            display: flex; align-items: center; gap: 12px; padding: 8px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 13px; color: #888;
-            text-decoration: none; transition: color 0.2s; font-family: var(--font-mono);
-        }
-        .toc li:last-child a { border-bottom: none; }
-        .toc a::before { content: counter(toc-counter, decimal-leading-zero); font-size: 10px; color: var(--accent-color); opacity: 0.7; min-width: 24px; }
-        .toc a:hover { color: #fff; }
-
-        /* Body Content */
-        .doc-section { margin-bottom: 56px; scroll-margin-top: 100px; }
-        .section-anchor {
-            font-family: var(--font-mono); font-size: 10px; text-transform: uppercase;
-            letter-spacing: 0.2em; color: var(--accent-color); opacity: 0.7;
-            margin-bottom: 12px; display: block;
-        }
-        .section-title { font-size: 22px; font-weight: 500; color: #fff; letter-spacing: -0.02em; margin-bottom: 20px; line-height: 1.2; }
-        .doc-body p { font-size: 15px; color: #aaa; line-height: 1.8; margin-bottom: 16px; }
-        .doc-body p:last-child { margin-bottom: 0; }
-        .doc-body strong { color: #ddd; font-weight: 500; }
-        .doc-body ul, .doc-body ol { margin: 16px 0 20px 0; padding-left: 0; list-style: none; }
-        .doc-body ul li, .doc-body ol li {
-            font-size: 14px; color: #999; line-height: 1.75; padding: 6px 0 6px 20px;
-            position: relative; border-bottom: 1px solid rgba(255,255,255,0.03);
-        }
-        .doc-body ul li:last-child, .doc-body ol li:last-child { border-bottom: none; }
-        .doc-body ul li::before { content: '—'; color: var(--accent-color); position: absolute; left: 0; opacity: 0.6; }
-        .doc-body ol { counter-reset: list-counter; }
-        .doc-body ol li { counter-increment: list-counter; }
-        .doc-body ol li::before { content: counter(list-counter) '.'; color: var(--accent-color); position: absolute; left: 0; font-family: var(--font-mono); font-size: 11px; opacity: 0.7; top: 8px; }
-
-        .def-box {
-            background: rgba(99,102,241,0.05); border: 1px solid rgba(99,102,241,0.15);
-            border-left: 2px solid var(--accent-color); border-radius: 4px;
-            padding: 20px 24px; margin: 24px 0;
-        }
-        .def-box p { font-size: 14px; color: #aaa; margin: 0; }
-        .def-box strong { color: var(--accent-light); }
-
-        .alert-box {
-            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 6px; padding: 20px 24px; margin: 24px 0;
-        }
-        .alert-label {
-            font-family: var(--font-mono); font-size: 9px; text-transform: uppercase;
-            letter-spacing: 0.15em; color: #555; margin-bottom: 8px; display: block;
-        }
-        .alert-box p { color: #888; font-size: 14px; margin: 0; }
-
-        .section-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 56px 0; }
-
-        .contact-block {
-            background: rgba(20,20,20,0.6); border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 12px; padding: 40px; margin-top: 64px;
-            display: flex; gap: 40px; align-items: flex-start;
-        }
-        .contact-icon { font-size: 28px; opacity: 0.6; flex-shrink: 0; }
-        .contact-label {
-            font-family: var(--font-mono); font-size: 10px; text-transform: uppercase;
-            letter-spacing: 0.15em; color: #555; margin-bottom: 8px; display: block;
-        }
-        .contact-block h4 { font-size: 16px; color: #fff; font-weight: 500; margin-bottom: 12px; }
-        .contact-block p { font-size: 14px; color: #888; line-height: 1.7; }
-        .contact-block a { color: var(--accent-light); text-decoration: none; }
-        .contact-block a:hover { color: #fff; }
-
-        /* Footer */
-        .page-footer { border-top: 1px solid rgba(255,255,255,0.05); padding: 40px 24px; position: relative; z-index: 2; }
-        .footer-inner {
-            max-width: 820px; margin: 0 auto;
-            display: flex; justify-content: space-between; align-items: center;
-            flex-wrap: wrap; gap: 20px;
-        }
-        .footer-logo { font-weight: 600; font-size: 16px; letter-spacing: -0.04em; color: #fff; }
-        .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
-        .footer-links a { font-size: 12px; color: #555; text-decoration: none; transition: color 0.2s; }
-        .footer-links a:hover { color: #fff; }
-        .footer-links a.active { color: var(--accent-light); }
-        .footer-copy { font-size: 11px; color: #444; font-family: var(--font-mono); }
-
-        .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.7s var(--easing), transform 0.7s var(--easing); }
-        .fade-in.visible { opacity: 1; transform: translateY(0); }
-        .delay-1 { transition-delay: 0.1s; }
-        .delay-2 { transition-delay: 0.2s; }
-
-        @media (max-width: 700px) {
-            .navbar { padding: 15px 20px; }
-            .page-wrap { padding: 130px 20px 80px; }
-            .doc-meta { gap: 16px; }
-            .contact-block { flex-direction: column; gap: 20px; padding: 24px; }
-            .footer-inner { flex-direction: column; align-items: flex-start; }
-            .footer-links { flex-direction: column; gap: 12px; }
-            .toc { padding: 20px; }
-        }
-
-        @media (max-width: 400px) {
-            .doc-title { font-size: 30px; }
-            .section-title { font-size: 18px; }
-        }
-    </style>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧊</text></svg>">
+    
+    <!-- Separated CSS -->
+    <link rel="stylesheet" href="legal.css">
 </head>
 <body>
 
@@ -230,7 +23,7 @@
     <nav class="navbar">
         <div class="logo-container">
             <a href="index.html" class="logo">ideafridge<span class="dot">.</span></a>
-            <div class="beta-tag">OS V.1.0</div>
+            <div class="beta-tag">STRATEGY V.1.0</div>
         </div>
         <a href="index.html" class="nav-back">Back to System</a>
     </nav>
@@ -240,8 +33,8 @@
         <header class="doc-header fade-in">
             <div class="doc-eyebrow">Legal Protocol // Privacy</div>
             <h1 class="doc-title">Privacy Protocol.</h1>
-            <p style="font-size:16px;color:#777;max-width:560px;line-height:1.7;">
-                This document governs how Ideafridge collects, processes, retains, and protects your data. We treat your information with the same precision we apply to your narrative.
+            <p class="doc-subtitle">
+                This document governs how Ideafridge collects, processes, retains, and protects your data. We treat your information with the same strategic precision we apply to your market narrative.
             </p>
             <div class="doc-meta">
                 <div class="doc-meta-item">
@@ -250,7 +43,7 @@
                 </div>
                 <div class="doc-meta-item">
                     <span class="doc-meta-label">Last Updated</span>
-                    <span class="doc-meta-value">January 1, 2026</span>
+                    <span class="doc-meta-value">March 3, 2026</span>
                 </div>
                 <div class="doc-meta-item">
                     <span class="doc-meta-label">Jurisdiction</span>
@@ -286,7 +79,7 @@
             <span class="section-anchor">// 01</span>
             <h2 class="section-title">Scope & Who This Applies To</h2>
             <div class="doc-body">
-                <p>This Privacy Protocol ("Policy") applies to all individuals and entities who interact with Idea Fridge Media, Inc. ("Ideafridge," "we," "our," or "us") — including visitors to our website (<strong>ideafridge.com</strong>), prospective clients who submit an availability inquiry, and active subscribers to any tier of the NarrativeOps platform (collectively, "you" or "Client").</p>
+                <p>This Privacy Protocol ("Policy") applies to all individuals and entities who interact with Idea Fridge Media, Inc. ("Ideafridge," "we," "our," or "us") — including visitors to our website (<strong>ideafridge.com</strong>), prospective clients who submit an availability inquiry, and active partners subscribed to any tier of the Narrative GTM platform (collectively, "you" or "Client").</p>
                 <p>Ideafridge is incorporated and operates from British Columbia, Canada. This Policy is governed by Canada's <strong>Personal Information Protection and Electronic Documents Act (PIPEDA)</strong> and British Columbia's <strong>Personal Information Protection Act (PIPA)</strong>. Where we serve clients in other jurisdictions — including the United States, the United Kingdom, or elsewhere in Canada — we apply these Canadian standards as our baseline and comply with applicable local requirements where they impose additional obligations.</p>
                 <p>This Policy does not apply to the content your organization creates, manages, or deploys through the platform. That content is governed by the applicable Master Services Agreement ("MSA") or Subscription Agreement between Ideafridge and your company.</p>
                 <div class="def-box">
@@ -333,7 +126,7 @@
             <div class="doc-body">
                 <p>We use your information for the following purposes, each tied to a legitimate operational need:</p>
                 <ul>
-                    <li><strong>Service delivery:</strong> To onboard, configure, and operate your NarrativeOps engagement — including deploying weekly narrative sprints, processing market signals, and generating role-specific content assets.</li>
+                    <li><strong>Service delivery:</strong> To onboard, configure, and operate your Narrative GTM engagement — including deploying weekly intelligence sprints, processing market signals, and generating role-specific field assets.</li>
                     <li><strong>Communication:</strong> To send operational updates, Weekly Briefs, system deployment notifications, and account-related correspondence. We do not send unsolicited promotional emails.</li>
                     <li><strong>Availability verification:</strong> To confirm that no conflicting Client in your market category is currently under an active exclusivity agreement.</li>
                     <li><strong>Security and fraud prevention:</strong> To detect and prevent unauthorized access, spam submissions (including honeypot-filtered form entries), and abuse of platform resources.</li>
@@ -419,7 +212,7 @@
                     <span class="alert-label">// Supervisory Authorities</span>
                     <p>If you are unsatisfied with our response to a privacy concern, you may file a complaint with the <strong>Office of the Privacy Commissioner of Canada (OPC)</strong> at priv.gc.ca, or with the <strong>Office of the Information and Privacy Commissioner for BC (OIPC)</strong> at oipc.bc.ca. UK-based clients may also contact the <strong>UK Information Commissioner's Office (ICO)</strong> at ico.org.uk.</p>
                 </div>
-                <p>To exercise any of these rights, contact us at <strong>privacy@ideafridge.com</strong>. We may require verification of your identity before processing your request.</p>
+                <p>To exercise any of these rights, contact us at <strong><a href="mailto:privacy@ideafridge.com" style="color:var(--accent-light);">privacy@ideafridge.com</a></strong>. We may require verification of your identity before processing your request.</p>
             </div>
         </section>
 
@@ -468,7 +261,7 @@
             <h2 class="section-title">Children's Privacy</h2>
             <div class="doc-body">
                 <p>Ideafridge is a B2B platform designed exclusively for business professionals and organizations. Our services are not directed to, and we do not knowingly collect Personal Data from, individuals under the age of 16 (or the applicable age of digital consent in their jurisdiction).</p>
-                <p>If we become aware that we have inadvertently collected Personal Data from a minor, we will take immediate steps to delete that data. If you believe we may have collected information from a minor, please contact us at <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a8d8dac1dec9cbd1e8c1cccdc9cedac1cccfcd86cbc7c5">[email&#160;protected]</a></strong>.</p>
+                <p>If we become aware that we have inadvertently collected Personal Data from a minor, we will take immediate steps to delete that data. If you believe we may have collected information from a minor, please contact us at <strong><a href="mailto:privacy@ideafridge.com" style="color:var(--accent-light);">privacy@ideafridge.com</a></strong>.</p>
             </div>
         </section>
 
@@ -481,7 +274,7 @@
                 <p>Ideafridge is based in British Columbia, Canada. Personal Information is collected and primarily processed in Canada. However, some of our third-party service providers — including cloud hosting, payment processing, and analytics tools — may process data in the United States or other countries.</p>
                 <p>When Personal Information is transferred outside Canada, it becomes subject to the laws of the receiving country, which may differ from Canadian privacy law. We take contractual steps to require that all third-party processors apply protections substantially equivalent to those required under PIPEDA and BC PIPA.</p>
                 <p>For clients located in the <strong>United Kingdom</strong>: Canada is recognized by the UK as providing adequate data protection, meaning transfers from the UK to Canada do not require additional safeguards. Where we further transfer UK client data to sub-processors in countries without an adequacy finding, we rely on the UK's International Data Transfer Agreement (IDTA) or equivalent mechanisms.</p>
-                <p>For clients located in the <strong>United States</strong>: Your Personal Information is processed in Canada under Canadian law. You may request information about the specific countries in which your data is processed by contacting <strong>privacy@ideafridge.com</strong>.</p>
+                <p>For clients located in the <strong>United States</strong>: Your Personal Information is processed in Canada under Canadian law. You may request information about the specific countries in which your data is processed by contacting <strong><a href="mailto:privacy@ideafridge.com" style="color:var(--accent-light);">privacy@ideafridge.com</a></strong>.</p>
             </div>
         </section>
 
@@ -511,7 +304,7 @@
                     <span class="contact-label">// Data Controller Contact</span>
                     <h4>Idea Fridge Media, Inc. — Privacy Office (British Columbia, Canada)</h4>
                     <p>
-                        Email: <a href="/cdn-cgi/l/email-protection#39494b504f585a4079505d5c585f4b505d5e5c175a5654"><span class="__cf_email__" data-cfemail="09797b607f686a7049606d6c686f7b606d6e6c276a6664">[email&#160;protected]</span></a><br>
+                        Email: <a href="mailto:privacy@ideafridge.com">privacy@ideafridge.com</a><br>
                         Subject line: <strong style="color:#ccc;">"Privacy Request — [Your Name/Company]"</strong><br><br>
                         We target a response time of <strong style="color:#ccc;">5 business days</strong> for all inquiries and are legally required to fulfill substantive data rights requests within 30 days of verified receipt.
                     </p>
@@ -529,18 +322,11 @@
                 <a href="terms.html">Terms of Service</a>
                 <a href="index.html">Back to System</a>
             </div>
-            <div class="footer-copy">&copy; 2026 Ideafridge, Inc. All rights reserved.</div>
+            <div class="footer-copy">&copy; 2026 Ideafridge Narrative GTM. All rights reserved.</div>
         </div>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const els = document.querySelectorAll('.fade-in');
-            const obs = new IntersectionObserver((entries, o) => {
-                entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); o.unobserve(e.target); } });
-            }, { threshold: 0.1 });
-            els.forEach(el => obs.observe(el));
-        });
-    </script>
+    <!-- Separated JS -->
+    <script src="legal.js"></script>
 </body>
 </html>
