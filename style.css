@@ -281,6 +281,45 @@ ul { list-style: none; }
 .matrix-grid { grid-template-columns: repeat(3, 1fr); }
 .pricing-grid { grid-template-columns: repeat(3, 1fr); align-items: start; }
 
+/* Pricing Disclaimer */
+.pricing-disclaimer {
+    margin: 48px auto 0 auto;
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 16px 24px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--text-mute);
+    line-height: 1.5;
+    text-align: left;
+}
+.pricing-disclaimer svg {
+    color: var(--accent-color);
+    flex-shrink: 0;
+}
+.pricing-disclaimer p {
+    margin: 0;
+}
+.pricing-disclaimer strong {
+    color: #fff;
+    font-weight: 500;
+}
+
+/* Mobile responsive tweak for the disclaimer */
+@media (max-width: 640px) {
+    .pricing-disclaimer {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+        gap: 10px;
+    }
+}
+
 .spotlight-card {
     position: relative; background: var(--surface-color);
     border: 1px solid var(--glass-border); border-radius: 12px;
