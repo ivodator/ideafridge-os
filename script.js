@@ -56,10 +56,12 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.style.overflow = isActive ? 'hidden' : '';
         });
 
+        // Close menu when a nav link is clicked
         navLinks.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', closeMobileMenu);
         });
 
+        // Close menu when clicking outside the drawer
         document.addEventListener('click', (e) => {
             if (
                 navLinks.classList.contains('active') &&
@@ -70,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        // Close menu on Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && navLinks.classList.contains('active')) {
                 closeMobileMenu();
@@ -91,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- 5. Secure Form Handling (Supabase Integration structure) ---
+    // --- 5. Secure Form Handling (Supabase Integration) ---
     const form = document.querySelector('.waitlist-form');
     
     if (form) {
@@ -102,24 +105,26 @@ document.addEventListener('DOMContentLoaded', () => {
             const button = form.querySelector('button');
             const btnText = button.querySelector('span');
             
+            // Grab the actual text the user typed in
             const email = form.querySelector('input[name="email"]').value;
             const category = form.querySelector('input[name="category"]').value;
 
+            // Spam trap check
             if (honeyInput && honeyInput.value !== '') {
                 console.log('Spam detected');
                 return; 
             }
 
+            // Loading State
             btnText.innerText = 'SECURING ALLOCATION...';
             button.disabled = true;
             button.style.opacity = '0.7';
 
             try {
                 // SUPABASE INTEGRATION
-                const SUPABASE_URL = 'https://itfjnqmwfjhptcopfacd.supabase.co';   // <-- Replace
-                const SUPABASE_ANON_KEY = 'sb_publishable_a7UeootOqf0KFd9rrroytQ_dbTSqNOg'; // <-- Replace
+                const SUPABASE_URL = 'https://itfjnqmwfjhptcopfacd.supabase.co';   // <-- Paste your Project URL here inside the quotes
+                const SUPABASE_ANON_KEY = 'sb_publishable_a7UeootOqf0KFd9rrroytQ_dbTSqNOg'; // <-- Paste your Anon Key here inside the quotes
 
-                /* Uncomment out the actual fetch logic when deploying your keys:
                 const response = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
                     method: 'POST',
                     headers: {
@@ -130,26 +135,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     body: JSON.stringify({ email: email, category: category })
                 });
-                if (!response.ok) throw new Error('Network response was not ok');
-                */
 
-                // Simulated Success State for display purposes
+                if (!response.ok) throw new Error('Network response was not ok');
+
+                // Success State
+                btnText.innerText = 'APPLICATION RECEIVED';
+                button.style.background = '#fff'; 
+                button.style.color = '#000';
+                button.style.borderColor = '#fff';
+                
+                // Reset form back to normal after 4 seconds
                 setTimeout(() => {
-                    btnText.innerText = 'APPLICATION RECEIVED';
-                    button.style.background = '#fff'; 
-                    button.style.color = '#000';
-                    button.style.borderColor = '#fff';
-                    
-                    setTimeout(() => {
-                        form.reset();
-                        btnText.innerText = 'Request Access';
-                        button.disabled = false;
-                        button.style.background = ''; 
-                        button.style.color = '';
-                        button.style.borderColor = '';
-                        button.style.opacity = '1';
-                    }, 4000);
-                }, 1000);
+                    form.reset();
+                    btnText.innerText = 'Apply for Access';
+                    button.disabled = false;
+                    button.style.background = ''; 
+                    button.style.color = '';
+                    button.style.borderColor = '';
+                    button.style.opacity = '1';
+                }, 4000);
                 
             } catch (error) {
                 console.error('Submission failed', error);
