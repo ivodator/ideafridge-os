@@ -284,25 +284,42 @@ function initMultiStepForm() {
     });
     if (backBtn2) backBtn2.addEventListener('click', () => showStep(1));
 
-    // Form Submission / Supabase API Call
+    // Form Submission / Supabase API Call (Diagnostic Version)
     if (form) form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
-        // HONEYPOT CHECK - If a bot fills this out, abort silently.
+        console.log("1. Form submit button clicked!");
+
+        // Debug: Check what data we actually have
+        console.log("Email:", emailInput.value);
+        console.log("Category:", categorySelect.value);
+        console.log("Goal:", goalSelect.value);
+        console.log("Honeypot value:", honeypot ? `"${honeypot.value}"` : "Not found");
+
+        // HONEYPOT CHECK
         if(honeypot && honeypot.value !== "") {
-            console.log("Bot detected. Silently aborting.");
+            console.error("🛑 2. EARLY EXIT: The hidden honeypot field was filled! If you are human, your browser's auto-fill probably did this by accident.");
             return; 
         }
+        console.log("2. Honeypot is clean.");
 
+        // GOAL VALIDATION CHECK
         if(goalSelect.value === "") {
+            console.error("🛑 3. EARLY EXIT: No primary goal was selected.");
             goalSelect.style.borderColor = "var(--status-error)";
+            return;
+        }
+        console.log("3. Form validation passed.");
+
+        // SUPABASE KEY CHECK
+        if (!SUPABASE_URL || SUPABASE_URL === 'YOUR_SUPABASE_PROJECT_URL') {
+            console.error("🛑 4. EARLY EXIT: You forgot to replace the SUPABASE_URL at the top of script.js!");
             return;
         }
 
         // Setup UI for loading state
-        btnText.classList.add('hidden');
-        loader.classList.remove('hidden');
-        submitBtn.disabled = true;
+        if (btnText) btnText.classList.add('hidden');
+        if (loader) loader.classList.remove('hidden');
+        if (submitBtn) submitBtn.disabled = true;
 
         const payload = {
             email: emailInput.value.trim(),
@@ -311,39 +328,44 @@ function initMultiStepForm() {
             timestamp: new Date().toISOString()
         };
 
+        console.log("4. Payload prepared:", payload);
+        console.log("5. Attempting to contact Supabase at:", `${SUPABASE_URL}/rest/v1/leads`);
+
         try {
-            // ==========================================
-            // SUPABASE INSERT LOGIC GOES HERE
-            // Example using Fetch API (REST):
-            /*
             const response = await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'apikey': SUPABASE_ANON_KEY,
-                    'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                    'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                    'Prefer': 'return=minimal' 
                 },
                 body: JSON.stringify(payload)
             });
 
-            if (!response.ok) throw new Error('Network response was not ok');
-            */
-            // ==========================================
+            console.log("6. Supabase responded with status code:", response.status);
 
-            // Simulating network delay for smooth UI
-            setTimeout(() => {
-                document.querySelector('.form-progress').classList.add('hidden');
-                showStep(3); // Show Success State
-            }, 1200);
+            if (!response.ok) {
+                // If Supabase rejects it (e.g. Row Level Security policy is missing)
+                const errorData = await response.json().catch(() => ({}));
+                console.error("🛑 7. Supabase rejected the data! Error details:", errorData);
+                throw new Error(errorData.message || `Failed with status ${response.status}`);
+            }
+
+            console.log("8. SUCCESS! Data inserted into Supabase.");
+
+            // Show Success UI
+            document.querySelector('.form-progress').classList.add('hidden');
+            showStep(3); 
 
         } catch (error) {
-            console.error('Error submitting to Supabase:', error);
-            // Handle error state gracefully here
-            alert("Secure transmission failed. Please try again.");
+            console.error('🛑 9. Fetch Catch Block Triggered:', error);
             
-            btnText.classList.remove('hidden');
-            loader.classList.add('hidden');
-            submitBtn.disabled = false;
+            // Revert UI so the user can try again
+            alert("Secure transmission failed. Check the developer console for details.");
+            if (btnText) btnText.classList.remove('hidden');
+            if (loader) loader.classList.add('hidden');
+            if (submitBtn) submitBtn.disabled = false;
         }
     });
 
