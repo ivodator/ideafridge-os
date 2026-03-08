@@ -8,25 +8,125 @@
 const REQUEST_TIMEOUT_MS = 10000;
 const MOBILE_BREAKPOINT = 768;
 
+function readMeta(name) {
+    return document.querySelector(`meta[name="${name}"]`)?.getAttribute('content')?.trim() || '';
+}
+
 const LEAD_ENDPOINT = (() => {
-    const endpointMeta = document.querySelector('meta[name="lead-endpoint"]');
-    const configured = endpointMeta?.getAttribute('content')?.trim() || '/api/leads';
+    const configured = readMeta('lead-endpoint') || '/api/leads';
 
     try {
         const url = new URL(configured, window.location.origin);
         const isSecure = window.location.protocol === 'https:' ? url.protocol === 'https:' : true;
         const isSameOrigin = url.origin === window.location.origin;
 
-        // Default to same-origin in production to reduce accidental data leakage.
         if (isSecure && isSameOrigin) {
             return `${url.pathname}${url.search}`;
         }
     } catch (_error) {
-        // Fall back to the known-safe default below.
+        // Use fallback below.
     }
 
     return '/api/leads';
 })();
+
+const SUPABASE_CONFIG = (() => {
+    const supabaseUrl = readMeta('supabase-url');
+    const anonKey = readMeta('supabase-anon-key');
+    const table = (readMeta('supabase-table') || 'leads').replace(/[^a-zA-Z0-9_]/g, '');
+
+    if (!supabaseUrl || !anonKey || !table) {
+        return { enabled: false };
+    }
+
+    try {
+        const url = new URL(supabaseUrl);
+        const insertUrl = `${url.origin}/rest/v1/${table}`;
+        return {
+            enabled: true,
+            insertUrl,
+            anonKey
+        };
+    } catch (_error) {
+        return { enabled: false };
+    }
+})();
+
+async function submitLead(payload, signal) {
+    if (SUPABASE_CONFIG.enabled) {
+        return submitLeadToSupabase(payload, signal);
+    }
+
+    return submitLeadToEndpoint(payload, signal);
+}
+
+async function submitLeadToSupabase(payload, signal) {
+    const response = await fetch(SUPABASE_CONFIG.insertUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            apikey: SUPABASE_CONFIG.anonKey,
+            Authorization: `Bearer ${SUPABASE_CONFIG.anonKey}`,
+            Prefer: 'return=minimal'
+        },
+        body: JSON.stringify(payload),
+        signal
+    });
+
+    if (!response.ok) {
+        let errorMessage = 'Secure transmission failed. Please try again in a moment.';
+
+        try {
+            const errorData = await response.json();
+            if (errorData && typeof errorData.message === 'string') {
+                errorMessage = errorData.message;
+            } else if (errorData && typeof errorData.details === 'string') {
+                errorMessage = errorData.details;
+            } else if (errorData && typeof errorData.hint === 'string') {
+                errorMessage = errorData.hint;
+            }
+        } catch (_error) {
+            // Keep generic error.
+        }
+
+        throw new Error(errorMessage);
+    }
+
+    return response;
+}
+
+async function submitLeadToEndpoint(payload, signal) {
+    const response = await fetch(LEAD_ENDPOINT, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+        },
+        body: JSON.stringify(payload),
+        signal
+    });
+
+    if (!response.ok) {
+        let errorMessage = 'Secure transmission failed. Please try again in a moment.';
+        const contentType = response.headers.get('content-type') || '';
+
+        if (contentType.includes('application/json')) {
+            try {
+                const errorData = await response.json();
+                if (errorData && typeof errorData.message === 'string') {
+                    errorMessage = errorData.message;
+                }
+            } catch (_error) {
+                // Keep generic error.
+            }
+        }
+
+        throw new Error(errorMessage);
+    }
+
+    return response;
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     initScrollReveals();
@@ -470,33 +570,7 @@ function initMultiStepForm() {
         const timeoutId = window.setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
 
         try {
-            const response = await fetch(LEAD_ENDPOINT, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json'
-                },
-                body: JSON.stringify(payload),
-                signal: controller.signal
-            });
-
-            if (!response.ok) {
-                let errorMessage = 'Secure transmission failed. Please try again in a moment.';
-                const contentType = response.headers.get('content-type') || '';
-
-                if (contentType.includes('application/json')) {
-                    try {
-                        const errorData = await response.json();
-                        if (errorData && typeof errorData.message === 'string') {
-                            errorMessage = errorData.message;
-                        }
-                    } catch (_error) {
-                        // Keep generic error message.
-                    }
-                }
-
-                throw new Error(errorMessage);
-            }
+            await submitLead(payload, controller.signal);
 
             if (formProgress) {
                 formProgress.classList.add('hidden');
