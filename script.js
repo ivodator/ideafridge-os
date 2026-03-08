@@ -558,13 +558,18 @@ function initMultiStepForm() {
 
         setLoadingState(true);
 
-        const payload = {
+        const corePayload = {
             email: emailInput.value.trim(),
             category: categorySelect.value,
-            goal: goalSelect.value,
-            timestamp: new Date().toISOString(),
-            ...getAttribution()
+            goal: goalSelect.value
         };
+        const payload = SUPABASE_CONFIG.enabled
+            ? corePayload
+            : {
+                ...corePayload,
+                timestamp: new Date().toISOString(),
+                ...getAttribution()
+            };
 
         const controller = new AbortController();
         const timeoutId = window.setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
@@ -611,3 +616,4 @@ function initMultiStepForm() {
         clearFormStatus();
     });
 }
+
