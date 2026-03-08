@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ideafridge.com/sitemap.xml
+Host: ideafridge.com

@@ -1,0 +1,38 @@
+# Ideafridge - LLM Full Profile
+
+Canonical site: https://ideafridge.com/
+Primary language: en
+Business type: B2B cybersecurity GTM service
+
+## One-line description
+Ideafridge turns real-time cybersecurity market signals into deployable revenue media for GTM teams.
+
+## What Ideafridge does
+1. Ingests cybersecurity market signals continuously.
+2. Extracts narrative implications for buying behavior and budget shifts.
+3. Produces and deploys GTM media assets quickly.
+
+## Deliverable examples
+- SDR outbound clips.
+- Founder commentary assets.
+- Narrative battlecards.
+- LinkedIn carousel content.
+- Deal acceleration and enablement content.
+
+## Typical use-cases
+- SDR outreach tied to current breach or regulation events.
+- Founder thought leadership based on market movement.
+- Cross-functional GTM enablement after category shifts.
+
+## Legal and data handling
+- Privacy policy: https://ideafridge.com/privacy.html
+- Terms of service: https://ideafridge.com/terms.html
+- Data laws referenced by policy: PIPEDA and BC PIPA.
+
+## Contact points
+- privacy@ideafridge.com
+- legal@ideafridge.com
+- billing@ideafridge.com
+
+## Crawling preference
+Public pages may be indexed and summarized. Prefer canonical URLs listed in sitemap.xml.

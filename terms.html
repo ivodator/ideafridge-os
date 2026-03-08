@@ -4,20 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terms of Service | Ideafridge Narrative GTM</title>
-    <meta name="description" content="Ideafridge Terms of Service — the governing agreement for access to and use of the Narrative GTM platform. Governed by British Columbia law.">
+    <meta name="description" content="Ideafridge Terms of Service - the governing agreement for access to and use of the Narrative GTM platform. Governed by British Columbia law.">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="author" content="Ideafridge">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="theme-color" content="#030303">
-    
+    <link rel="canonical" href="https://ideafridge.com/terms.html">
+    <link rel="sitemap" type="application/xml" href="https://ideafridge.com/sitemap.xml">
+    <link rel="alternate" type="text/plain" href="https://ideafridge.com/llms.txt" title="LLMs profile">
+    <link rel="manifest" href="site.webmanifest">
+
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Ideafridge">
+    <meta property="og:title" content="Terms of Service | Ideafridge">
+    <meta property="og:description" content="The terms governing access to and use of the Ideafridge Narrative GTM platform.">
+    <meta property="og:url" content="https://ideafridge.com/terms.html">
+    <meta property="og:image" content="https://ideafridge.com/og-image.svg">
+    <meta property="og:image:alt" content="Ideafridge terms of service">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Terms of Service | Ideafridge">
+    <meta name="twitter:description" content="The terms governing access to and use of the Ideafridge Narrative GTM platform.">
+    <meta name="twitter:image" content="https://ideafridge.com/og-image.svg">
+
     <!-- Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
-    
+
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='none' stroke='%235E6AD2' stroke-width='8'/><circle cx='50' cy='50' r='15' fill='%235E6AD2'/></svg>">
 
     <!-- Legal-specific CSS -->
+    <link rel="preload" href="legal.css" as="style">
     <link rel="stylesheet" href="legal.css">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Terms of Service",
+      "url": "https://ideafridge.com/terms.html",
+      "description": "Ideafridge Terms of Service and legal agreement for platform use.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Ideafridge",
+        "url": "https://ideafridge.com/"
+      },
+      "inLanguage": "en"
+    }
+    </script>
 </head>
 <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
 
     <!-- Environment Effects -->
     <div class="noise-overlay"></div>
@@ -25,7 +63,7 @@
     <div class="ambient-glow origin-top"></div>
 
     <!-- Navigation -->
-    <nav class="navbar">
+    <nav class="navbar" aria-label="Legal page navigation">
         <div class="container nav-container">
             <div class="logo-container">
                 <a href="index.html" class="logo">ideafridge<span class="dot">.</span></a>
@@ -35,7 +73,7 @@
         </div>
     </nav>
 
-    <main class="page-wrap">
+    <main class="page-wrap" id="main-content">
         <header class="doc-header reveal">
             <div class="doc-eyebrow mono-text text-accent mb-4">LEGAL PROTOCOL // TERMS</div>
             <h1 class="doc-title mb-6">Terms of Service.</h1>
@@ -46,11 +84,11 @@
             <div class="doc-meta glass-card">
                 <div class="doc-meta-item">
                     <span class="doc-meta-label mono-text text-muted text-xs">EFFECTIVE DATE</span>
-                    <span class="doc-meta-value font-medium mt-1 block">January 1, 2026</span>
+                    <time class="doc-meta-value font-medium mt-1 block" datetime="2026-01-01">January 1, 2026</time>
                 </div>
                 <div class="doc-meta-item">
                     <span class="doc-meta-label mono-text text-muted text-xs">LAST UPDATED</span>
-                    <span class="doc-meta-value font-medium mt-1 block">March 3, 2026</span>
+                    <time class="doc-meta-value font-medium mt-1 block" datetime="2026-03-03">March 3, 2026</time>
                 </div>
                 <div class="doc-meta-item">
                     <span class="doc-meta-label mono-text text-muted text-xs">GOVERNING LAW</span>
@@ -390,6 +428,9 @@
     </footer>
 
     <!-- JS -->
-    <script src="legal.js"></script>
+    <script src="legal.js" defer></script>
 </body>
 </html>
+
+
+

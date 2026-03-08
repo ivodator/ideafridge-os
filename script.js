@@ -1,16 +1,32 @@
 /**
  * IDEAFRIDGE SIGNAL ENGINE - INTERACTIVE LOGIC
- * Architecture: ES6+, Modular Event Listeners, State Management
+ * Production baseline: accessibility, resilience, progressive enhancement.
  */
 
-// ==========================================
-// SUPABASE CONFIGURATION PLACEHOLDER
-// ==========================================
-const SUPABASE_URL = 'https://itfjnqmwfjhptcopfacd.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_a7UeootOqf0KFd9rrroytQ_dbTSqNOg';
-// Note: If using the Supabase JS Client, you would initialize here:
-// const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+'use strict';
 
+const REQUEST_TIMEOUT_MS = 10000;
+const MOBILE_BREAKPOINT = 768;
+
+const LEAD_ENDPOINT = (() => {
+    const endpointMeta = document.querySelector('meta[name="lead-endpoint"]');
+    const configured = endpointMeta?.getAttribute('content')?.trim() || '/api/leads';
+
+    try {
+        const url = new URL(configured, window.location.origin);
+        const isSecure = window.location.protocol === 'https:' ? url.protocol === 'https:' : true;
+        const isSameOrigin = url.origin === window.location.origin;
+
+        // Default to same-origin in production to reduce accidental data leakage.
+        if (isSecure && isSameOrigin) {
+            return `${url.pathname}${url.search}`;
+        }
+    } catch (_error) {
+        // Fall back to the known-safe default below.
+    }
+
+    return '/api/leads';
+})();
 
 document.addEventListener('DOMContentLoaded', () => {
     initScrollReveals();
@@ -24,33 +40,39 @@ document.addEventListener('DOMContentLoaded', () => {
    ========================================================================== */
 function initScrollReveals() {
     const reveals = document.querySelectorAll('.reveal, .fade-in');
-    
-    // Trigger animations instantly for elements already in view on load
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+        reveals.forEach((el) => el.classList.add('active'));
+        return;
+    }
+
     setTimeout(() => {
-        reveals.forEach(el => {
-            if(el.classList.contains('fade-in')) {
+        reveals.forEach((el) => {
+            if (el.classList.contains('fade-in')) {
                 el.classList.add('active');
             }
         });
     }, 50);
 
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px 0px -10% 0px',
-        threshold: 0.1
-    };
+    const observer = new IntersectionObserver(
+        (entries, obs) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    obs.unobserve(entry.target);
+                }
+            });
+        },
+        {
+            root: null,
+            rootMargin: '0px 0px -10% 0px',
+            threshold: 0.1
+        }
+    );
 
-    const observer = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-                obs.unobserve(entry.target); // Run once
-            }
-        });
-    }, observerOptions);
-
-    reveals.forEach(reveal => {
-        if(reveal.classList.contains('reveal')) {
+    reveals.forEach((reveal) => {
+        if (reveal.classList.contains('reveal')) {
             observer.observe(reveal);
         }
     });
@@ -65,21 +87,65 @@ function initMobileMenu() {
 
     if (!menuBtn || !navLinks) return;
 
+    const closeMenu = () => {
+        menuBtn.classList.remove('active');
+        navLinks.classList.remove('active');
+        menuBtn.setAttribute('aria-expanded', 'false');
+        navLinks.setAttribute('aria-hidden', window.innerWidth <= MOBILE_BREAKPOINT ? 'true' : 'false');
+        document.body.classList.remove('nav-open');
+    };
+
+    const openMenu = () => {
+        menuBtn.classList.add('active');
+        navLinks.classList.add('active');
+        menuBtn.setAttribute('aria-expanded', 'true');
+        navLinks.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('nav-open');
+    };
+
     menuBtn.addEventListener('click', () => {
         const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
-        menuBtn.setAttribute('aria-expanded', !isExpanded);
-        menuBtn.classList.toggle('active');
-        navLinks.classList.toggle('active');
+        if (isExpanded) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
     });
 
-    // Close menu on link click
-    navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            menuBtn.classList.remove('active');
-            navLinks.classList.remove('active');
-            menuBtn.setAttribute('aria-expanded', 'false');
-        });
+    navLinks.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', closeMenu);
     });
+
+    document.addEventListener('click', (event) => {
+        if (!navLinks.classList.contains('active')) return;
+        if (!(event.target instanceof Node)) return;
+
+        if (!navLinks.contains(event.target) && !menuBtn.contains(event.target)) {
+            closeMenu();
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            closeMenu();
+        }
+    });
+
+    const syncMenuStateForViewport = () => {
+        if (window.innerWidth <= MOBILE_BREAKPOINT) {
+            closeMenu();
+            return;
+        }
+
+        menuBtn.classList.remove('active');
+        navLinks.classList.remove('active');
+        menuBtn.setAttribute('aria-expanded', 'false');
+        navLinks.setAttribute('aria-hidden', 'false');
+        document.body.classList.remove('nav-open');
+    };
+
+    syncMenuStateForViewport();
+    window.addEventListener('resize', syncMenuStateForViewport);
 }
 
 /* ==========================================================================
@@ -95,50 +161,51 @@ function initPricingCalculator() {
     const featuresList = document.getElementById('tierFeatures');
     const featuresContainer = document.getElementById('featuresContainer');
 
-    if (!slider) return;
+    if (!slider || !display || !tierName || !tierDesc || !tierBadge || !tierBox || !featuresList || !featuresContainer) {
+        return;
+    }
 
-    // Feature data corresponding to exact screenshots
     const planData = {
         signal: {
-            name: "Signal Plan",
-            desc: "Early Series A and early Series B vendors. Establish your signal response capability.",
-            class: "tier-signal",
-            badge: "ENTRY INFRASTRUCTURE",
-            features:[
-                "Continuous cybersecurity signal monitoring",
-                "Signal response media production",
-                "SDR outbound clips",
-                "LinkedIn carousel assets",
-                "Founder commentary media",
-                "Monthly signal briefing"
+            name: 'Signal Plan',
+            desc: 'Early Series A and early Series B vendors. Establish your signal response capability.',
+            class: 'tier-signal',
+            badge: 'ENTRY INFRASTRUCTURE',
+            features: [
+                'Continuous cybersecurity signal monitoring',
+                'Signal response media production',
+                'SDR outbound clips',
+                'LinkedIn carousel assets',
+                'Founder commentary media',
+                'Monthly signal briefing'
             ]
         },
         strike: {
-            name: "Strike Plan",
-            desc: "Scaling Series B cybersecurity vendors. The full signal-driven GTM engine.",
-            class: "tier-strike",
-            badge: "RECOMMENDED INFRASTRUCTURE",
-            features:[
-                "Continuous signal monitoring",
-                "Rapid signal response production",
-                "Outbound media library for SDR teams",
-                "Competitor narrative breakdowns",
-                "Carousel distribution assets",
-                "Weekly intelligence sync"
+            name: 'Strike Plan',
+            desc: 'Scaling Series B cybersecurity vendors. The full signal-driven GTM engine.',
+            class: 'tier-strike',
+            badge: 'RECOMMENDED INFRASTRUCTURE',
+            features: [
+                'Continuous signal monitoring',
+                'Rapid signal response production',
+                'Outbound media library for SDR teams',
+                'Competitor narrative breakdowns',
+                'Carousel distribution assets',
+                'Weekly intelligence sync'
             ]
         },
         command: {
-            name: "Command Plan",
-            desc: "Late-stage vendors and category leaders. Full narrative coverage of the cybersecurity market.",
-            class: "tier-command",
-            badge: "ENTERPRISE INFRASTRUCTURE",
-            features:[
-                "Priority signal monitoring",
-                "Rapid response media production",
-                "Outbound video libraries",
-                "Executive market briefings",
-                "Narrative strategy support",
-                "Category positioning support"
+            name: 'Command Plan',
+            desc: 'Late-stage vendors and category leaders. Full narrative coverage of the cybersecurity market.',
+            class: 'tier-command',
+            badge: 'ENTERPRISE INFRASTRUCTURE',
+            features: [
+                'Priority signal monitoring',
+                'Rapid response media production',
+                'Outbound video libraries',
+                'Executive market briefings',
+                'Narrative strategy support',
+                'Category positioning support'
             ]
         }
     };
@@ -146,67 +213,67 @@ function initPricingCalculator() {
     let currentPlan = '';
 
     const renderFeatures = (features) => {
-        return features.map(feat => `<li>${feat}</li>`).join('');
+        const fragment = document.createDocumentFragment();
+
+        features.forEach((feature) => {
+            const listItem = document.createElement('li');
+            listItem.textContent = feature;
+            fragment.appendChild(listItem);
+        });
+
+        return fragment;
     };
 
-    const updateCalculator = (val) => {
-        const reps = parseInt(val, 10);
-        display.innerText = reps; // Update rolling number
+    const updateCalculator = (value) => {
+        const reps = parseInt(value, 10) || 1;
+        display.textContent = String(reps);
 
         let planKey = '';
+        if (reps <= 5) {
+            planKey = 'signal';
+        } else if (reps <= 25) {
+            planKey = 'strike';
+        } else {
+            planKey = 'command';
+        }
 
-        // Logic thresholds
-        if (reps >= 1 && reps <= 5) planKey = 'signal';
-        else if (reps >= 6 && reps <= 25) planKey = 'strike';
-        else planKey = 'command';
-
-        // Only update DOM if the plan tier actually changes
         if (planKey !== currentPlan) {
             const plan = planData[planKey];
-            
-            // Fade out
-            featuresContainer.style.opacity = 0;
-            
+            featuresContainer.style.opacity = '0';
+
             setTimeout(() => {
-                tierName.innerText = plan.name;
-                tierDesc.innerText = plan.desc;
-                tierBadge.innerText = plan.badge;
-                
-                // Swap classes for dynamic styling (CSS handles the dot/button colors based on this)
+                tierName.textContent = plan.name;
+                tierDesc.textContent = plan.desc;
+                tierBadge.textContent = plan.badge;
                 tierBox.className = `recommended-tier text-left p-8 glass-card border-glass ${plan.class}`;
-                
-                // Inject new feature list
-                featuresList.innerHTML = renderFeatures(plan.features);
-                
-                // Fade in
-                featuresContainer.style.opacity = 1;
-            }, 150); // matches var(--transition-fast)
+                featuresList.replaceChildren(renderFeatures(plan.features));
+                featuresContainer.style.opacity = '1';
+            }, 150);
 
             currentPlan = planKey;
         }
     };
 
-    // Initialize the default state on load
     updateCalculator(slider.value);
 
-    // Event listener for sliding
-    slider.addEventListener('input', (e) => {
-        updateCalculator(e.target.value);
+    slider.addEventListener('input', (event) => {
+        if (!(event.target instanceof HTMLInputElement)) return;
+        updateCalculator(event.target.value);
     });
 }
 
 /* ==========================================================================
-   4. MULTI-STEP CONVERSION FORM W/ HONEYPOT & API MOCK
+   4. MULTI-STEP CONVERSION FORM
    ========================================================================== */
 function initMultiStepForm() {
-    const steps =[
+    const steps = [
         document.getElementById('step-1'),
         document.getElementById('step-2'),
         document.getElementById('step-3'),
         document.getElementById('step-success')
     ];
-    
-    const dots =[
+
+    const dots = [
         document.getElementById('dot-1'),
         document.getElementById('dot-2'),
         document.getElementById('dot-3')
@@ -216,161 +283,257 @@ function initMultiStepForm() {
     const emailError = document.getElementById('emailError');
     const categorySelect = document.getElementById('companyCategory');
     const goalSelect = document.getElementById('primaryGoal');
-    const honeypot = document.getElementById('gotcha'); // SPAM PROTECTION
-    
+    const honeypot = document.getElementById('gotcha');
+
     const nextBtn1 = document.getElementById('nextBtn1');
     const nextBtn2 = document.getElementById('nextBtn2');
     const backBtn1 = document.getElementById('backBtn1');
     const backBtn2 = document.getElementById('backBtn2');
     const form = document.getElementById('accessForm');
+    const formProgress = form?.querySelector('.form-progress');
+    const formStatus = document.getElementById('formStatus');
     const submitBtn = document.getElementById('submitBtn');
     const loader = submitBtn?.querySelector('.loader-icon');
     const btnText = submitBtn?.querySelector('span');
 
-    let currentStep = 0;
+    if (!form || !emailInput || !emailError || !categorySelect || !goalSelect || !submitBtn) {
+        return;
+    }
 
-    const showStep = (index) => {
-        steps.forEach((step, i) => {
-            if (step) {
-                step.classList.toggle('hidden', i !== index);
-                step.classList.toggle('active', i === index);
-            }
-        });
-        dots.forEach((dot, i) => {
-            if(dot) {
-                dot.classList.toggle('active', i <= index);
-            }
-        });
-        currentStep = index;
+    const genericDomains = new Set(['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'aol.com', 'icloud.com']);
+
+    const clearFormStatus = () => {
+        if (!formStatus) return;
+
+        formStatus.textContent = '';
+        formStatus.classList.add('hidden');
+        formStatus.classList.remove('text-error', 'text-success');
     };
 
-    // B2B Email Validation logic
+    const setFormStatus = (message, tone = 'error') => {
+        if (!formStatus) return;
+
+        formStatus.textContent = message;
+        formStatus.classList.remove('hidden', 'text-error', 'text-success');
+        formStatus.classList.add(tone === 'success' ? 'text-success' : 'text-error');
+    };
+
+    const setLoadingState = (isLoading) => {
+        submitBtn.disabled = isLoading;
+        if (btnText) {
+            btnText.classList.toggle('hidden', isLoading);
+        }
+        if (loader) {
+            loader.classList.toggle('hidden', !isLoading);
+        }
+    };
+
+    const showStep = (index) => {
+        steps.forEach((step, stepIndex) => {
+            if (!step) return;
+            step.classList.toggle('hidden', stepIndex !== index);
+            step.classList.toggle('active', stepIndex === index);
+        });
+
+        dots.forEach((dot, dotIndex) => {
+            if (!dot) return;
+            dot.classList.toggle('active', dotIndex <= Math.min(index, dots.length - 1));
+        });
+    };
+
     const validateEmail = () => {
-        const email = emailInput.value.trim();
-        const genericDomains =['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'aol.com', 'icloud.com'];
-        const domain = email.split('@')[1];
-        
+        const email = emailInput.value.trim().toLowerCase();
         const isValidFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-        
+        const domain = email.split('@')[1] || '';
+
+        emailInput.setAttribute('aria-invalid', 'false');
+
         if (!email) {
-            emailError.innerText = "Email is required.";
+            emailError.textContent = 'Email is required.';
             emailError.classList.remove('hidden');
-            return false;
-        } else if (!isValidFormat) {
-            emailError.innerText = "Please enter a valid email format.";
-            emailError.classList.remove('hidden');
-            return false;
-        } else if (genericDomains.includes(domain)) {
-            emailError.innerText = "Please use your B2B work email address.";
-            emailError.classList.remove('hidden');
+            emailInput.setAttribute('aria-invalid', 'true');
             return false;
         }
-        
+
+        if (!isValidFormat) {
+            emailError.textContent = 'Please enter a valid email format.';
+            emailError.classList.remove('hidden');
+            emailInput.setAttribute('aria-invalid', 'true');
+            return false;
+        }
+
+        if (genericDomains.has(domain)) {
+            emailError.textContent = 'Please use your B2B work email address.';
+            emailError.classList.remove('hidden');
+            emailInput.setAttribute('aria-invalid', 'true');
+            return false;
+        }
+
         emailError.classList.add('hidden');
         return true;
     };
 
-    if (nextBtn1) nextBtn1.addEventListener('click', () => { if(validateEmail()) showStep(1); });
-    if (backBtn1) backBtn1.addEventListener('click', () => showStep(0));
-    
-    // Step 2 Validation
-    if (nextBtn2) nextBtn2.addEventListener('click', () => {
-        if(categorySelect.value !== "") {
-            categorySelect.style.borderColor = "var(--border-glass)";
+    const validateCategory = () => {
+        const isValid = categorySelect.value !== '';
+        categorySelect.style.borderColor = isValid ? 'var(--border-glass)' : 'var(--status-error)';
+        categorySelect.setAttribute('aria-invalid', String(!isValid));
+        return isValid;
+    };
+
+    const validateGoal = () => {
+        const isValid = goalSelect.value !== '';
+        goalSelect.style.borderColor = isValid ? 'var(--border-glass)' : 'var(--status-error)';
+        goalSelect.setAttribute('aria-invalid', String(!isValid));
+        return isValid;
+    };
+
+    const getAttribution = () => {
+        const params = new URLSearchParams(window.location.search);
+        const attribution = {
+            source: 'website',
+            page: window.location.pathname,
+            referrer: document.referrer || ''
+        };
+
+        ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach((key) => {
+            const value = params.get(key);
+            if (value) {
+                attribution[key] = value;
+            }
+        });
+
+        return attribution;
+    };
+
+    if (nextBtn1) {
+        nextBtn1.addEventListener('click', () => {
+            clearFormStatus();
+            if (validateEmail()) showStep(1);
+        });
+    }
+
+    if (backBtn1) {
+        backBtn1.addEventListener('click', () => {
+            clearFormStatus();
+            showStep(0);
+        });
+    }
+
+    if (nextBtn2) {
+        nextBtn2.addEventListener('click', () => {
+            clearFormStatus();
+            if (validateCategory()) showStep(2);
+        });
+    }
+
+    if (backBtn2) {
+        backBtn2.addEventListener('click', () => {
+            clearFormStatus();
+            showStep(1);
+        });
+    }
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        clearFormStatus();
+
+        if (honeypot && honeypot.value.trim() !== '') {
+            return;
+        }
+
+        if (!validateEmail()) {
+            showStep(0);
+            return;
+        }
+
+        if (!validateCategory()) {
+            showStep(1);
+            return;
+        }
+
+        if (!validateGoal()) {
             showStep(2);
-        } else {
-            categorySelect.style.borderColor = "var(--status-error)";
-        }
-    });
-    if (backBtn2) backBtn2.addEventListener('click', () => showStep(1));
-
-    // Form Submission / Supabase API Call (Diagnostic Version)
-    if (form) form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        console.log("1. Form submit button clicked!");
-
-        // Debug: Check what data we actually have
-        console.log("Email:", emailInput.value);
-        console.log("Category:", categorySelect.value);
-        console.log("Goal:", goalSelect.value);
-        console.log("Honeypot value:", honeypot ? `"${honeypot.value}"` : "Not found");
-
-        // HONEYPOT CHECK
-        if(honeypot && honeypot.value !== "") {
-            console.error("🛑 2. EARLY EXIT: The hidden honeypot field was filled! If you are human, your browser's auto-fill probably did this by accident.");
-            return; 
-        }
-        console.log("2. Honeypot is clean.");
-
-        // GOAL VALIDATION CHECK
-        if(goalSelect.value === "") {
-            console.error("🛑 3. EARLY EXIT: No primary goal was selected.");
-            goalSelect.style.borderColor = "var(--status-error)";
-            return;
-        }
-        console.log("3. Form validation passed.");
-
-        // SUPABASE KEY CHECK
-        if (!SUPABASE_URL || SUPABASE_URL === 'YOUR_SUPABASE_PROJECT_URL') {
-            console.error("🛑 4. EARLY EXIT: You forgot to replace the SUPABASE_URL at the top of script.js!");
             return;
         }
 
-        // Setup UI for loading state
-        if (btnText) btnText.classList.add('hidden');
-        if (loader) loader.classList.remove('hidden');
-        if (submitBtn) submitBtn.disabled = true;
+        setLoadingState(true);
 
         const payload = {
             email: emailInput.value.trim(),
             category: categorySelect.value,
             goal: goalSelect.value,
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
+            ...getAttribution()
         };
 
-        console.log("4. Payload prepared:", payload);
-        console.log("5. Attempting to contact Supabase at:", `${SUPABASE_URL}/rest/v1/leads`);
+        const controller = new AbortController();
+        const timeoutId = window.setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
 
         try {
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
+            const response = await fetch(LEAD_ENDPOINT, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'apikey': SUPABASE_ANON_KEY,
-                    'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-                    'Prefer': 'return=minimal' 
+                    Accept: 'application/json'
                 },
-                body: JSON.stringify(payload)
+                body: JSON.stringify(payload),
+                signal: controller.signal
             });
 
-            console.log("6. Supabase responded with status code:", response.status);
-
             if (!response.ok) {
-                // If Supabase rejects it (e.g. Row Level Security policy is missing)
-                const errorData = await response.json().catch(() => ({}));
-                console.error("🛑 7. Supabase rejected the data! Error details:", errorData);
-                throw new Error(errorData.message || `Failed with status ${response.status}`);
+                let errorMessage = 'Secure transmission failed. Please try again in a moment.';
+                const contentType = response.headers.get('content-type') || '';
+
+                if (contentType.includes('application/json')) {
+                    try {
+                        const errorData = await response.json();
+                        if (errorData && typeof errorData.message === 'string') {
+                            errorMessage = errorData.message;
+                        }
+                    } catch (_error) {
+                        // Keep generic error message.
+                    }
+                }
+
+                throw new Error(errorMessage);
             }
 
-            console.log("8. SUCCESS! Data inserted into Supabase.");
+            if (formProgress) {
+                formProgress.classList.add('hidden');
+            }
 
-            // Show Success UI
-            document.querySelector('.form-progress').classList.add('hidden');
-            showStep(3); 
-
+            showStep(3);
+            setFormStatus('Request submitted successfully.', 'success');
         } catch (error) {
-            console.error('🛑 9. Fetch Catch Block Triggered:', error);
-            
-            // Revert UI so the user can try again
-            alert("Secure transmission failed. Check the developer console for details.");
-            if (btnText) btnText.classList.remove('hidden');
-            if (loader) loader.classList.add('hidden');
-            if (submitBtn) submitBtn.disabled = false;
+            const timedOut = error instanceof DOMException && error.name === 'AbortError';
+            const message = timedOut
+                ? 'Request timed out. Please retry in a moment.'
+                : error instanceof Error && error.message
+                  ? error.message
+                  : 'Secure transmission failed. Please try again in a moment.';
+
+            setFormStatus(message, 'error');
+            setLoadingState(false);
+        } finally {
+            window.clearTimeout(timeoutId);
         }
     });
 
-    // Clear errors on typing/changing
-    if(categorySelect) categorySelect.addEventListener('change', () => categorySelect.style.borderColor = "var(--border-glass)");
-    if(goalSelect) goalSelect.addEventListener('change', () => goalSelect.style.borderColor = "var(--border-glass)");
-    if(emailInput) emailInput.addEventListener('input', () => emailError.classList.add('hidden'));
+    categorySelect.addEventListener('change', () => {
+        categorySelect.style.borderColor = 'var(--border-glass)';
+        categorySelect.setAttribute('aria-invalid', 'false');
+        clearFormStatus();
+    });
+
+    goalSelect.addEventListener('change', () => {
+        goalSelect.style.borderColor = 'var(--border-glass)';
+        goalSelect.setAttribute('aria-invalid', 'false');
+        clearFormStatus();
+    });
+
+    emailInput.addEventListener('input', () => {
+        emailError.classList.add('hidden');
+        emailInput.setAttribute('aria-invalid', 'false');
+        clearFormStatus();
+    });
 }

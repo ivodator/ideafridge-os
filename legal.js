@@ -14,11 +14,16 @@ document.addEventListener('DOMContentLoaded', () => {
    ========================================================================== */
 function initScrollReveals() {
     const reveals = document.querySelectorAll('.reveal, .fade-in');
-    
-    // Trigger animations instantly for elements already in view on load
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+        reveals.forEach((el) => el.classList.add('active'));
+        return;
+    }
+
     setTimeout(() => {
-        reveals.forEach(el => {
-            if(el.classList.contains('fade-in')) {
+        reveals.forEach((el) => {
+            if (el.classList.contains('fade-in')) {
                 el.classList.add('active');
             }
         });
@@ -31,16 +36,16 @@ function initScrollReveals() {
     };
 
     const observer = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
-                obs.unobserve(entry.target); // Run once per element
+                obs.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
-    reveals.forEach(reveal => {
-        if(reveal.classList.contains('reveal')) {
+    reveals.forEach((reveal) => {
+        if (reveal.classList.contains('reveal')) {
             observer.observe(reveal);
         }
     });
@@ -50,29 +55,29 @@ function initScrollReveals() {
    2. SMOOTH SCROLLING FOR TOC LINKS
    ========================================================================== */
 function initSmoothScrolling() {
-    const tocLinks = document.querySelectorAll('.toc a');
-    
-    tocLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            
+    const tocLinks = document.querySelectorAll('.toc a[href^="#"]');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    tocLinks.forEach((link) => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+
             const targetId = link.getAttribute('href');
+            if (!targetId) return;
+
             const targetElement = document.querySelector(targetId);
-            
-            if (targetElement) {
-                // Offset for fixed navbar (64px) plus some breathing room (32px)
-                const offset = 96;
-                const elementPosition = targetElement.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - offset;
-                
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                });
-                
-                // Optional: Update URL without jumping
-                history.pushState(null, null, targetId);
-            }
+            if (!targetElement) return;
+
+            const offset = 96;
+            const elementPosition = targetElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: prefersReducedMotion ? 'auto' : 'smooth'
+            });
+
+            history.replaceState(null, '', targetId);
         });
     });
 }
@@ -81,32 +86,68 @@ function initSmoothScrolling() {
    3. TOC SCROLLSPY (Highlights active section)
    ========================================================================== */
 function initScrollspy() {
-    const sections = document.querySelectorAll('.doc-section');
-    const navLinks = document.querySelectorAll('.toc a');
-    
+    const sections = Array.from(document.querySelectorAll('.doc-section[id]'));
+    const navLinks = Array.from(document.querySelectorAll('.toc a[href^="#"]'));
+
     if (!sections.length || !navLinks.length) return;
 
-    window.addEventListener('scroll', () => {
-        let current = '';
-        const scrollPosition = window.pageYOffset;
-        
-        // Find the current section
-        sections.forEach(section => {
-            // 120px offset to trigger highlight slightly before the section hits the top
-            const sectionTop = section.offsetTop - 120;
-            const sectionHeight = section.clientHeight;
-            
-            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                current = section.getAttribute('id');
-            }
-        });
-        
-        // Remove active class from all, add to current
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${current}`) {
-                link.classList.add('active');
-            }
-        });
+    const linkById = new Map();
+    navLinks.forEach((link) => {
+        const id = link.getAttribute('href')?.slice(1);
+        if (id) {
+            linkById.set(id, link);
+        }
     });
+
+    const setActiveLink = (id) => {
+        navLinks.forEach((link) => link.classList.remove('active'));
+        const activeLink = linkById.get(id);
+        if (activeLink) {
+            activeLink.classList.add('active');
+        }
+    };
+
+    const initialHash = window.location.hash.slice(1);
+    if (initialHash && linkById.has(initialHash)) {
+        setActiveLink(initialHash);
+    } else {
+        setActiveLink(sections[0].id);
+    }
+
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setActiveLink(entry.target.id);
+                    }
+                });
+            },
+            {
+                root: null,
+                rootMargin: '-20% 0px -65% 0px',
+                threshold: [0, 0.25, 0.5]
+            }
+        );
+
+        sections.forEach((section) => observer.observe(section));
+        return;
+    }
+
+    const fallbackUpdate = () => {
+        let currentId = sections[0].id;
+        const scrollPosition = window.pageYOffset + 120;
+
+        sections.forEach((section) => {
+            if (section.offsetTop <= scrollPosition) {
+                currentId = section.id;
+            }
+        });
+
+        setActiveLink(currentId);
+    };
+
+    window.addEventListener('scroll', fallbackUpdate, { passive: true });
+    fallbackUpdate();
 }
+
