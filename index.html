@@ -3,387 +3,317 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Ideafridge | Cybersecurity GTM Signal Engine</title>
+    <title>Ideafridge | Cybersecurity Signal Engine</title>
     <meta name="description" content="Turn cybersecurity signals into pipeline. Equip your GTM team with deployable revenue media triggered by real-time market shifts.">
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-    <meta name="author" content="Ideafridge">
-    <meta name="referrer" content="strict-origin-when-cross-origin">
-    <meta name="theme-color" content="#030303">
+    
     <meta name="lead-endpoint" content="/api/leads">
     <meta name="supabase-url" content="https://itfjnqmwfjhptcopfacd.supabase.co">
     <meta name="supabase-anon-key" content="sb_publishable_a7UeootOqf0KFd9rrroytQ_dbTSqNOg">
     <meta name="supabase-table" content="leads">
 
-    <link rel="canonical" href="https://ideafridge.com/">
-    <link rel="sitemap" type="application/xml" href="https://ideafridge.com/sitemap.xml">
-    <link rel="alternate" type="text/plain" href="https://ideafridge.com/llms.txt" title="LLMs profile">
-    <link rel="manifest" href="site.webmanifest">
-
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Ideafridge">
-    <meta property="og:title" content="Ideafridge | Cybersecurity GTM Signal Engine">
-    <meta property="og:description" content="Turn cybersecurity signals into pipeline with real-time narrative deployment for cybersecurity GTM teams.">
-    <meta property="og:url" content="https://ideafridge.com/">
-    <meta property="og:image" content="https://ideafridge.com/og-image.svg">
-    <meta property="og:image:alt" content="Ideafridge signal engine visualization">
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Ideafridge | Cybersecurity GTM Signal Engine">
-    <meta name="twitter:description" content="Turn cybersecurity signals into pipeline with real-time narrative deployment.">
-    <meta name="twitter:image" content="https://ideafridge.com/og-image.svg">
-
-    <!-- Typography -->
+    <!-- Typography: Inter (Highly Readable) + JetBrains Mono (Technical) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <!-- Assets -->
-    <link rel="preload" href="style.css" as="style">
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='none' stroke='%235E6AD2' stroke-width='8'/><circle cx='50' cy='50' r='15' fill='%235E6AD2'/></svg>">
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "Organization",
-          "name": "Ideafridge",
-          "url": "https://ideafridge.com/",
-          "logo": "https://ideafridge.com/og-image.svg",
-          "email": "mailto:privacy@ideafridge.com"
-        },
-        {
-          "@type": "WebSite",
-          "name": "Ideafridge",
-          "url": "https://ideafridge.com/",
-          "inLanguage": "en"
-        },
-        {
-          "@type": "Service",
-          "name": "Cybersecurity GTM Signal Engine",
-          "provider": {
-            "@type": "Organization",
-            "name": "Ideafridge"
-          },
-          "serviceType": "Signal-driven cybersecurity GTM media deployment",
-          "areaServed": "Global",
-          "url": "https://ideafridge.com/"
-        }
-      ]
-    }
-    </script>
+   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23050505'/><path d='M32 32 H44 M32 32 V44 M68 32 H56 M68 32 V44 M32 68 H44 M32 68 V56 M68 68 H56 M68 68 V56' stroke='%23F5F5F7' stroke-width='5' stroke-linecap='square' fill='none'/><circle cx='50' cy='50' r='5' fill='%23F5F5F7'/></svg>">
 </head>
 <body>
-    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <a class="skip-link visually-hidden" href="#main-content">Skip to content &darr;</a>
 
-    <noscript>
-        <p class="noscript-notice">JavaScript is disabled. You can still browse content, but interactive pricing and the request form require JavaScript.</p>
-    </noscript>
-
-    <!-- Environment Effects -->
-    <div class="noise-overlay"></div>
-    <div class="grid-background"></div>
-    <div class="ambient-glow origin-top"></div>
+    <div class="blueprint-grid"></div>
 
     <!-- Navigation -->
-    <nav class="navbar" aria-label="Primary">
+    <nav class="navbar border-b" aria-label="Primary">
         <div class="container nav-container">
-            <div class="logo-container">
-                <a href="index.html" class="logo">ideafridge<span class="dot">.</span></a>
-                <div class="beta-tag">SIGNAL ENGINE V.2.0</div>
+            <div class="flex align-center gap-4">
+                <a href="index.html" class="logo">Ideafridge.</a>
+                <div class="badge hide-mobile">SYS.V2</div>
             </div>
 
             <button type="button" class="mobile-menu-btn" aria-label="Toggle Navigation" aria-expanded="false" aria-controls="primary-navigation">
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </button>
 
             <div class="nav-links" id="primary-navigation" aria-hidden="false">
-                <a href="#engine">The Engine</a>
-                <a href="#use-cases">Use Cases</a>
-                <a href="#pricing">Pricing</a>
-                <a href="#apply" class="btn-nav">Request Access</a>
+                <a href="#engine" class="nav-item">REF.01 / ENGINE</a>
+                <a href="#use-cases" class="nav-item">REF.02 / TARGETS</a>
+                <a href="#pricing" class="nav-item">REF.03 / CONFIG</a>
+                <a href="#apply" class="btn-primary nav-btn">INITIATE SEQUENCE &rarr;</a>
             </div>
         </div>
     </nav>
 
     <main id="main-content">
         <!-- Hero Section -->
-        <header class="hero section">
-            <div class="container relative z-10 text-center">
-                <div class="status-pill fade-in">
-                    <span class="pulse-dot"></span>
-                    <span class="status-text mono-text">Continuous Cyber Market Monitoring</span>
+        <header class="hero section border-b">
+            <div class="container hero-grid">
+                <!-- Technical Sidebar -->
+                <div class="tech-sidebar hide-mobile fade-in border-r pr-8">
+                    <div class="mono-text mb-8 text-muted">
+                        <strong>DOC_ID:</strong> IF-2026-A<br>
+                        <strong>STATUS:</strong> OPERATIONAL<br>
+                        <strong>LATENCY:</strong> 12MS<br>
+                        <strong>OBJECTIVE:</strong> REV_GEN
+                    </div>
+                    
+                    <div class="tech-graphic">
+                        <svg viewBox="0 0 100 100" class="w-full">
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="var(--border-color)" stroke-width="2"/>
+                            <circle cx="50" cy="50" r="30" fill="none" stroke="var(--fg-base)" stroke-width="1" stroke-dasharray="4 4">
+                                <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="20s" repeatCount="indefinite"/>
+                            </circle>
+                            <line x1="50" y1="0" x2="50" y2="100" stroke="var(--border-color)" stroke-width="1"/>
+                            <line x1="0" y1="50" x2="100" y2="50" stroke="var(--border-color)" stroke-width="1"/>
+                            <rect x="46" y="46" width="8" height="8" fill="var(--fg-base)" rx="2"/>
+                        </svg>
+                        <div class="mono-text text-xs text-center mt-4 text-muted">FIG. 1A - RADAR SCAN</div>
+                    </div>
                 </div>
 
-                <h1 class="fade-in delay-1">Turn Market Signals<br>Into <span class="text-gradient">Pipeline</span></h1>
+                <!-- Main Content -->
+                <div class="hero-content pl-8">
+                    <div class="badge fade-in mb-6">
+                        <span class="pulse-dot"></span> CONTINUOUS MARKET MONITORING
+                    </div>
 
-                <p class="hero-sub fade-in delay-2">
-                    Convert market shifts into deployable revenue media. Equip your SDRs, AEs, AMs, and Channel Partners to win the narrative before the opportunity closes.
-                </p>
+                    <h1 class="hero-title fade-in delay-1">Turn market<br>signals into<br>pipeline</h1>
 
-                <div class="hero-actions flex justify-center gap-4 fade-in delay-3">
-                    <a href="#apply" class="btn-primary">
-                        <span>Request Intelligence Access</span>
-                    </a>
-                    <a href="#engine" class="btn-text">Explore the Engine &rarr;</a>
+                    <p class="hero-sub fade-in delay-2 mt-6">
+                        Convert market shifts into deployable revenue media. Equip your GTM team to win the narrative before competitors even react.
+                    </p>
+
+                    <div class="hero-actions flex gap-4 mt-8 fade-in delay-3">
+                        <a href="#apply" class="btn-primary">Request Access &rarr;</a>
+                        <a href="#engine" class="btn-outline">View Schematics &darr;</a>
+                    </div>
                 </div>
             </div>
         </header>
 
         <!-- Ticker Tape -->
-        <div class="ticker-wrap fade-in delay-3" aria-label="Deployable asset types">
-            <div class="ticker-label mono-text">DEPLOYABLE ASSETS //</div>
+        <div class="ticker-wrap border-b" aria-label="Deployable asset types">
+            <div class="ticker-label mono-text border-r">OUTPUT_MEDIA //</div>
             <div class="ticker-track">
-                <div class="ticker-content mono-text text-sm">
-                    <span>SDR OUTBOUND CLIPS</span><span class="dot-sep">&bull;</span>
-                    <span>FOUNDER COMMENTARY</span><span class="dot-sep">&bull;</span>
-                    <span>DEAL ACCELERATION</span><span class="dot-sep">&bull;</span>
-                    <span>NARRATIVE BATTLECARDS</span><span class="dot-sep">&bull;</span>
-                    <span>LINKEDIN CAROUSELS</span><span class="dot-sep">&bull;</span>
-                    <span>SDR OUTBOUND CLIPS</span><span class="dot-sep">&bull;</span>
-                    <span>FOUNDER COMMENTARY</span><span class="dot-sep">&bull;</span>
-                    <span>DEAL ACCELERATION</span><span class="dot-sep">&bull;</span>
-                    <span>NARRATIVE BATTLECARDS</span><span class="dot-sep">&bull;</span>
-                    <span>LINKEDIN CAROUSELS</span>
+                <div class="ticker-content mono-text">
+                    <span>SDR OUTBOUND CLIPS</span><span class="sep">&rarr;</span>
+                    <span>FOUNDER COMMENTARY</span><span class="sep">&rarr;</span>
+                    <span>DEAL ACCELERATION</span><span class="sep">&rarr;</span>
+                    <span>NARRATIVE BATTLECARDS</span><span class="sep">&rarr;</span>
+                    <span>LINKEDIN CAROUSELS</span><span class="sep">&rarr;</span>
+                    <span>SDR OUTBOUND CLIPS</span><span class="sep">&rarr;</span>
+                    <span>FOUNDER COMMENTARY</span><span class="sep">&rarr;</span>
+                    <span>DEAL ACCELERATION</span><span class="sep">&rarr;</span>
+                    <span>NARRATIVE BATTLECARDS</span>
                 </div>
             </div>
         </div>
 
-        <!-- The Engine -->
-        <section id="engine" class="section">
-            <div class="ambient-glow origin-center"></div>
-            <div class="container relative">
-                <div class="text-center mb-16 reveal">
-                    <div class="section-label mono-text text-accent mb-4">01 // THE ENGINE</div>
-                    <h2>Signals come in.<br>Revenue media goes out.</h2>
-                    <p class="text-lg text-muted mt-4 max-w-2xl mx-auto">Ideafridge is not a marketing agency. We are a signal-driven media layer built specifically for high-velocity cybersecurity GTM teams.</p>
+        <!-- The Engine (Instruction Manual Diagram) -->
+        <section id="engine" class="section border-b">
+            <div class="container">
+                <div class="section-header reveal flex justify-between align-end mb-8 border-b pb-4">
+                    <div>
+                        <div class="mono-text mb-2 text-muted">REF.01 // SYSTEM ARCHITECTURE</div>
+                        <h2>The Engine.</h2>
+                    </div>
+                    <div class="mono-text hide-mobile text-right text-muted">
+                        DWG NO: 80-6B<br>
+                        SCALE: 1:1
+                    </div>
                 </div>
 
-                <div class="signal-engine-graphic reveal mb-16">
-                    <svg viewBox="0 0 800 200" width="100%" height="200" class="engine-svg" aria-hidden="true">
-                        <path d="M 0 50 C 150 50, 250 100, 350 100" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2"/>
-                        <path d="M 0 150 C 150 150, 250 100, 350 100" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2"/>
-                        <path d="M 0 100 L 350 100" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2"/>
+                <!-- Animated Blueprint SVG -->
+                <div class="diagram-container reveal mb-12 border bg-surface radius-lg">
+                    <div class="mono-text border-b p-4">FIG 2. SIGNAL PROCESSING SCHEMATIC</div>
+                    <svg viewBox="0 0 1000 280" class="tech-svg" preserveAspectRatio="xMidYMid meet">
+                        <!-- Grid Lines -->
+                        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                            <rect width="40" height="40" fill="none" stroke="var(--border-color)" stroke-width="1" opacity="0.5"/>
+                        </pattern>
+                        <rect width="100%" height="100%" fill="url(#grid)" />
+                        
+                        <!-- Connecting Path Background -->
+                        <path d="M 150 140 L 850 140" fill="none" stroke="var(--fg-base)" stroke-width="2" stroke-dasharray="6 6" opacity="0.3"/>
 
-                        <circle r="3" fill="#FFF" class="flow-particle"><animateMotion dur="3s" repeatCount="indefinite" path="M 0 50 C 150 50, 250 100, 350 100" /></circle>
-                        <circle r="3" fill="#FFF" class="flow-particle"><animateMotion dur="2.5s" repeatCount="indefinite" path="M 0 150 C 150 150, 250 100, 350 100" /></circle>
-                        <circle r="3" fill="#FFF" class="flow-particle"><animateMotion dur="4s" repeatCount="indefinite" path="M 0 100 L 350 100" /></circle>
+                        <!-- Left Node: INGEST -->
+                        <g transform="translate(150, 140)">
+                            <rect x="-60" y="-60" width="120" height="120" fill="var(--bg-surface)" stroke="var(--fg-base)" stroke-width="2" rx="8"/>
+                            <circle r="36" fill="none" stroke="var(--fg-base)" stroke-width="1.5">
+                                <animateTransform attributeName="transform" type="scale" values="0.8; 1.1; 0.8" dur="4s" repeatCount="indefinite"/>
+                            </circle>
+                            <circle r="4" fill="var(--fg-base)"/>
+                            <rect x="-50" y="-80" width="100" height="24" fill="var(--fg-base)" rx="4"/>
+                            <text x="0" y="-64" fill="var(--bg-surface)" text-anchor="middle" class="svg-mono">01. INGEST</text>
+                        </g>
 
-                        <circle cx="400" cy="100" r="45" fill="var(--bg-glass)" stroke="var(--border-glass)" stroke-width="1"/>
-                        <circle cx="400" cy="100" r="25" fill="rgba(94, 106, 210, 0.15)" stroke="var(--accent-primary)" stroke-width="2" class="engine-pulse"/>
-                        <rect x="390" y="90" width="20" height="20" fill="var(--accent-primary)" rx="4"/>
+                        <!-- Middle Node: EXTRACT -->
+                        <g transform="translate(500, 140)">
+                            <rect x="-70" y="-70" width="140" height="140" fill="var(--bg-surface)" stroke="var(--fg-base)" stroke-width="2" rx="8"/>
+                            <polygon points="0,-35 35,0 0,35 -35,0" fill="none" stroke="var(--fg-base)" stroke-width="2">
+                                <animateTransform attributeName="transform" type="rotate" from="0" to="90" dur="2s" repeatCount="indefinite"/>
+                            </polygon>
+                            <rect x="-55" y="-90" width="110" height="24" fill="var(--fg-base)" rx="4"/>
+                            <text x="0" y="-74" fill="var(--bg-surface)" text-anchor="middle" class="svg-mono">02. EXTRACT</text>
+                        </g>
 
-                        <path d="M 450 100 C 550 100, 650 50, 800 50" fill="none" stroke="rgba(94, 106, 210, 0.3)" stroke-width="2"/>
-                        <path d="M 450 100 C 550 100, 650 150, 800 150" fill="none" stroke="rgba(229, 166, 59, 0.3)" stroke-width="2"/>
-                        <path d="M 450 100 L 800 100" fill="none" stroke="rgba(165, 180, 252, 0.3)" stroke-width="2"/>
+                        <!-- Right Node: DEPLOY -->
+                        <g transform="translate(850, 140)">
+                            <circle r="70" fill="var(--bg-surface)" stroke="var(--fg-base)" stroke-width="2"/>
+                            <rect x="-26" y="-26" width="52" height="52" fill="none" stroke="var(--fg-base)" stroke-width="2" rx="4">
+                                <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="10s" repeatCount="indefinite"/>
+                            </rect>
+                            <rect x="-50" y="-90" width="100" height="24" fill="var(--fg-base)" rx="4"/>
+                            <text x="0" y="-74" fill="var(--bg-surface)" text-anchor="middle" class="svg-mono">03. DEPLOY</text>
+                        </g>
 
-                        <circle r="4" fill="var(--accent-primary)" class="flow-particle"><animateMotion dur="2.5s" repeatCount="indefinite" path="M 450 100 C 550 100, 650 50, 800 50" /></circle>
-                        <circle r="4" fill="var(--accent-gold)" class="flow-particle"><animateMotion dur="3s" repeatCount="indefinite" path="M 450 100 C 550 100, 650 150, 800 150" /></circle>
-                        <circle r="4" fill="var(--accent-light)" class="flow-particle"><animateMotion dur="2s" repeatCount="indefinite" path="M 450 100 L 800 100" /></circle>
+                        <!-- Flow Data Packets -->
+                        <rect width="12" height="12" fill="var(--fg-base)" x="0" y="-6" rx="2">
+                            <animateMotion dur="2s" repeatCount="indefinite" path="M 210 140 L 430 140" />
+                        </rect>
+                        <circle r="6" fill="var(--fg-base)">
+                            <animateMotion dur="1.5s" repeatCount="indefinite" path="M 570 140 L 780 140" />
+                        </circle>
+
+                        <!-- Annotations -->
+                        <text x="320" y="125" fill="var(--fg-muted)" text-anchor="middle" class="svg-mono">RAW_DATA [8TB/S]</text>
+                        <text x="675" y="125" fill="var(--fg-muted)" text-anchor="middle" class="svg-mono">MEDIA_COMPILED</text>
                     </svg>
                 </div>
 
                 <div class="grid-3">
-                    <div class="glass-card reveal">
-                        <div class="card-icon mono-text text-accent mb-4">1. INGEST</div>
+                    <div class="manual-card reveal border radius-lg bg-surface flex-col">
+                        <div class="mono-text mb-6 border-b pb-3 text-muted">STEP 01.</div>
                         <h3 class="mb-4">Continuous Intelligence</h3>
-                        <p class="text-muted">We monitor the cyber ecosystem 24/7. Funding, breaches, and regulations track straight to our engine.</p>
+                        <p class="text-body text-muted">We continuously monitor your ecosystem. Vendor funding rounds, strategic breaches, and major compliance regulations track straight into our analytical engine.</p>
                     </div>
-                    <div class="glass-card reveal delay-1">
-                        <div class="card-icon mono-text text-gold mb-4">2. EXTRACT</div>
+                    <div class="manual-card reveal delay-1 border radius-lg bg-surface flex-col">
+                        <div class="mono-text mb-6 border-b pb-3 text-muted">STEP 02.</div>
                         <h3 class="mb-4">Narrative Extraction</h3>
-                        <p class="text-muted">Noise becomes signal. We identify the specific market shifts that dictate buyer behavior and budget allocations.</p>
+                        <p class="text-body text-muted">Noise efficiently becomes pure signal. We isolate and identify the specific market shifts that dictate your buyers' behavior and organizational budget allocation.</p>
                     </div>
-                    <div class="glass-card reveal delay-2">
-                        <div class="card-icon mono-text text-light mb-4">3. DEPLOY</div>
+                    <div class="manual-card reveal delay-2 border radius-lg bg-surface flex-col">
+                        <div class="mono-text mb-6 border-b pb-3 text-muted">STEP 03.</div>
                         <h3 class="mb-4">Rapid Media Production</h3>
-                        <p class="text-muted">Signals are instantly converted into deployable SDR clips, founder commentary, and carousel assets.</p>
+                        <p class="text-body text-muted">Signals are instantly converted into deployable SDR/AE outbound clips and structured carousel assets for immediate team distribution.</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Use Cases -->
-        <section id="use-cases" class="section">
+        <section id="use-cases" class="section border-b bg-muted">
             <div class="container">
-                <div class="text-center mb-16 reveal">
-                    <div class="section-label mono-text text-accent mb-4">02 // USE CASES</div>
-                    <h2>Win The Feed</h2>
+                <div class="section-header reveal flex justify-between align-end mb-8 border-b pb-4">
+                    <div>
+                        <div class="mono-text mb-2 text-muted">REF.02 // DEPLOYMENT TARGETS</div>
+                        <h2>Win the feed.</h2>
+                    </div>
                 </div>
 
                 <div class="grid-3">
-                    <div class="use-case-card glass-card reveal">
-                        <div class="role-header flex justify-between align-center mb-6">
-                            <span class="mono-text text-sm">FOR SDRs &amp; AEs</span>
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                    <div class="manual-card reveal border radius-lg bg-surface flex-col">
+                        <div class="flex justify-between align-center mb-6 border-b pb-4">
+                            <span class="badge">TARGET: SDR / AE</span>
                         </div>
                         <h3 class="mb-4">Outbound That Converts</h3>
-                        <p class="text-muted mb-8">An SDR sends a prospect a short visual explaining a breach that happened that week and why it matters directly to their industry.</p>
-                        <div class="tag mt-auto inline-block">OUTCOME: PIPELINE GENERATED</div>
+                        <p class="text-body text-muted mb-10">An SDR sends a prospect a short, high-fidelity visual explaining a breach that happened that week, clearly detailing why it matters directly to their industry.</p>
+                        <div class="mono-text text-xs mt-auto bg-dark text-white p-2 inline-block radius-sm self-start">OUTCOME: PIPELINE</div>
                     </div>
 
-                    <div class="use-case-card glass-card reveal delay-1">
-                        <div class="role-header flex justify-between align-center mb-6">
-                            <span class="mono-text text-sm text-gold">FOR AMs</span>
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-gold)" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <div class="manual-card reveal delay-1 border radius-lg bg-surface flex-col">
+                        <div class="flex justify-between align-center mb-6 border-b pb-4">
+                            <span class="badge">TARGET: FOUNDER</span>
                         </div>
                         <h3 class="mb-4">Market Authority</h3>
-                        <p class="text-muted mb-8">Expand deals by building trust on signal-based commentary explaining where the security market is heading based on market shifts.</p>
-                        <div class="tag gold mt-auto inline-block">OUTCOME: CATEGORY LEADERSHIP</div>
+                        <p class="text-body text-muted mb-10">Your CEO posts signal-based commentary explaining where the security market is heading, specifically mapped to recent competitor positioning shifts.</p>
+                        <div class="mono-text text-xs mt-auto bg-dark text-white p-2 inline-block radius-sm self-start">OUTCOME: LEADERSHIP</div>
                     </div>
 
-                    <div class="use-case-card glass-card reveal delay-2">
-                        <div class="role-header flex justify-between align-center mb-6">
-                            <span class="mono-text text-sm text-light">FOR MARKETING</span>
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-light)" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    <div class="manual-card reveal delay-2 border radius-lg bg-surface flex-col">
+                        <div class="flex justify-between align-center mb-6 border-b pb-4">
+                            <span class="badge">TARGET: MARKETING</span>
                         </div>
-                        <h3 class="mb-4">Enablement at Scale</h3>
-                        <p class="text-muted mb-8">Equip the entire revenue organization with narrative battlecards and carousels the moment a major regulatory change drops.</p>
-                        <div class="tag light mt-auto inline-block">OUTCOME: SALES VELOCITY</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Interactive Pricing Calculator -->
-        <section id="pricing" class="section">
-            <div class="container">
-                <div class="text-center mb-16 reveal">
-                    <div class="section-label mono-text text-accent mb-4">03 // PRICING</div>
-                    <h2>Scale Your Signal Engine</h2>
-                    <p class="text-lg text-muted mt-4 max-w-2xl mx-auto">Determine the right infrastructure based on your team size.</p>
-                </div>
-
-                <div class="pricing-calculator mx-auto reveal mb-16">
-                    <div class="calc-header text-center mb-8">
-                        <h3 class="mb-2 font-medium">How many employees are on your GTM team?</h3>
-                        <div class="rep-count display-text text-gradient" id="repCountDisplay">15</div>
-                        <div class="mono-text text-dark mt-2">SDRs, AEs, AMs and Channel Partners</div>
-                    </div>
-
-                    <div class="slider-container mb-12">
-                        <input type="range" min="1" max="50" value="15" class="cyber-slider" id="repSlider" aria-label="Number of representatives">
-                        <div class="flex justify-between mt-4 mono-text text-dark">
-                            <span>1 (Founder-led)</span>
-                            <span>50+ (Enterprise)</span>
-                        </div>
-                    </div>
-
-                    <!-- Dynamic Pricing Card -->
-                    <div class="recommended-tier text-left p-8 glass-card border-glass tier-strike" id="recommendedTierBox">
-                        <div class="text-center mb-6">
-                            <div class="mono-text mb-4 tracking-widest dynamic-color" id="tierBadge">RECOMMENDED INFRASTRUCTURE</div>
-                            <h3 class="text-3xl mb-2 font-medium text-white" id="tierName">Strike Plan</h3>
-                            <p class="text-muted max-w-md mx-auto" id="tierDesc">Scaling Series B cybersecurity vendors. The full signal-driven GTM engine.</p>
-                        </div>
-
-                        <div class="border-t border-glass pt-6 mb-8 transition-base" id="featuresContainer">
-                            <ul class="feature-list" id="tierFeatures">
-                                <!-- Populated via JS -->
-                            </ul>
-                        </div>
-
-                        <a href="#apply" class="btn-primary w-full justify-center flex dynamic-bg">Select Plan</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Why Ideafridge Exists (Replaced FAQ) -->
-        <section class="section border-t border-glass">
-            <div class="container max-w-4xl mx-auto">
-                <div class="grid-2 align-start reveal">
-                    <div>
-                        <h2 class="mb-4">Why Ideafridge Exists</h2>
-                        <p class="text-muted">Capture the timing gap in GTM</p>
-                    </div>
-                    <div>
-                        <p class="text-lg text-muted mb-6 leading-relaxed">
-                            The cybersecurity market moves fast. Breaches, funding rounds, product launches, and category shifts reshape buyer conversations every week.
-                        </p>
-                        <p class="text-lg text-muted leading-relaxed">
-                            Most GTM teams respond weeks later because producing high-quality media takes time. <strong class="text-white font-medium">Ideafridge closes that gap.</strong> We monitor the market and rapidly convert signals into deployable revenue media. So when the conversation starts, your team is already part of it.
-                        </p>
+                        <h3 class="mb-4">Enablement At Scale</h3>
+                        <p class="text-body text-muted mb-10">Equip the entire revenue organization with narrative battlecards and carousels the precise moment a major compliance or regulatory change drops.</p>
+                        <div class="mono-text text-xs mt-auto bg-dark text-white p-2 inline-block radius-sm self-start">OUTCOME: VELOCITY</div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Conversion Form -->
-        <section id="apply" class="section bg-surface border-t border-glass">
+        <section id="apply" class="section">
             <div class="container max-w-2xl mx-auto">
-                <div class="cta-box glass-card text-center reveal p-12">
-                    <h2 class="mb-4">Arm Your Revenue Team.</h2>
-                    <p class="text-muted mb-8">Deploy the Ideafridge Signal Engine. Request access below to check availability for your cyber category.</p>
-
-                    <form id="accessForm" class="onboarding-form" novalidate>
-                        <!-- SPAM HONEYPOT - Bots will fill this out, humans won't see it -->
+                <div class="manual-card border bg-surface text-center reveal radius-lg">
+                    <div class="mono-text mb-6 border-b pb-3 inline-block mx-auto text-muted">INITIALIZATION SEQUENCE</div>
+                    <h2 class="mb-10">Arm your revenue team.</h2>
+                    
+                    <form id="accessForm" class="tech-form text-left" novalidate>
                         <div class="visually-hidden" aria-hidden="true">
                             <label for="gotcha">Leave this field blank</label>
                             <input type="text" id="gotcha" name="gotcha" tabindex="-1" autocomplete="off">
                         </div>
 
-                        <!-- Step Indicator -->
-                        <div class="form-progress mb-8" aria-hidden="true">
-                            <div class="progress-dot active" id="dot-1"></div>
-                            <div class="progress-dot" id="dot-2"></div>
-                            <div class="progress-dot" id="dot-3"></div>
+                        <div class="form-progress mb-8 flex justify-between mono-text border-b pb-4" aria-hidden="true">
+                            <span id="dot-1" class="active">01. AUTH</span>
+                            <span id="dot-2" class="text-muted">02. CLASS</span>
+                            <span id="dot-3" class="text-muted">03. TARGET</span>
                         </div>
 
                         <!-- Step 1 -->
-                        <div class="form-step active" id="step-1">
-                            <label for="workEmail" class="block text-left mb-2 text-sm font-medium">Work Email Address</label>
-                            <input type="email" id="workEmail" name="work_email" autocomplete="email" inputmode="email" aria-describedby="emailError" aria-invalid="false" class="cyber-input w-full mb-4" placeholder="founder@yourcybercompany.com" required>
-                            <div class="error-message text-error text-xs text-left hidden mb-4" id="emailError" role="status" aria-live="polite">Please enter a valid work email.</div>
-                            <button type="button" class="btn-primary w-full justify-center mt-2" id="nextBtn1">Continue</button>
+                        <div class="form-step active fade-in" id="step-1">
+                            <label for="workEmail" class="block mb-3 mono-text font-bold">WORK_EMAIL_ADDRESS</label>
+                            <input type="email" id="workEmail" name="work_email" autocomplete="email" class="tech-input mb-3" placeholder="user@domain.com" required>
+                            <div class="mono-text text-xs text-error hidden mb-4 bg-dark text-white p-3 radius-sm" id="emailError" role="status">ERR: INVALID B2B EMAIL.</div>
+                            <button type="button" class="btn-primary w-full mt-6" id="nextBtn1">PROCEED &rarr;</button>
                         </div>
 
                         <!-- Step 2 -->
-                        <div class="form-step hidden" id="step-2">
-                            <label for="companyCategory" class="block text-left mb-2 text-sm font-medium">Cybersecurity Category</label>
-                            <select id="companyCategory" name="company_category" aria-invalid="false" class="cyber-input w-full mb-6" required>
-                                <option value="">Select a category...</option>
-                                <option value="cloud">Cloud Security (CNAPP, CSPM)</option>
-                                <option value="identity">Identity &amp; Access (IAM, PAM)</option>
-                                <option value="data">Data Security (DSPM)</option>
-                                <option value="secops">SecOps (SIEM, SOAR, XDR)</option>
+                        <div class="form-step hidden fade-in" id="step-2">
+                            <label for="companyCategory" class="block mb-3 mono-text font-bold">CYBERSECURITY_CATEGORY</label>
+                            <select id="companyCategory" name="company_category" class="tech-input mb-8" required>
+                                <option value="">[ Select Category ]</option>
+                                <option value="cloud">Cybersecurity</option>
+                                <option value="identity">Education</option>
+                                <option value="identity">Healthcare</option>
+                                <option value="identity">HR and Workplace</option>
+                                <option value="data">Compliance</option>
+                                <option value="secops">Marketing</option>
                                 <option value="other">Other</option>
                             </select>
                             <div class="flex gap-4">
-                                <button type="button" class="btn-outline w-full justify-center" id="backBtn1">Back</button>
-                                <button type="button" class="btn-primary w-full justify-center" id="nextBtn2">Continue</button>
+                                <button type="button" class="btn-outline w-full" id="backBtn1">&larr; BACK</button>
+                                <button type="button" class="btn-primary w-full" id="nextBtn2">PROCEED &rarr;</button>
                             </div>
                         </div>
 
                         <!-- Step 3 -->
-                        <div class="form-step hidden" id="step-3">
-                            <label for="primaryGoal" class="block text-left mb-2 text-sm font-medium">Primary GTM Objective</label>
-                            <select id="primaryGoal" name="primary_goal" aria-invalid="false" class="cyber-input w-full mb-6" required>
-                                <option value="">Select objective...</option>
+                        <div class="form-step hidden fade-in" id="step-3">
+                            <label for="primaryGoal" class="block mb-3 mono-text font-bold">PRIMARY_GTM_OBJECTIVE</label>
+                            <select id="primaryGoal" name="primary_goal" class="tech-input mb-8" required>
+                                <option value="">[ Select Objective ]</option>
                                 <option value="outbound">Scale SDR Outbound Pipeline</option>
                                 <option value="founder">Build Founder Authority</option>
                                 <option value="enablement">Equip AEs for Deal Acceleration</option>
                             </select>
                             <div class="flex gap-4">
-                                <button type="button" class="btn-outline w-full justify-center" id="backBtn2">Back</button>
-                                <button type="submit" class="btn-primary w-full justify-center" id="submitBtn">
-                                    <span>Request Access</span>
-                                    <svg class="loader-icon hidden spin ml-2" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>
+                                <button type="button" class="btn-outline w-full" id="backBtn2">&larr; BACK</button>
+                                <button type="submit" class="btn-primary w-full flex justify-center align-center" id="submitBtn">
+                                    <span>EXECUTE</span>
+                                    <span class="loader-text hidden ml-2 blink">_PROCESSING</span>
                                 </button>
                             </div>
                         </div>
 
-                        <p id="formStatus" class="form-status text-sm text-left mt-4 hidden" role="status" aria-live="polite"></p>
+                        <p id="formStatus" class="mono-text mt-6 hidden text-center bg-dark text-white p-3 radius-sm" role="status"></p>
 
                         <!-- Success State -->
-                        <div class="form-step hidden text-center py-8" id="step-success">
-                            <div class="success-icon inline-flex align-center justify-center w-16 h-16 rounded-full bg-surface border border-glass mb-6">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--status-success)" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            </div>
-                            <h3 class="mb-2">Intelligence Request Received.</h3>
-                            <p class="text-muted text-sm">We are checking category availability. You will receive an email response in 48 hours.</p>
+                        <div class="form-step hidden text-center py-8 fade-in" id="step-success">
+                            <div class="text-3xl mb-6">&#x2713;</div>
+                            <h3 class="mb-4">Request Received.</h3>
+                            <p class="text-body text-muted">Awaiting category verification. Expected response interval: 48 hours.</p>
                         </div>
                     </form>
                 </div>
@@ -392,21 +322,21 @@
     </main>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer py-8 border-t bg-surface">
         <div class="container">
-            <div class="flex flex-wrap justify-between align-center gap-8 mb-8">
-                <div class="logo">ideafridge<span class="text-accent">.</span></div>
-                <div class="footer-links flex gap-6 text-sm">
-                    <a href="#engine">Product</a>
-                    <a href="#use-cases">Use Cases</a>
-                    <a href="#pricing">Pricing</a>
+            <div class="flex flex-wrap justify-between align-center gap-8 mb-8 border-b pb-8">
+                <div class="logo font-bold">Ideafridge.</div>
+                <div class="footer-links flex gap-6 mono-text">
+                    <a href="#engine" class="nav-item">ENGINE</a>
+                    <a href="#use-cases" class="nav-item">TARGETS</a>
+                    <a href="#pricing" class="nav-item">CONFIG</a>
                 </div>
             </div>
-            <div class="flex flex-wrap justify-between align-center gap-4 text-xs pt-8 border-t border-glass">
-                <p>Ideafridge Intelligence &copy; 2026. Narratives deployed.</p>
+            <div class="flex flex-wrap justify-between align-center gap-4 mono-text text-muted text-xs">
+                <p>&copy; 2026 IDEAFRIDGE MEDIA, INC. ALL SYSTEMS NOMINAL.</p>
                 <div class="legal-links flex gap-6">
-                    <a href="privacy.html">Privacy Protocol</a>
-                    <a href="terms.html">Terms of Service</a>
+                    <a href="privacy.html" class="nav-item">PRIVACY PROTOCOL</a>
+                    <a href="terms.html" class="nav-item">TERMS OF SERVICE</a>
                 </div>
             </div>
         </div>
@@ -415,7 +345,3 @@
     <script src="script.js" defer></script>
 </body>
 </html>
-
-
-
-

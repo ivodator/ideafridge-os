@@ -2,363 +2,181 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Protocol | Ideafridge Narrative GTM</title>
-    <meta name="description" content="Ideafridge Privacy Protocol - how we collect, process, and protect your data in accordance with PIPEDA and BC PIPA.">
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-    <meta name="author" content="Ideafridge">
-    <meta name="referrer" content="strict-origin-when-cross-origin">
-    <meta name="theme-color" content="#030303">
-    <link rel="canonical" href="https://ideafridge.com/privacy.html">
-    <link rel="sitemap" type="application/xml" href="https://ideafridge.com/sitemap.xml">
-    <link rel="alternate" type="text/plain" href="https://ideafridge.com/llms.txt" title="LLMs profile">
-    <link rel="manifest" href="site.webmanifest">
-
-    <meta property="og:type" content="article">
-    <meta property="og:site_name" content="Ideafridge">
-    <meta property="og:title" content="Privacy Protocol | Ideafridge">
-    <meta property="og:description" content="How Ideafridge collects, uses, and protects data under PIPEDA and BC PIPA.">
-    <meta property="og:url" content="https://ideafridge.com/privacy.html">
-    <meta property="og:image" content="https://ideafridge.com/og-image.svg">
-    <meta property="og:image:alt" content="Ideafridge privacy protocol">
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Privacy Protocol | Ideafridge">
-    <meta name="twitter:description" content="How Ideafridge collects, uses, and protects data under PIPEDA and BC PIPA.">
-    <meta name="twitter:image" content="https://ideafridge.com/og-image.svg">
-
-    <!-- Typography -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Privacy Protocol | Ideafridge</title>
+    <meta name="description" content="Privacy policy and data protection protocol for Ideafridge.">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='none' stroke='%235E6AD2' stroke-width='8'/><circle cx='50' cy='50' r='15' fill='%235E6AD2'/></svg>">
-
-    <!-- Legal-specific CSS -->
-    <link rel="preload" href="legal.css" as="style">
-    <link rel="stylesheet" href="legal.css">
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "name": "Privacy Protocol",
-      "url": "https://ideafridge.com/privacy.html",
-      "description": "Ideafridge Privacy Protocol and data handling standards.",
-      "isPartOf": {
-        "@type": "WebSite",
-        "name": "Ideafridge",
-        "url": "https://ideafridge.com/"
-      },
-      "inLanguage": "en"
-    }
-    </script>
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23050505'/><path d='M32 32 H44 M32 32 V44 M68 32 H56 M68 32 V44 M32 68 H44 M32 68 V56 M68 68 H56 M68 68 V56' stroke='%23F5F5F7' stroke-width='5' stroke-linecap='square' fill='none'/><circle cx='50' cy='50' r='5' fill='%23F5F5F7'/></svg>">
 </head>
 <body>
-    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <a class="skip-link visually-hidden" href="#main-content">Skip to main content</a>
 
-    <!-- Environment Effects -->
-    <div class="noise-overlay"></div>
-    <div class="grid-background"></div>
-    <div class="ambient-glow origin-top"></div>
+    <div class="blueprint-grid"></div>
 
-    <!-- Navigation -->
-    <nav class="navbar" aria-label="Legal page navigation">
+    <!-- Navigation matched to Index -->
+    <nav class="navbar border-b" aria-label="Primary">
         <div class="container nav-container">
-            <div class="logo-container">
-                <a href="index.html" class="logo">ideafridge<span class="dot">.</span></a>
-                <div class="beta-tag">STRATEGY V.1.0</div>
+            <div class="flex align-center gap-4">
+                <a href="index.html" class="logo">Ideafridge.</a>
+                <div class="badge hide-mobile">SYS.V2</div>
             </div>
-            <a href="index.html" class="btn-nav">Back to System</a>
+
+            <button type="button" class="mobile-menu-btn" aria-label="Toggle Navigation" aria-expanded="false" aria-controls="primary-navigation">
+                <span></span><span></span><span></span>
+            </button>
+
+            <div class="nav-links" id="primary-navigation" aria-hidden="false">
+                <a href="index.html#engine" class="nav-item">REF.01 / ENGINE</a>
+                <a href="index.html#use-cases" class="nav-item">REF.02 / TARGETS</a>
+                <a href="index.html#pricing" class="nav-item">REF.03 / CONFIG</a>
+                <a href="index.html#apply" class="btn-primary nav-btn">INITIATE SEQUENCE &rarr;</a>
+            </div>
         </div>
     </nav>
 
-    <main class="page-wrap" id="main-content">
-        <header class="doc-header reveal">
-            <div class="doc-eyebrow mono-text text-accent mb-4">LEGAL PROTOCOL // PRIVACY</div>
-            <h1 class="doc-title mb-6">Privacy Protocol.</h1>
-            <p class="doc-subtitle text-lg text-muted mb-8">
-                This document governs how Ideafridge collects, processes, retains, and protects your data. We treat your information with the same strategic precision we apply to your market narrative.
-            </p>
+    <main id="main-content" class="section">
+        <div class="container max-w-2xl mx-auto pt-16">
+            <div class="mono-text text-muted mb-4">LEGAL_PROTOCOL // 01</div>
+            <h1 class="mb-12">PRIVACY PROTOCOL</h1>
             
-            <div class="doc-meta glass-card">
-                <div class="doc-meta-item">
-                    <span class="doc-meta-label mono-text text-muted text-xs">EFFECTIVE DATE</span>
-                    <time class="doc-meta-value font-medium mt-1 block" datetime="2026-01-01">January 1, 2026</time>
-                </div>
-                <div class="doc-meta-item">
-                    <span class="doc-meta-label mono-text text-muted text-xs">LAST UPDATED</span>
-                    <time class="doc-meta-value font-medium mt-1 block" datetime="2026-03-03">March 3, 2026</time>
-                </div>
-                <div class="doc-meta-item">
-                    <span class="doc-meta-label mono-text text-muted text-xs">JURISDICTION</span>
-                    <span class="doc-meta-value font-medium mt-1 block">British Columbia, Canada</span>
-                </div>
-                <div class="doc-meta-item">
-                    <span class="doc-meta-label mono-text text-muted text-xs">ENTITY</span>
-                    <span class="doc-meta-value font-medium mt-1 block">Idea Fridge Media, Inc.</span>
-                </div>
-            </div>
-        </header>
-
-        <nav class="toc glass-card reveal delay-1 mb-16 mt-12">
-            <div class="toc-title mono-text text-muted text-xs mb-4">// TABLE OF CONTENTS</div>
-            <ol>
-                <li><a href="#s1">Scope & Who This Applies To</a></li>
-                <li><a href="#s2">Information We Collect</a></li>
-                <li><a href="#s3">How We Use Your Information</a></li>
-                <li><a href="#s4">Legal Bases for Processing</a></li>
-                <li><a href="#s5">Data Sharing & Third Parties</a></li>
-                <li><a href="#s6">Data Retention</a></li>
-                <li><a href="#s7">Your Rights</a></li>
-                <li><a href="#s8">Security Architecture</a></li>
-                <li><a href="#s9">Cookies & Tracking</a></li>
-                <li><a href="#s10">Children's Privacy</a></li>
-                <li><a href="#s11">International Data Transfers</a></li>
-                <li><a href="#s12">Changes to This Policy</a></li>
-                <li><a href="#s13">Contact the Data Controller</a></li>
-            </ol>
-        </nav>
-
-        <section id="s1" class="doc-section reveal">
-            <span class="section-anchor mono-text text-muted">// 01</span>
-            <h2 class="section-title mb-6">Scope & Who This Applies To</h2>
-            <div class="doc-body">
-                <p>This Privacy Protocol ("Policy") applies to all individuals and entities who interact with Idea Fridge Media, Inc. ("Ideafridge," "we," "our," or "us") — including visitors to our website, prospective clients, and active partners subscribed to any tier of the Narrative GTM platform.</p>
-                <p>Ideafridge is incorporated and operates from British Columbia, Canada. This Policy is governed by Canada's <strong>Personal Information Protection and Electronic Documents Act (PIPEDA)</strong> and British Columbia's <strong>Personal Information Protection Act (PIPA)</strong>. Where we serve clients in other jurisdictions, we apply these Canadian standards as our baseline and comply with applicable local requirements.</p>
-                <p>This Policy does not apply to the content your organization creates or deploys through the platform. That content is governed by your Subscription Agreement.</p>
+            <div class="legal-content">
+                <p class="mono-text text-muted mb-8">EFFECTIVE DATE: JAN 2026 // LAST UPDATED: MAR 2026 // JURISDICTION: BC, CANADA</p>
                 
-                <div class="def-box glass-card mt-6">
-                    <p class="m-0"><strong>"Personal Information"</strong> means any information about an identifiable individual — including name, business email address, job title, IP address, usage data, and communications metadata — as defined under PIPEDA and BC PIPA.</p>
-                </div>
-            </div>
-        </section>
+                <p class="text-muted mb-6">This Privacy Protocol ("Policy") governs how Ideafridge collects, processes, retains, and protects your data. We treat your information with the same strategic precision we apply to your market narrative.</p>
 
-        <div class="section-divider"></div>
+                <h3 class="mb-4 mt-8">01. SCOPE & WHO THIS APPLIES TO</h3>
+                <p class="text-muted mb-6">This Privacy Protocol applies to all individuals and entities who interact with Idea Fridge Media, Inc. ("Ideafridge," "we," "our," or "us") — including visitors to our website, prospective clients, and active partners subscribed to any tier of the Narrative GTM platform.</p>
+                <p class="text-muted mb-6">Ideafridge is incorporated and operates from British Columbia, Canada. This Policy is governed by Canada's Personal Information Protection and Electronic Documents Act (PIPEDA) and British Columbia's Personal Information Protection Act (PIPA). Where we serve clients in other jurisdictions, we apply these Canadian standards as our baseline and comply with applicable local requirements.</p>
+                <p class="text-muted mb-6">This Policy does not apply to the content your organization creates or deploys through the platform. That content is governed by your Subscription Agreement.</p>
+                <p class="text-muted mb-6">"Personal Information" means any information about an identifiable individual — including name, business email address, job title, IP address, usage data, and communications metadata — as defined under PIPEDA and BC PIPA.</p>
 
-        <section id="s2" class="doc-section reveal">
-            <span class="section-anchor mono-text text-muted">// 02</span>
-            <h2 class="section-title mb-6">Information We Collect</h2>
-            <div class="doc-body">
-                <p>We collect information in two primary ways: data you provide directly, and data we collect automatically as you interact with our platform.</p>
+                <h3 class="mb-4 mt-8">02. INFORMATION WE COLLECT</h3>
+                <p class="text-muted mb-6">We collect information in two primary ways: data you provide directly, and data we collect automatically as you interact with our platform.</p>
                 
-                <p class="mt-6"><strong>Information you provide directly:</strong></p>
-                <ul class="feature-list mb-6">
+                <p class="text-muted mb-2 font-bold">Information you provide directly:</p>
+                <ul class="feature-list mono-text text-muted mb-6">
                     <li>Work email address and professional contact information</li>
                     <li>Company name, industry category, and GTM team size</li>
                     <li>Communications exchanged as part of service delivery</li>
                     <li>Content inputs shared for narrative intelligence processing (e.g., transcripts, messaging briefs)</li>
                     <li>Billing and payment information, processed via PCI-DSS compliant partners</li>
                 </ul>
-
-                <p><strong>Information collected automatically:</strong></p>
-                <ul class="feature-list mb-6">
+                
+                <p class="text-muted mb-2 font-bold">Information collected automatically:</p>
+                <ul class="feature-list mono-text text-muted mb-6">
                     <li>IP address, browser type, and device identifiers</li>
                     <li>Pages visited and interaction patterns on ideafridge.com</li>
                     <li>Timestamps of logins and platform actions</li>
                 </ul>
+                
+                <p class="mono-text text-muted mb-6"><strong>// IMPORTANT NOTE:</strong> We do not purchase third-party marketing lists. We do not collect data from social media platforms without your explicit authorization. We do not collect sensitive personal data (as defined under GDPR Article 9) through our standard intake processes.</p>
 
-                <div class="alert-box glass-card mt-8">
-                    <span class="alert-label mono-text text-gold text-xs block mb-2">// IMPORTANT NOTE</span>
-                    <p class="text-sm m-0">We do not purchase third-party marketing lists. We do not collect data from social media platforms without your explicit authorization. We do not collect sensitive personal data (as defined under GDPR Article 9) through our standard intake processes.</p>
-                </div>
-            </div>
-        </section>
-
-        <div class="section-divider"></div>
-
-        <section id="s3" class="doc-section reveal">
-            <span class="section-anchor mono-text text-muted">// 03</span>
-            <h2 class="section-title mb-6">How We Use Your Information</h2>
-            <div class="doc-body">
-                <p>We use your information for the following purposes, each tied to a legitimate operational need:</p>
-                <ul class="feature-list mt-6">
+                <h3 class="mb-4 mt-8">03. HOW WE USE YOUR INFORMATION</h3>
+                <p class="text-muted mb-6">We use your information for the following purposes, each tied to a legitimate operational need:</p>
+                <ul class="feature-list mono-text text-muted mb-6">
                     <li><strong>Service delivery:</strong> To onboard, configure, and operate your Narrative GTM engagement.</li>
                     <li><strong>Communication:</strong> To send operational updates and Weekly Briefs. We do not send unsolicited promotional emails.</li>
                     <li><strong>Availability verification:</strong> To confirm that no conflicting Client in your category is currently under exclusivity.</li>
-                    <li><strong>Security and fraud prevention:</strong> To detect and prevent unauthorized access or spam submissions.</li>
+                    <li><strong>Security & fraud prevention:</strong> To detect and prevent unauthorized access or spam submissions.</li>
                     <li><strong>Platform improvement:</strong> Aggregated and anonymized usage data may be used to refine deployment cycle performance.</li>
                 </ul>
-            </div>
-        </section>
 
-        <div class="section-divider"></div>
-
-        <section id="s4" class="doc-section reveal">
-            <span class="section-anchor mono-text text-muted">// 04</span>
-            <h2 class="section-title mb-6">Legal Bases for Processing</h2>
-            <div class="doc-body">
-                <p>Under PIPEDA and BC PIPA, Ideafridge collects, uses, and discloses Personal Information only with your knowledge and consent, except where the law permits otherwise. Our processing is grounded in the following PIPEDA accountability principles:</p>
-                <ul class="feature-list mt-6 mb-6">
+                <h3 class="mb-4 mt-8">04. LEGAL BASES FOR PROCESSING</h3>
+                <p class="text-muted mb-6">Under PIPEDA and BC PIPA, Ideafridge collects, uses, and discloses Personal Information only with your knowledge and consent, except where the law permits otherwise. Our processing is grounded in the following PIPEDA accountability principles:</p>
+                <ul class="feature-list mono-text text-muted mb-6">
                     <li><strong>Consent:</strong> We obtain meaningful consent before or at the time of collection.</li>
                     <li><strong>Contractual necessity:</strong> Processing required to deliver services under your active Subscription Agreement.</li>
                     <li><strong>Legitimate business purposes:</strong> Security, fraud prevention, and platform improvement.</li>
                     <li><strong>Legal obligation:</strong> Processing required to comply with applicable Canadian tax and reporting law.</li>
                 </ul>
-                
-                <div class="alert-box glass-card mt-8" style="border-left-color: var(--accent-light); background: rgba(165, 180, 252, 0.05);">
-                    <span class="alert-label mono-text text-light text-xs block mb-2">// NOTE FOR US & UK CLIENTS</span>
-                    <p class="text-sm m-0">If you are located in the United States or the United Kingdom, your Personal Information is processed in Canada under Canadian privacy law. Canada is recognized by the UK as providing an adequate level of data protection.</p>
-                </div>
-            </div>
-        </section>
+                <p class="mono-text text-muted mb-6"><strong>// NOTE FOR US & UK CLIENTS:</strong> If you are located in the United States or the United Kingdom, your Personal Information is processed in Canada under Canadian privacy law. Canada is recognized by the UK as providing an adequate level of data protection.</p>
 
-        <div class="section-divider"></div>
-
-        <section id="s5" class="doc-section reveal">
-            <span class="section-anchor mono-text text-muted">// 05</span>
-            <h2 class="section-title mb-6">Data Sharing & Third Parties</h2>
-            <div class="doc-body">
-                <p>Ideafridge does not sell, rent, or trade your Personal Data. Data is disclosed only in the following limited circumstances:</p>
-                <ul class="feature-list mt-6 mb-6">
+                <h3 class="mb-4 mt-8">05. DATA SHARING & THIRD PARTIES</h3>
+                <p class="text-muted mb-6">Ideafridge does not sell, rent, or trade your Personal Data. Data is disclosed only in the following limited circumstances:</p>
+                <ul class="feature-list mono-text text-muted mb-6">
                     <li><strong>Service providers:</strong> Cloud hosting, payment processing, and analytics vendors bound by strict DPAs.</li>
                     <li><strong>Professional advisors:</strong> Legal counsel and auditors bound by confidentiality.</li>
                     <li><strong>Business transfers:</strong> In the event of an acquisition or asset sale (with prior notice).</li>
                     <li><strong>Legal requirements:</strong> Where required by law, subpoena, or court order.</li>
                 </ul>
-            </div>
-        </section>
 
-        <div class="section-divider"></div>
-
-        <section id="s6" class="doc-section reveal">
-            <span class="section-anchor mono-text text-muted">// 06</span>
-            <h2 class="section-title mb-6">Data Retention</h2>
-            <div class="doc-body">
-                <p>We retain your Personal Information only for as long as necessary to fulfill the purposes outlined in this Policy, or as required by applicable Canadian law.</p>
-                <ul class="feature-list mt-6">
+                <h3 class="mb-4 mt-8">06. DATA RETENTION</h3>
+                <p class="text-muted mb-6">We retain your Personal Information only for as long as necessary to fulfill the purposes outlined in this Policy, or as required by applicable Canadian law.</p>
+                <ul class="feature-list mono-text text-muted mb-6">
                     <li><strong>Active Client data:</strong> Retained for the duration of the Subscription and for 36 months following termination.</li>
                     <li><strong>Prospect data:</strong> Retained for 12 months from date of submission.</li>
                     <li><strong>Billing records:</strong> Retained for a minimum of 7 years in accordance with tax requirements.</li>
                     <li><strong>Security logs:</strong> Retained for 90 days.</li>
                 </ul>
-                <p class="mt-4">Upon expiration, data is either securely deleted or irreversibly anonymized.</p>
-            </div>
-        </section>
+                <p class="text-muted mb-6">Upon expiration, data is either securely deleted or irreversibly anonymized.</p>
 
-        <div class="section-divider"></div>
+                <h3 class="mb-4 mt-8">07. YOUR RIGHTS</h3>
+                <p class="text-muted mb-6">Under PIPEDA and BC PIPA, you have the right to access, correct, or withdraw consent regarding your Personal Information. We respond to verifiable requests within 30 calendar days.</p>
+                <p class="text-muted mb-6">To exercise any of these rights, contact us at privacy@ideafridge.com. We may require verification of your identity.</p>
+                <p class="mono-text text-muted mb-6"><strong>// SUPERVISORY AUTHORITIES:</strong> If unsatisfied with our response, you may file a complaint with the Office of the Privacy Commissioner of Canada (OPC) or the Office of the Information and Privacy Commissioner for BC (OIPC).</p>
 
-        <section id="s7" class="doc-section reveal">
-            <span class="section-anchor mono-text text-muted">// 07</span>
-            <h2 class="section-title mb-6">Your Rights</h2>
-            <div class="doc-body">
-                <p>Under PIPEDA and BC PIPA, you have the right to access, correct, or withdraw consent regarding your Personal Information. We respond to verifiable requests within 30 calendar days.</p>
-                <p>To exercise any of these rights, contact us at <strong><a href="mailto:privacy@ideafridge.com" class="text-light">privacy@ideafridge.com</a></strong>. We may require verification of your identity.</p>
-                
-                <div class="alert-box glass-card mt-8">
-                    <span class="alert-label mono-text text-gold text-xs block mb-2">// SUPERVISORY AUTHORITIES</span>
-                    <p class="text-sm m-0">If unsatisfied with our response, you may file a complaint with the Office of the Privacy Commissioner of Canada (OPC) or the Office of the Information and Privacy Commissioner for BC (OIPC).</p>
-                </div>
-            </div>
-        </section>
-
-        <div class="section-divider"></div>
-
-        <section id="s8" class="doc-section reveal">
-            <span class="section-anchor mono-text text-muted">// 08</span>
-            <h2 class="section-title mb-6">Security Architecture</h2>
-            <div class="doc-body">
-                <p>We implement robust technical and organizational measures to protect your data:</p>
-                <ul class="feature-list mt-6 mb-6">
+                <h3 class="mb-4 mt-8">08. SECURITY ARCHITECTURE</h3>
+                <p class="text-muted mb-6">We implement robust technical and organizational measures to protect your data:</p>
+                <ul class="feature-list mono-text text-muted mb-6">
                     <li>Encryption of data in transit (TLS 1.2+) and at rest (AES-256)</li>
                     <li>Strict role-based access controls</li>
                     <li>Regular vulnerability assessments</li>
                     <li>Documented incident response procedures</li>
                 </ul>
-                <div class="warning-box glass-card mt-8">
-                    <span class="warning-label mono-text text-error text-xs block mb-2">// LIMITATION</span>
-                    <p class="text-sm m-0 text-muted">No security system is impenetrable. We cannot guarantee absolute security of data transmitted over the internet.</p>
-                </div>
+                <p class="mono-text text-muted mb-6"><strong>// LIMITATION:</strong> No security system is impenetrable. We cannot guarantee absolute security of data transmitted over the internet.</p>
+
+                <h3 class="mb-4 mt-8">09. COOKIES & TRACKING</h3>
+                <p class="text-muted mb-6">We do not use advertising cookies or cross-site tracking pixels. Our tracking is limited to strictly necessary session cookies and anonymized analytics cookies (deployed only with consent where required).</p>
+
+                <h3 class="mb-4 mt-8">10. CHILDREN'S PRIVACY</h3>
+                <p class="text-muted mb-6">Ideafridge is a B2B platform. Our services are not directed to, and we do not knowingly collect Personal Data from, individuals under the age of 16.</p>
+
+                <h3 class="mb-4 mt-8">11. INTERNATIONAL DATA TRANSFERS</h3>
+                <p class="text-muted mb-6">While Ideafridge processes data primarily in Canada, some third-party sub-processors may operate in the United States or elsewhere. We require that all processors apply protections substantially equivalent to PIPEDA standards.</p>
+
+                <h3 class="mb-4 mt-8">12. CHANGES TO THIS POLICY</h3>
+                <p class="text-muted mb-6">We reserve the right to update this Privacy Protocol. Material changes will be communicated via email or prominent platform notices. Continued use of our services constitutes acceptance of the updated Policy.</p>
+
+                <h3 class="mb-4 mt-8">13. CONTACT THE DATA CONTROLLER</h3>
+                <p class="text-muted mb-6">If you have questions or wish to exercise your data rights, reach us here:</p>
+                <p class="mono-text text-muted mb-6">
+                    <strong>// PRIVACY OFFICE</strong><br>
+                    Idea Fridge Media, Inc. (BC, Canada)<br>
+                    Email: privacy@ideafridge.com<br>
+                    Subject line: "Privacy Request — [Your Name]"<br><br>
+                    We target a response time of 5 business days for all initial inquiries.
+                </p>
             </div>
-        </section>
-
-        <div class="section-divider"></div>
-
-        <section id="s9" class="doc-section reveal">
-            <span class="section-anchor mono-text text-muted">// 09</span>
-            <h2 class="section-title mb-6">Cookies & Tracking</h2>
-            <div class="doc-body">
-                <p>We do not use advertising cookies or cross-site tracking pixels. Our tracking is limited to strictly necessary session cookies and anonymized analytics cookies (deployed only with consent where required).</p>
-            </div>
-        </section>
-
-        <div class="section-divider"></div>
-
-        <section id="s10" class="doc-section reveal">
-            <span class="section-anchor mono-text text-muted">// 10</span>
-            <h2 class="section-title mb-6">Children's Privacy</h2>
-            <div class="doc-body">
-                <p>Ideafridge is a B2B platform. Our services are not directed to, and we do not knowingly collect Personal Data from, individuals under the age of 16.</p>
-            </div>
-        </section>
-
-        <div class="section-divider"></div>
-
-        <section id="s11" class="doc-section reveal">
-            <span class="section-anchor mono-text text-muted">// 11</span>
-            <h2 class="section-title mb-6">International Data Transfers</h2>
-            <div class="doc-body">
-                <p>While Ideafridge processes data primarily in Canada, some third-party sub-processors may operate in the United States or elsewhere. We require that all processors apply protections substantially equivalent to PIPEDA standards.</p>
-            </div>
-        </section>
-
-        <div class="section-divider"></div>
-
-        <section id="s12" class="doc-section reveal">
-            <span class="section-anchor mono-text text-muted">// 12</span>
-            <h2 class="section-title mb-6">Changes to This Policy</h2>
-            <div class="doc-body">
-                <p>We reserve the right to update this Privacy Protocol. Material changes will be communicated via email or prominent platform notices. Continued use of our services constitutes acceptance of the updated Policy.</p>
-            </div>
-        </section>
-
-        <div class="section-divider"></div>
-
-        <section id="s13" class="doc-section reveal mb-16">
-            <span class="section-anchor mono-text text-muted">// 13</span>
-            <h2 class="section-title mb-6">Contact the Data Controller</h2>
-            <div class="doc-body">
-                <p class="mb-6">If you have questions or wish to exercise your data rights, reach us here:</p>
-                
-                <div class="contact-block glass-card flex align-start gap-6">
-                    <div class="contact-icon text-3xl">🔒</div>
-                    <div>
-                        <span class="contact-label mono-text text-accent text-xs block mb-2">// PRIVACY OFFICE</span>
-                        <h4 class="mb-4 text-white">Idea Fridge Media, Inc. (BC, Canada)</h4>
-                        <p class="text-sm text-muted">
-                            Email: <a href="mailto:privacy@ideafridge.com" class="text-light">privacy@ideafridge.com</a><br>
-                            Subject line: <span class="text-white">"Privacy Request — [Your Name]"</span><br><br>
-                            We target a response time of <strong>5 business days</strong> for all initial inquiries.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
+        </div>
     </main>
 
-    <footer class="footer border-t border-glass py-12">
-        <div class="container max-w-4xl mx-auto">
-            <div class="flex flex-wrap justify-between align-center gap-8 mb-8">
-                <div class="logo">ideafridge<span class="text-accent">.</span></div>
-                <div class="footer-links flex gap-6 text-sm">
-                    <a href="index.html">Back to System</a>
+    <!-- Footer matched to Index -->
+    <footer class="footer py-8 border-t bg-surface">
+        <div class="container">
+            <div class="flex flex-wrap justify-between align-center gap-8 mb-8 border-b pb-8">
+                <div class="logo font-bold">Ideafridge.</div>
+                <div class="footer-links flex gap-6 mono-text">
+                    <a href="index.html#engine" class="nav-item">ENGINE</a>
+                    <a href="index.html#use-cases" class="nav-item">TARGETS</a>
+                    <a href="index.html#pricing" class="nav-item">CONFIG</a>
                 </div>
             </div>
-            <div class="flex flex-wrap justify-between align-center gap-4 text-xs pt-8 border-t border-glass">
-                <p class="text-dark m-0">&copy; 2026 Ideafridge Narrative GTM. All rights reserved.</p>
+            <div class="flex flex-wrap justify-between align-center gap-4 mono-text text-muted text-xs">
+                <p>&copy; 2026 IDEAFRIDGE MEDIA, INC. ALL SYSTEMS NOMINAL.</p>
                 <div class="legal-links flex gap-6">
-                    <a href="privacy.html" class="text-white font-medium">Privacy Protocol</a>
-                    <a href="terms.html" class="text-muted hover:text-white">Terms of Service</a>
+                    <a href="privacy.html" class="nav-item">PRIVACY PROTOCOL</a>
+                    <a href="terms.html" class="nav-item">TERMS OF SERVICE</a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- JS -->
-    <script src="legal.js" defer></script>
+    <script src="script.js"></script>
 </body>
 </html>
-
-
-
