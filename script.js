@@ -93,7 +93,6 @@ async function submitLeadToEndpoint(payload, signal) {
 document.addEventListener('DOMContentLoaded', () => {
     initScrollReveals();
     initMobileMenu();
-    initPricingCalculator();
     initMultiStepForm();
 });
 
@@ -175,99 +174,7 @@ function initMobileMenu() {
 }
 
 /* ==========================================================================
-   3. PRICING CALCULATOR
-   ========================================================================== */
-function initPricingCalculator() {
-    const slider = document.getElementById('repSlider');
-    const display = document.getElementById('repCountDisplay');
-    const tierName = document.getElementById('tierName');
-    const tierDesc = document.getElementById('tierDesc');
-    const tierBadge = document.getElementById('tierBadge');
-    const featuresList = document.getElementById('tierFeatures');
-    const featuresContainer = document.getElementById('featuresContainer');
-
-    if (!slider || !display || !tierName || !tierDesc || !tierBadge || !featuresList || !featuresContainer) return;
-
-    const planData = {
-        signal: {
-            name: 'SIGNAL_PLAN',
-            desc: 'Early Series A/B vendors. Establish baseline signal response capability.',
-            badge: 'SPEC: 01 // ENTRY',
-            features:[
-                'Continuous Signal Monitoring',
-                'Signal Response Media Production',
-                'SDR Outbound Clips',
-                'LinkedIn Carousel Assets',
-                'Founder Commentary Media',
-                'Monthly Signal Briefing'
-            ]
-        },
-        strike: {
-            name: 'STRIKE_PLAN',
-            desc: 'Scaling Series B vendors. The full signal-driven GTM engine.',
-            badge: 'SPEC: 02 // RECOMMENDED',
-            features:[
-                'Continuous Signal Monitoring',
-                'Rapid Signal Response Production',
-                'Outbound Media Library for SDRs',
-                'Competitor Narrative Breakdowns',
-                'Carousel Distribution Assets',
-                'Weekly Intelligence Sync'
-            ]
-        },
-        command: {
-            name: 'COMMAND_PLAN',
-            desc: 'Late-stage vendors. Full narrative coverage.',
-            badge: 'SPEC: 03 // ENTERPRISE',
-            features:[
-                'Priority Signal Monitoring',
-                'Rapid Response Media Production',
-                'Outbound Video Libraries',
-                'Executive Market Briefings',
-                'Narrative Strategy Support',
-                'Category Positioning Support'
-            ]
-        }
-    };
-
-    let currentPlan = '';
-
-    const renderFeatures = (features) => {
-        const fragment = document.createDocumentFragment();
-        features.forEach((feature) => {
-            const listItem = document.createElement('li');
-            listItem.textContent = feature;
-            fragment.appendChild(listItem);
-        });
-        return fragment;
-    };
-
-    const updateCalculator = (value) => {
-        const reps = parseInt(value, 10) || 1;
-        display.textContent = String(reps).padStart(2, '0');
-
-        let planKey = reps <= 5 ? 'signal' : reps <= 25 ? 'strike' : 'command';
-
-        if (planKey !== currentPlan) {
-            const plan = planData[planKey];
-            featuresContainer.style.opacity = '0';
-            setTimeout(() => {
-                tierName.textContent = plan.name;
-                tierDesc.textContent = plan.desc;
-                tierBadge.textContent = plan.badge;
-                featuresList.replaceChildren(renderFeatures(plan.features));
-                featuresContainer.style.opacity = '1';
-            }, 150);
-            currentPlan = planKey;
-        }
-    };
-
-    updateCalculator(slider.value);
-    slider.addEventListener('input', (e) => updateCalculator(e.target.value));
-}
-
-/* ==========================================================================
-   4. MULTI-STEP CONVERSION FORM
+   3. MULTI-STEP CONVERSION FORM
    ========================================================================== */
 function initMultiStepForm() {
     const steps =[
