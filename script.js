@@ -125,8 +125,8 @@
 
   // ── Supabase config ──────────────────────────────────────────────────────
   var SUPABASE_URL = "https://itfjnqmwfjhptcopfacd.supabase.co";
-  // Dashboard → Project Settings → API → Project API keys → `anon` `public`.
-  // Paste that key (a long string starting with "eyJ…") between the quotes:
+  // Dashboard → Project Settings → API Keys → Publishable key. Legacy anon
+  // JWT keys also work, but sb_publishable_ keys must not be sent as Bearer JWTs.
   var SUPABASE_ANON_KEY = "sb_publishable_a7UeootOqf0KFd9rrroytQ_dbTSqNOg";
   var LEADS_TABLE = "leads";
   // The object inserted (see body below) sends { email, source }. Those column
@@ -186,17 +186,25 @@
       var controller = ("AbortController" in window) ? new AbortController() : null;
       var timeout = controller ? setTimeout(function () { controller.abort(); }, 12000) : null;
 
+      var headers = {
+        "apikey": SUPABASE_ANON_KEY,
+        "Content-Type": "application/json",
+        // return=minimal is REQUIRED with insert-only RLS: it stops PostgREST
+        // from SELECTing the new row back (the anon role can't read it, which
+        // would otherwise make a successful insert look like a failure).
+        "Prefer": "return=minimal"
+      };
+
+      // Legacy anon keys are JWTs and may be sent as Bearer tokens. New
+      // sb_publishable_ keys are not JWTs, so sending them in Authorization
+      // makes the database reject otherwise valid anon requests.
+      if (!/^sb_publishable_/.test(SUPABASE_ANON_KEY)) {
+        headers.Authorization = "Bearer " + SUPABASE_ANON_KEY;
+      }
+
       fetch(LEADS_ENDPOINT, {
         method: "POST",
-        headers: {
-          "apikey": SUPABASE_ANON_KEY,
-          "Authorization": "Bearer " + SUPABASE_ANON_KEY,
-          "Content-Type": "application/json",
-          // return=minimal is REQUIRED with insert-only RLS: it stops PostgREST
-          // from SELECTing the new row back (the anon role can't read it, which
-          // would otherwise make a successful insert look like a failure).
-          "Prefer": "return=minimal"
-        },
+        headers: headers,
         body: JSON.stringify({ email: email, source: "ideafridge.com" }),
         mode: "cors",
         credentials: "omit", // cross-origin to Supabase — never attach cookies
