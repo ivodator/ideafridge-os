@@ -1,332 +1,221 @@
-/**
- * IDEAFRIDGE SIGNAL ENGINE
- * Interaction Logic (Softened Technical Design)
- */
-
-'use strict';
-
-const REQUEST_TIMEOUT_MS = 10000;
-const MOBILE_BREAKPOINT = 768;
-
-function readMeta(name) {
-    return document.querySelector(`meta[name="${name}"]`)?.getAttribute('content')?.trim() || '';
-}
-
-const LEAD_ENDPOINT = (() => {
-    const configured = readMeta('lead-endpoint') || '/api/leads';
-    try {
-        const url = new URL(configured, window.location.origin);
-        const isSecure = window.location.protocol === 'https:' ? url.protocol === 'https:' : true;
-        const isSameOrigin = url.origin === window.location.origin;
-        if (isSecure && isSameOrigin) return `${url.pathname}${url.search}`;
-    } catch (_error) {}
-    return '/api/leads';
-})();
-
-const SUPABASE_CONFIG = (() => {
-    const supabaseUrl = readMeta('supabase-url');
-    const anonKey = readMeta('supabase-anon-key');
-    const table = (readMeta('supabase-table') || 'leads').replace(/[^a-zA-Z0-9_]/g, '');
-
-    if (!supabaseUrl || !anonKey || !table) return { enabled: false };
-    try {
-        const url = new URL(supabaseUrl);
-        const insertUrl = `${url.origin}/rest/v1/${table}`;
-        return { enabled: true, insertUrl, anonKey };
-    } catch (_error) {
-        return { enabled: false };
-    }
-})();
-
-async function submitLead(payload, signal) {
-    if (SUPABASE_CONFIG.enabled) return submitLeadToSupabase(payload, signal);
-    return submitLeadToEndpoint(payload, signal);
-}
-
-async function submitLeadToSupabase(payload, signal) {
-    const response = await fetch(SUPABASE_CONFIG.insertUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-            apikey: SUPABASE_CONFIG.anonKey,
-            Authorization: `Bearer ${SUPABASE_CONFIG.anonKey}`,
-            Prefer: 'return=minimal'
-        },
-        body: JSON.stringify(payload),
-        signal
-    });
-
-    if (!response.ok) {
-        let errorMessage = 'ERR: SECURE TRANSMISSION FAILED.';
-        try {
-            const errorData = await response.json();
-            if (errorData && typeof errorData.message === 'string') errorMessage = errorData.message;
-        } catch (_error) {}
-        throw new Error(errorMessage);
-    }
-    return response;
-}
-
-async function submitLeadToEndpoint(payload, signal) {
-    const response = await fetch(LEAD_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(payload),
-        signal
-    });
-
-    if (!response.ok) {
-        let errorMessage = 'ERR: SECURE TRANSMISSION FAILED.';
-        const contentType = response.headers.get('content-type') || '';
-        if (contentType.includes('application/json')) {
-            try {
-                const errorData = await response.json();
-                if (errorData && typeof errorData.message === 'string') errorMessage = errorData.message;
-            } catch (_error) {}
-        }
-        throw new Error(errorMessage);
-    }
-    return response;
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    initScrollReveals();
-    initMobileMenu();
-    initMultiStepForm();
-});
-
 /* ==========================================================================
-   1. SCROLL REVEALS
+   IDEAFRIDGE — Market Signal Engine (v2 interactions)
+   Vanilla JS, zero dependencies, CSP-safe (external file, no eval/inline).
+   Respects prefers-reduced-motion throughout.
    ========================================================================== */
-function initScrollReveals() {
-    const reveals = document.querySelectorAll('.reveal, .fade-in');
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+(function () {
+  "use strict";
 
-    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
-        reveals.forEach((el) => el.classList.add('active'));
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- footer year ---------- */
+  var yearEl = document.getElementById("year");
+  if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+  /* ---------- scroll reveal ---------- */
+  var reveals = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
+  function showAll() { reveals.forEach(function (el) { el.classList.add("in"); }); }
+  var revealObs = null;
+  if (reduceMotion || !("IntersectionObserver" in window)) {
+    showAll();
+  } else {
+    revealObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in");
+          revealObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+    reveals.forEach(function (el) { revealObs.observe(el); });
+  }
+
+  /* ---------- decode effect on REF labels (terminal vernacular, used once per label) ---------- */
+  var GLYPHS = "▓▒░/\\|<>_—01";
+  function decode(el) {
+    var finalText = el.getAttribute("data-final");
+    var len = finalText.length;
+    var frame = 0;
+    var totalFrames = Math.min(26, 8 + len);
+    function step() {
+      frame++;
+      var resolved = Math.floor((frame / totalFrames) * len);
+      var out = "";
+      for (var i = 0; i < len; i++) {
+        var ch = finalText.charAt(i);
+        if (i < resolved || ch === " " || ch === "/" || ch === ".") out += ch;
+        else out += GLYPHS.charAt(Math.floor(Math.random() * GLYPHS.length));
+      }
+      el.textContent = out;
+      if (frame < totalFrames) requestAnimationFrame(step);
+      else el.textContent = finalText;
+    }
+    requestAnimationFrame(step);
+  }
+  var decodes = Array.prototype.slice.call(document.querySelectorAll("[data-decode]"));
+  decodes.forEach(function (el) { el.setAttribute("data-final", el.textContent); });
+  if (!reduceMotion && "IntersectionObserver" in window) {
+    var decodeObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          decode(entry.target);
+          decodeObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.6 });
+    decodes.forEach(function (el) { decodeObs.observe(el); });
+  }
+
+  /* ---------- rotating readout under the FIG.01 schematic ---------- */
+  var SIGNALS = [
+    "DETECTED: COMPETITOR WEBINAR\u00A0\u00A014:02",
+    "DETECTED: REGULATORY CHANGE \u2014 TARGET VERTICAL\u00A0\u00A009:41",
+    "DETECTED: SERIES C IN YOUR ICP\u00A0\u00A013:02",
+    "DETECTED: COMPETITOR PRICING UPDATE\u00A0\u00A011:18",
+    "DETECTED: INDUSTRY REPORT PUBLISHED\u00A0\u00A014:46",
+    "DETECTED: EARNINGS SIGNAL \u2014 MACRO SHIFT\u00A0\u00A016:21"
+  ];
+  var label = document.getElementById("wire-label");
+  if (label && !reduceMotion) {
+    var idx = 0;
+    setInterval(function () {
+      label.classList.add("swap");
+      setTimeout(function () {
+        idx = (idx + 1) % SIGNALS.length;
+        label.textContent = SIGNALS[idx];
+        label.classList.remove("swap");
+      }, 350);
+    }, 7000); // synced with the 7s schematic loop
+  }
+
+  /* ---------- duplicate ticker content for a seamless loop ---------- */
+  var track = document.getElementById("ticker-track");
+  if (track && !reduceMotion) {
+    track.innerHTML += track.innerHTML; // safe: duplicating our own static markup
+  }
+
+  /* ---------- single-open FAQ ---------- */
+  var faqs = Array.prototype.slice.call(document.querySelectorAll(".faq"));
+  faqs.forEach(function (faq) {
+    faq.addEventListener("toggle", function () {
+      if (faq.open) {
+        faqs.forEach(function (other) { if (other !== faq && other.open) other.open = false; });
+      }
+    });
+  });
+
+  /* ---------- lead form ----------
+     Direct browser → Supabase insert (no backend / serverless proxy).
+
+     Security model for this approach:
+       • The anon ("publishable") key below is MEANT to be public — it ships in
+         client code by design and is NOT a secret. Do NOT ever paste your
+         service_role key here: that key bypasses RLS and must stay server-side.
+       • Your real safety boundary is Row Level Security on the `leads` table.
+         An insert-only policy for the `anon` role means this key can add rows
+         but cannot read, update, or delete them. Apply that policy BEFORE going
+         live, or the table is unprotected (see the RLS SQL provided separately).
+       • The honeypot + email check below are best-effort only. They deter lazy
+         bots, but anyone can POST straight to the REST endpoint with this key,
+         bypassing this script entirely. For real spam protection put Cloudflare
+         Turnstile / rate limiting in front, and add length/format CHECK
+         constraints on the table columns.
+     Requires the CSP connect-src to include the Supabase origin (already set
+     in the <meta> tag on each page). */
+
+  // ── Supabase config ──────────────────────────────────────────────────────
+  var SUPABASE_URL = "https://itfjnqmwfjhptcopfacd.supabase.co";
+  // Dashboard → Project Settings → API → Project API keys → `anon` `public`.
+  // Paste that key (a long string starting with "eyJ…") between the quotes:
+  var SUPABASE_ANON_KEY = "sb_publishable_a7UeootOqf0KFd9rrroytQ_dbTSqNOg";
+  var LEADS_TABLE = "leads";
+  // The object inserted (see body below) sends { email, source }. Those column
+  // names must exist on your table. `created_at` is intentionally NOT sent —
+  // give that column a `default now()` so Postgres stamps the time server-side
+  // (a client-supplied timestamp is spoofable and unnecessary).
+  // ───────────────────────────────────────────────────────────────────────────
+
+  var LEADS_ENDPOINT = SUPABASE_URL + "/rest/v1/" + LEADS_TABLE;
+  var form = document.getElementById("lead-form");
+  var msg = document.getElementById("lead-msg");
+
+  function setMsg(text, cls) {
+    if (!msg) return;
+    msg.textContent = text;
+    msg.className = "lead-msg mono" + (cls ? " " + cls : "");
+  }
+
+  function validEmail(v) {
+    // Pragmatic check; the database CHECK constraints are the real gate.
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) && v.length <= 254;
+  }
+
+  if (form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var emailInput = document.getElementById("email");
+      var hp = document.getElementById("company_website");
+      var email = (emailInput && emailInput.value || "").trim();
+
+      // Honeypot filled => silently succeed for the bot, send nothing.
+      if (hp && hp.value) {
+        setMsg("REQUEST RECEIVED. RESPONSE INTERVAL: 48 HOURS.", "ok");
+        form.reset();
         return;
-    }
+      }
+      if (!validEmail(email)) {
+        emailInput.setAttribute("aria-invalid", "true");
+        setMsg("ENTER A VALID WORK EMAIL TO PROCEED.", "err");
+        emailInput.focus();
+        return;
+      }
+      emailInput.removeAttribute("aria-invalid");
 
-    setTimeout(() => {
-        reveals.forEach((el) => { if (el.classList.contains('fade-in')) el.classList.add('active'); });
-    }, 100);
+      // Setup guard: surface a forgotten key clearly instead of a vague failure.
+      if (/^PASTE_/.test(SUPABASE_ANON_KEY)) {
+        setMsg("FORM NOT CONFIGURED YET. SET SUPABASE_ANON_KEY IN script.js.", "err");
+        if (window.console) console.error("[lead-form] SUPABASE_ANON_KEY is still the placeholder — paste your anon public key.");
+        return;
+      }
 
-    const observer = new IntersectionObserver(
-        (entries, obs) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    obs.unobserve(entry.target);
-                }
-            });
+      var btn = form.querySelector(".lead-btn");
+      if (btn) { btn.disabled = true; btn.textContent = "TRANSMITTING…"; }
+      setMsg("");
+
+      // Abort the request if the endpoint hangs, so the UI never locks up.
+      var controller = ("AbortController" in window) ? new AbortController() : null;
+      var timeout = controller ? setTimeout(function () { controller.abort(); }, 12000) : null;
+
+      fetch(LEADS_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "apikey": SUPABASE_ANON_KEY,
+          "Authorization": "Bearer " + SUPABASE_ANON_KEY,
+          "Content-Type": "application/json",
+          // return=minimal is REQUIRED with insert-only RLS: it stops PostgREST
+          // from SELECTing the new row back (the anon role can't read it, which
+          // would otherwise make a successful insert look like a failure).
+          "Prefer": "return=minimal"
         },
-        { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.1 }
-    );
-
-    reveals.forEach((reveal) => { if (reveal.classList.contains('reveal')) observer.observe(reveal); });
-}
-
-/* ==========================================================================
-   2. MOBILE NAVIGATION
-   ========================================================================== */
-function initMobileMenu() {
-    const menuBtn = document.querySelector('.mobile-menu-btn');
-    const navLinks = document.querySelector('.nav-links');
-    if (!menuBtn || !navLinks) return;
-
-    const closeMenu = () => {
-        menuBtn.classList.remove('active');
-        navLinks.classList.remove('active');
-        menuBtn.setAttribute('aria-expanded', 'false');
-        navLinks.setAttribute('aria-hidden', window.innerWidth <= MOBILE_BREAKPOINT ? 'true' : 'false');
-    };
-
-    const openMenu = () => {
-        menuBtn.classList.add('active');
-        navLinks.classList.add('active');
-        menuBtn.setAttribute('aria-expanded', 'true');
-        navLinks.setAttribute('aria-hidden', 'false');
-    };
-
-    menuBtn.addEventListener('click', () => {
-        menuBtn.getAttribute('aria-expanded') === 'true' ? closeMenu() : openMenu();
-    });
-
-    navLinks.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
-    document.addEventListener('click', (event) => {
-        if (!navLinks.classList.contains('active')) return;
-        if (!(event.target instanceof Node)) return;
-        if (!navLinks.contains(event.target) && !menuBtn.contains(event.target)) closeMenu();
-    });
-    document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeMenu(); });
-
-    const syncMenuStateForViewport = () => {
-        if (window.innerWidth <= MOBILE_BREAKPOINT) { closeMenu(); return; }
-        menuBtn.classList.remove('active');
-        navLinks.classList.remove('active');
-        menuBtn.setAttribute('aria-expanded', 'false');
-        navLinks.setAttribute('aria-hidden', 'false');
-    };
-
-    syncMenuStateForViewport();
-    window.addEventListener('resize', syncMenuStateForViewport);
-}
-
-/* ==========================================================================
-   3. MULTI-STEP CONVERSION FORM
-   ========================================================================== */
-function initMultiStepForm() {
-    const steps =[
-        document.getElementById('step-1'),
-        document.getElementById('step-2'),
-        document.getElementById('step-3'),
-        document.getElementById('step-success')
-    ];
-
-    const dots =[
-        document.getElementById('dot-1'),
-        document.getElementById('dot-2'),
-        document.getElementById('dot-3')
-    ];
-
-    const emailInput = document.getElementById('workEmail');
-    const emailError = document.getElementById('emailError');
-    const categorySelect = document.getElementById('companyCategory');
-    const goalSelect = document.getElementById('primaryGoal');
-    const honeypot = document.getElementById('gotcha');
-
-    const nextBtn1 = document.getElementById('nextBtn1');
-    const nextBtn2 = document.getElementById('nextBtn2');
-    const backBtn1 = document.getElementById('backBtn1');
-    const backBtn2 = document.getElementById('backBtn2');
-    const form = document.getElementById('accessForm');
-    const formProgress = form?.querySelector('.form-progress');
-    const formStatus = document.getElementById('formStatus');
-    const submitBtn = document.getElementById('submitBtn');
-    const loader = submitBtn?.querySelector('.loader-text');
-    const btnText = submitBtn?.querySelector('span:first-child');
-
-    if (!form || !emailInput || !categorySelect || !goalSelect || !submitBtn) return;
-
-    const genericDomains = new Set(['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'aol.com', 'icloud.com']);
-
-    const clearFormStatus = () => {
-        if (!formStatus) return;
-        formStatus.textContent = '';
-        formStatus.classList.add('hidden');
-    };
-
-    const setFormStatus = (message) => {
-        if (!formStatus) return;
-        formStatus.textContent = message;
-        formStatus.classList.remove('hidden');
-    };
-
-    const setLoadingState = (isLoading) => {
-        submitBtn.disabled = isLoading;
-        if (btnText) btnText.classList.toggle('hidden', isLoading);
-        if (loader) loader.classList.toggle('hidden', !isLoading);
-    };
-
-    const showStep = (index) => {
-        steps.forEach((step, stepIndex) => {
-            if (!step) return;
-            if (stepIndex === index) {
-                step.classList.remove('hidden');
-                setTimeout(() => step.classList.add('active'), 10);
-            } else {
-                step.classList.remove('active');
-                step.classList.add('hidden');
-            }
+        body: JSON.stringify({ email: email, source: "ideafridge.com" }),
+        mode: "cors",
+        credentials: "omit", // cross-origin to Supabase — never attach cookies
+        cache: "no-store",
+        redirect: "error",   // a lead POST should never be redirected
+        signal: controller ? controller.signal : undefined
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error("status " + res.status);
+          setMsg("REQUEST RECEIVED. AWAITING CATEGORY VERIFICATION. RESPONSE INTERVAL: 48 HOURS.", "ok");
+          form.reset();
+        })
+        .catch(function () {
+          setMsg("TRANSMISSION FAILED. EMAIL US DIRECTLY: HELLO@IDEAFRIDGE.COM", "err");
+        })
+        .finally(function () {
+          if (timeout) clearTimeout(timeout);
+          if (btn) { btn.disabled = false; btn.innerHTML = "Proceed \u2192"; }
         });
-
-        dots.forEach((dot, dotIndex) => {
-            if (!dot) return;
-            dot.classList.toggle('active', dotIndex <= Math.min(index, dots.length - 1));
-            dot.classList.toggle('text-muted', dotIndex > Math.min(index, dots.length - 1));
-        });
-    };
-
-    const validateEmail = () => {
-        const email = emailInput.value.trim().toLowerCase();
-        const isValidFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-        const domain = email.split('@')[1] || '';
-
-        if (!email || !isValidFormat) {
-            emailError.textContent = 'ERR: INVALID EMAIL FORMAT.';
-            emailError.classList.remove('hidden');
-            return false;
-        }
-
-        if (genericDomains.has(domain)) {
-            emailError.textContent = 'ERR: REQUIRES B2B DOMAIN.';
-            emailError.classList.remove('hidden');
-            return false;
-        }
-
-        emailError.classList.add('hidden');
-        return true;
-    };
-
-    const validateCategory = () => {
-        const isValid = categorySelect.value !== '';
-        categorySelect.style.borderColor = isValid ? 'var(--border-color)' : '#D93025';
-        return isValid;
-    };
-
-    const validateGoal = () => {
-        const isValid = goalSelect.value !== '';
-        goalSelect.style.borderColor = isValid ? 'var(--border-color)' : '#D93025';
-        return isValid;
-    };
-
-    const getAttribution = () => {
-        const params = new URLSearchParams(window.location.search);
-        const attribution = { source: 'website', page: window.location.pathname, referrer: document.referrer || '' };['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach((key) => {
-            const value = params.get(key);
-            if (value) attribution[key] = value;
-        });
-        return attribution;
-    };
-
-    if (nextBtn1) nextBtn1.addEventListener('click', () => { clearFormStatus(); if (validateEmail()) showStep(1); });
-    if (backBtn1) backBtn1.addEventListener('click', () => { clearFormStatus(); showStep(0); });
-    if (nextBtn2) nextBtn2.addEventListener('click', () => { clearFormStatus(); if (validateCategory()) showStep(2); });
-    if (backBtn2) backBtn2.addEventListener('click', () => { clearFormStatus(); showStep(1); });
-
-    form.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        clearFormStatus();
-
-        if (honeypot && honeypot.value.trim() !== '') return;
-        if (!validateEmail()) { showStep(0); return; }
-        if (!validateCategory()) { showStep(1); return; }
-        if (!validateGoal()) { showStep(2); return; }
-
-        setLoadingState(true);
-
-        const corePayload = { email: emailInput.value.trim(), category: categorySelect.value, goal: goalSelect.value };
-        const payload = SUPABASE_CONFIG.enabled ? corePayload : { ...corePayload, timestamp: new Date().toISOString(), ...getAttribution() };
-        
-        const controller = new AbortController();
-        const timeoutId = window.setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
-
-        try {
-            await submitLead(payload, controller.signal);
-            if (formProgress) formProgress.classList.add('hidden');
-            showStep(3);
-        } catch (error) {
-            const timedOut = error instanceof DOMException && error.name === 'AbortError';
-            const message = timedOut ? 'ERR: TIMEOUT. RETRY.' : (error.message || 'ERR: TRANSMISSION FAILED.');
-            setFormStatus(message);
-            setLoadingState(false);
-        } finally {
-            window.clearTimeout(timeoutId);
-        }
     });
-
-    categorySelect.addEventListener('change', () => { categorySelect.style.borderColor = 'var(--border-color)'; clearFormStatus(); });
-    goalSelect.addEventListener('change', () => { goalSelect.style.borderColor = 'var(--border-color)'; clearFormStatus(); });
-    emailInput.addEventListener('input', () => { emailError.classList.add('hidden'); clearFormStatus(); });
-}
+  }
+})();

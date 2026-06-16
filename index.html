@@ -1,406 +1,375 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Ideafridge | Market Signal Engine</title>
-    <meta name="description" content="Turn market signals into pipeline. Equip your GTM team with deployable revenue media triggered by real-time market shifts.">
-    <meta name="theme-color" content="#FAFAFA">
-    <meta property="og:title" content="Ideafridge | Market Signal Engine">
-    <meta property="og:description" content="Turn market signals into deployable revenue media for SDRs, founders, and GTM teams.">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Ideafridge">
-    <meta name="twitter:card" content="summary_large_image">
-    
-    <meta name="lead-endpoint" content="/api/leads">
-    <meta name="supabase-url" content="https://itfjnqmwfjhptcopfacd.supabase.co">
-    <meta name="supabase-anon-key" content="sb_publishable_a7UeootOqf0KFd9rrroytQ_dbTSqNOg">
-    <meta name="supabase-table" content="leads">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self'; img-src 'self' data:; connect-src 'self' https://itfjnqmwfjhptcopfacd.supabase.co; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
 
-    <!-- Typography: Inter (Highly Readable) + JetBrains Mono (Technical) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <title>Ideafridge — Market Signal Engine. Own the moment the market moves.</title>
+  <meta name="description" content="Ideafridge monitors your market continuously and turns live shifts — competitor moves, regulation, funding — into deployable revenue media your team posts within hours. One client per category.">
+  <link rel="canonical" href="https://ideafridge.com/">
 
-    <link rel="stylesheet" href="style.css">
-   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23050505'/><path d='M32 32 H44 M32 32 V44 M68 32 H56 M68 32 V44 M32 68 H44 M32 68 V56 M68 68 H56 M68 68 V56' stroke='%23F5F5F7' stroke-width='5' stroke-linecap='square' fill='none'/><circle cx='50' cy='50' r='5' fill='%23F5F5F7'/></svg>">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Ideafridge">
+  <meta property="og:title" content="Ideafridge — Market Signal Engine">
+  <meta property="og:description" content="Live market shifts become deployable revenue media for your GTM team — within hours, before competitors schedule the meeting about it. One client per category.">
+  <meta property="og:url" content="https://ideafridge.com/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#FAFAFA">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,450;14..32,550;14..32,650;14..32,750&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://ideafridge.com/#org",
+        "name": "Ideafridge",
+        "legalName": "Ideafridge Media, Inc.",
+        "url": "https://ideafridge.com/",
+        "description": "Market signal engine for B2B revenue teams. Ideafridge monitors a client's market continuously and converts live shifts into brand-safe, deployable media that sales reps, founders, and GTM teams distribute through their own profiles within hours.",
+        "foundingDate": "2026",
+        "knowsAbout": ["market signal monitoring", "B2B go-to-market", "signal-timed content", "rep-level distribution", "competitive response", "dark social", "employee-distributed media"]
+      },
+      {
+        "@type": "Service",
+        "@id": "https://ideafridge.com/#service",
+        "name": "Market Signal Engine",
+        "provider": { "@id": "https://ideafridge.com/#org" },
+        "serviceType": "GTM intelligence and signal-timed content distribution",
+        "audience": { "@type": "BusinessAudience", "name": "B2B revenue teams — SDRs, AEs, founders, and marketing leaders" },
+        "offers": { "@type": "Offer", "availability": "https://schema.org/LimitedAvailability", "description": "Engagement by request. No public rate card. One client per category." }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://ideafridge.com/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What does Ideafridge actually do?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Ideafridge watches your market continuously — competitor moves, regulatory changes, funding rounds, industry events. When something your buyers care about happens, we turn it into short, brand-safe media your revenue team posts from their own profiles within hours. Detection to deployment, before competitors have scheduled the meeting about it." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why distribute through people instead of the company page?",
+            "acceptedAnswer": { "@type": "Answer", "text": "LinkedIn cut company-page organic reach 60–66% between 2024 and 2026; company posts now reach roughly 1.6% of followers, while most of the feed is personal posts from connections. The personal profile is the only organic surface the platform still meaningfully distributes — and a point of view from someone a buyer knows carries trust no ad can buy." }
+          },
+          {
+            "@type": "Question",
+            "name": "Doesn't the algorithm suppress many people posting the same content?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes — identical links and captions across many profiles get demoted as duplicates, and buyers read the choreography. Every Ideafridge deployment ships as a variation set: distinct framings per person, staggered windows, optional personalization. Fifteen reps read as fifteen professionals with something to say." }
+          },
+          {
+            "@type": "Question",
+            "name": "What does 'one client per category' mean?",
+            "acceptedAnswer": { "@type": "Answer", "text": "If Ideafridge is building the signal layer for your category, it is not building it for your direct competitor. Availability is intentionally narrow; category exclusivity is confirmed during the request process." }
+          },
+          {
+            "@type": "Question",
+            "name": "How does Ideafridge work in compliance-heavy industries?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Every deployment is review-ready: pre-vetted against your guidelines and packaged for your firm's own approval workflow, on a rapid-review lane established in week one. Regulatory review, supervision, and archiving obligations remain with your firm — no vendor can discharge those for you, and Ideafridge never claims to." }
+          },
+          {
+            "@type": "Question",
+            "name": "How is performance measured?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Before launch, Ideafridge captures a baseline — reply rates and meeting conversion from the prior 60 days — and every report benchmarks against it: reply-rate deltas, inbound from target accounts, meetings booked. No vanity impressions; movement against your own numbers." }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does Ideafridge cost?",
+            "acceptedAnswer": { "@type": "Answer", "text": "There is no public rate card. Coverage is scoped to market lanes, operating cadence, and activation depth, and confirmed on request alongside category availability." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
-    <a class="skip-link visually-hidden" href="#main-content">Skip to content &darr;</a>
+  <a class="skip" href="#main">Skip to content</a>
 
-    <div class="blueprint-grid"></div>
+  <!-- ===== status strip ===== -->
+  <div class="status mono" aria-hidden="true">
+    <span>DOC IF-2026-A</span>
+    <span class="status-live"><i class="dot"></i>MONITORING: CONTINUOUS</span>
+    <span>RESPONSE: HOURS</span>
+    <span class="status-wide">COVERAGE: ONE CLIENT / CATEGORY</span>
+  </div>
 
-    <!-- Navigation -->
-    <nav class="navbar border-b" aria-label="Primary">
-        <div class="container nav-container">
-            <div class="flex align-center gap-4">
-                <a href="index.html" class="logo">Ideafridge.</a>
-                <div class="badge hide-mobile">SYS.V2</div>
-            </div>
-
-            <button type="button" class="mobile-menu-btn" aria-label="Toggle Navigation" aria-expanded="false" aria-controls="primary-navigation">
-                <span></span><span></span><span></span>
-            </button>
-
-            <div class="nav-links" id="primary-navigation" aria-hidden="false">
-                <a href="#engine" class="nav-item">REF.01 / ENGINE</a>
-                <a href="#use-cases" class="nav-item">REF.02 / TARGETS</a>
-                <a href="#pricing" class="nav-item">REF.03 / CONFIG</a>
-                <a href="#apply" class="btn-primary nav-btn">INITIATE SEQUENCE &rarr;</a>
-            </div>
-        </div>
+  <header class="site-head">
+    <nav class="head-inner" aria-label="Primary">
+      <a class="wordmark" href="#top" aria-label="Ideafridge home">Ideafridge<span class="wm-period">.</span></a>
+      <div class="head-links mono">
+        <a href="#engine">REF.01 / ENGINE</a>
+        <a href="#targets">REF.03 / TARGETS</a>
+        <a href="#coverage">REF.04 / COVERAGE</a>
+        <a href="#faq">REF.05 / Q&amp;A</a>
+      </div>
+      <a class="btn btn-ink btn-sm" href="#apply">Request access</a>
     </nav>
+  </header>
 
-    <main id="main-content">
-        <!-- Hero Section -->
-        <header class="hero section border-b">
-            <div class="container hero-grid">
-                <!-- Technical Sidebar -->
-                <div class="tech-sidebar hide-mobile fade-in border-r pr-8">
-                    <div class="mono-text mb-8 text-muted">
-                        <strong>DOC_ID:</strong> IF-2026-A<br>
-                        <strong>STATUS:</strong> OPERATIONAL<br>
-                        <strong>LATENCY:</strong> 12MS<br>
-                        <strong>OBJECTIVE:</strong> REV_GEN
-                    </div>
-                    
-                    <div class="tech-graphic">
-                        <svg viewBox="0 0 100 100" class="w-full">
-                            <circle cx="50" cy="50" r="45" fill="none" stroke="var(--border-color)" stroke-width="2"/>
-                            <circle cx="50" cy="50" r="30" fill="none" stroke="var(--fg-base)" stroke-width="1" stroke-dasharray="4 4">
-                                <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="20s" repeatCount="indefinite"/>
-                            </circle>
-                            <line x1="50" y1="0" x2="50" y2="100" stroke="var(--border-color)" stroke-width="1"/>
-                            <line x1="0" y1="50" x2="100" y2="50" stroke="var(--border-color)" stroke-width="1"/>
-                            <rect x="46" y="46" width="8" height="8" fill="var(--fg-base)" rx="2"/>
-                        </svg>
-                        <div class="mono-text text-xs text-center mt-4 text-muted">FIG. 1A - RADAR SCAN</div>
-                    </div>
-                </div>
+  <main id="main">
 
-                <!-- Main Content -->
-                <div class="hero-content pl-8">
-                    <div class="badge fade-in mb-6">
-                        <span class="pulse-dot"></span> CONTINUOUS MARKET MONITORING
-                    </div>
-
-                    <h1 class="hero-title fade-in delay-1">Turn market<br>signals into<br>pipeline</h1>
-
-                    <p class="hero-sub fade-in delay-2 mt-6">
-                        Convert live market movement into signal-timed GTM activation. Equip your revenue team to earn attention before competitors even react.
-                    </p>
-
-                    <div class="hero-actions flex gap-4 mt-8 fade-in delay-3">
-                        <a href="#apply" class="btn-primary">Request Access &rarr;</a>
-                        <a href="#engine" class="btn-outline">View Schematics &darr;</a>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <!-- Ticker Tape -->
-        <div class="ticker-wrap border-b" aria-label="Signal activation system">
-            <div class="ticker-label mono-text border-r">SIGNAL_TO_PIPELINE //</div>
-            <div class="ticker-track">
-                <div class="ticker-content mono-text">
-                    <span>MARKET INTEL</span><span class="sep">&rarr;</span>
-                    <span>BUYING SIGNALS</span><span class="sep">&rarr;</span>
-                    <span>REP-LEVEL DISTRIBUTION</span><span class="sep">&rarr;</span>
-                    <span>DARK SOCIAL MOMENTUM</span><span class="sep">&rarr;</span>
-                    <span>PIPELINE CONTEXT</span><span class="sep">&rarr;</span>
-                    <span>MARKET INTEL</span><span class="sep">&rarr;</span>
-                    <span>BUYING SIGNALS</span><span class="sep">&rarr;</span>
-                    <span>REP-LEVEL DISTRIBUTION</span><span class="sep">&rarr;</span>
-                    <span>DARK SOCIAL MOMENTUM</span>
-                </div>
-            </div>
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="top" aria-labelledby="hero-h">
+      <div class="grid hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow mono" data-decode>MARKET SIGNAL ENGINE</p>
+          <h1 id="hero-h" class="hero-h">
+            <span class="line"><span>Own the</span></span>
+            <span class="line"><span>moment<em class="sig">.</em></span></span>
+          </h1>
+          <p class="lede">The market will move this week. A competitor will publish, a regulation will land, a round will close. Ideafridge watches it all, continuously — and puts a credible point of view in your team's feeds within hours. Before anyone else has scheduled the meeting about it.</p>
+          <div class="cta-row">
+            <a class="btn btn-ink" href="#apply">Request access</a>
+            <a class="btn btn-ghost" href="#engine">View the engine</a>
+          </div>
         </div>
 
-        <!-- The Engine (Instruction Manual Diagram) -->
-        <section id="engine" class="section border-b">
-            <div class="container">
-                <div class="section-header reveal flex justify-between align-end mb-8 border-b pb-4">
-                    <div>
-                        <div class="mono-text mb-2 text-muted">REF.01 // SYSTEM ARCHITECTURE</div>
-                        <h2>The Engine.</h2>
-                    </div>
-                    <div class="mono-text hide-mobile text-right text-muted">
-                        DWG NO: 80-6B<br>
-                        SCALE: 1:1
-                    </div>
-                </div>
+        <!-- FIG.01 — detect → deploy -->
+        <figure class="fig" aria-label="Animated schematic: a radar sweep detects a market signal, which becomes an asset deployed through your team into buyer networks.">
+          <div class="fig-head mono"><span>FIG. 01</span><span>DETECT &rarr; DEPLOY</span></div>
+          <div class="fig-frame">
+            <span class="tick tl" aria-hidden="true"></span><span class="tick tr" aria-hidden="true"></span>
+            <span class="tick bl" aria-hidden="true"></span><span class="tick br" aria-hidden="true"></span>
+            <svg class="schema" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+              <g class="radar">
+                <circle class="r-ring" cx="150" cy="180" r="110"/>
+                <circle class="r-ring" cx="150" cy="180" r="74"/>
+                <circle class="r-ring" cx="150" cy="180" r="38"/>
+                <line class="r-cross" x1="40" y1="180" x2="260" y2="180"/>
+                <line class="r-cross" x1="150" y1="70" x2="150" y2="290"/>
+                <g class="r-sweep-g">
+                  <line class="r-sweep" x1="150" y1="180" x2="150" y2="72"/>
+                </g>
+                <circle class="r-blip" cx="208" cy="124" r="5"/>
+              </g>
+              <line class="w-base" x1="262" y1="180" x2="362" y2="180"/>
+              <circle class="w-pulse" cx="262" cy="180" r="5"/>
+              <rect class="w-asset" x="362" y="156" width="48" height="48" rx="2"/>
+              <polygon class="w-play" points="380,170 380,190 398,180"/>
+              <path class="w-branch b1" d="M410 180 C 470 180, 480 110, 540 110"/>
+              <path class="w-branch b2" d="M410 180 C 470 180, 480 180, 540 180"/>
+              <path class="w-branch b3" d="M410 180 C 470 180, 480 250, 540 250"/>
+              <circle class="w-rep r1" cx="556" cy="110" r="8"/>
+              <circle class="w-rep r2" cx="556" cy="180" r="8"/>
+              <circle class="w-rep r3" cx="556" cy="250" r="8"/>
+              <g class="w-net n1"><circle cx="592" cy="96" r="3.5"/><circle cx="614" cy="116" r="3.5"/></g>
+              <g class="w-net n2"><circle cx="592" cy="168" r="3.5"/><circle cx="616" cy="186" r="3.5"/><circle cx="600" cy="204" r="3.5"/></g>
+              <g class="w-net n3"><circle cx="592" cy="238" r="3.5"/><circle cx="614" cy="258" r="3.5"/></g>
+            </svg>
+            <p class="fig-readout mono"><span id="wire-label">DETECTED: COMPETITOR WEBINAR&nbsp;&nbsp;14:02</span></p>
+          </div>
+          <figcaption class="fig-cap mono">SIGNAL &rarr; ASSET, IN HOURS &rarr; YOUR PEOPLE &rarr; THEIR NETWORKS</figcaption>
+        </figure>
+      </div>
+    </section>
 
-                <!-- Animated Blueprint SVG -->
-                <div class="diagram-container reveal mb-12 border bg-surface radius-lg">
-                    <div class="mono-text border-b p-4">FIG 2. SIGNAL PROCESSING SCHEMATIC</div>
-                    <svg viewBox="0 0 1000 280" class="tech-svg" preserveAspectRatio="xMidYMid meet">
-                        <!-- Grid Lines -->
-                        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                            <rect width="40" height="40" fill="none" stroke="var(--border-color)" stroke-width="1" opacity="0.5"/>
-                        </pattern>
-                        <rect width="100%" height="100%" fill="url(#grid)" />
-                        
-                        <!-- Connecting Path Background -->
-                        <path d="M 150 140 L 850 140" fill="none" stroke="var(--fg-base)" stroke-width="2" stroke-dasharray="6 6" opacity="0.3"/>
+    <!-- ============ TICKER ============ -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track" id="ticker-track">
+        <span class="t-item mono"><i class="dot"></i>REGULATORY CHANGE — TARGET VERTICAL — 09:41</span>
+        <span class="t-item mono"><i class="dot"></i>COMPETITOR PRICING UPDATE — 11:18</span>
+        <span class="t-item mono"><i class="dot"></i>SERIES C CLOSED IN YOUR ICP — 13:02</span>
+        <span class="t-item mono"><i class="dot"></i>INDUSTRY REPORT PUBLISHED — 14:46</span>
+        <span class="t-item mono"><i class="dot"></i>COMPETITOR WEBINAR LIVE — 15:00</span>
+        <span class="t-item mono"><i class="dot"></i>EARNINGS SIGNAL — MACRO SHIFT — 16:21</span>
+      </div>
+    </div>
 
-                        <!-- Flow Data Packets sit behind processing nodes -->
-                        <rect width="10" height="10" fill="var(--fg-base)" x="0" y="-5" rx="2" opacity="0.65">
-                            <animateMotion dur="2s" repeatCount="indefinite" path="M 210 140 L 410 140" />
-                        </rect>
-                        <circle r="5" fill="var(--fg-base)" opacity="0.65">
-                            <animateMotion dur="1.5s" repeatCount="indefinite" path="M 590 140 L 765 140" />
-                        </circle>
+    <!-- ============ OPERATING CONTEXT ============ -->
+    <section class="section" id="why" aria-labelledby="why-h">
+      <div class="grid">
+        <p class="eyebrow mono reveal" data-decode>REF.00 // OPERATING CONTEXT</p>
+        <h2 id="why-h" class="h2 reveal">The channels you built on are closing.</h2>
+        <p class="section-lede reveal">Cold email answers three times in a hundred. The company page reaches 1.6% of its own followers. The whitepaper goes unread. None of this is your team's fault — and none of it is coming back. What still works is a person your buyer recognizes, saying something timely, in the feed where decisions quietly form.</p>
+      </div>
+      <div class="evidence mono reveal">
+        <span>COLD EMAIL REPLY RATE&ensp;3.43%</span>
+        <span>COMPANY-PAGE REACH&ensp;&minus;66% SINCE 2024</span>
+        <span>GATED WHITEPAPER ABANDONMENT&ensp;80%+</span>
+      </div>
+    </section>
 
-                        <!-- Left Node: INGEST -->
-                        <g transform="translate(150, 140)">
-                            <rect x="-60" y="-60" width="120" height="120" fill="var(--bg-surface)" stroke="var(--fg-base)" stroke-width="2" rx="8"/>
-                            <circle r="36" fill="none" stroke="var(--fg-base)" stroke-width="1.5">
-                                <animateTransform attributeName="transform" type="scale" values="0.8; 1.1; 0.8" dur="4s" repeatCount="indefinite"/>
-                            </circle>
-                            <circle r="4" fill="var(--fg-base)"/>
-                            <rect x="-50" y="-80" width="100" height="24" fill="var(--fg-base)" rx="4"/>
-                            <text x="0" y="-64" fill="var(--bg-surface)" text-anchor="middle" class="svg-mono">01. INGEST</text>
-                        </g>
+    <!-- ============ THE ENGINE ============ -->
+    <section class="section section-rule" id="engine" aria-labelledby="engine-h">
+      <div class="grid">
+        <p class="eyebrow mono reveal" data-decode>REF.01 // SYSTEM ARCHITECTURE</p>
+        <h2 id="engine-h" class="h2 reveal">The Engine.</h2>
+        <p class="section-lede reveal">Three stages. No dashboards to learn, no software to adopt. The output arrives where your team already works.</p>
+      </div>
+      <div class="stages">
+        <article class="stage reveal">
+          <p class="stage-k mono">STAGE 01 — WE WATCH</p>
+          <h3 class="stage-h">Continuous intelligence</h3>
+          <p class="stage-t">Your ecosystem, monitored daily: competitor moves, regulatory shifts, funding rounds, breaches, earnings. Machines for coverage. Humans for judgment. You do none of it.</p>
+        </article>
+        <article class="stage reveal">
+          <p class="stage-k mono">STAGE 02 — WE DISTILL</p>
+          <h3 class="stage-h">Narrative extraction</h3>
+          <p class="stage-t">Most of what happens is noise. We isolate the shifts that change your buyers' urgency and budget — then build the point of view your market needs to hear, in your voice, to your brand standards.</p>
+        </article>
+        <article class="stage reveal">
+          <p class="stage-k mono">STAGE 03 — YOU DEPLOY</p>
+          <h3 class="stage-h">Revenue-team activation</h3>
+          <p class="stage-t">Brand-safe deployment kits land in Slack — short video, written framing, posting windows. Each person gets a different version. The ask is under two minutes. Then back to selling.</p>
+        </article>
+      </div>
+      <div class="scenario reveal">
+        <p class="scenario-k mono">FIELD NOTE</p>
+        <p class="scenario-t">A competitor's webinar goes live Tuesday at 2pm. Four hundred of your prospects watch them frame the market. By Wednesday morning, your team's feeds carry the counter-perspective — produced overnight, cleared through the review lane built in week one, in a dozen distinct voices. They spent months on that webinar. Your answer was live before their follow-up email.</p>
+      </div>
+    </section>
 
-                        <!-- Middle Node: EXTRACT -->
-                        <g transform="translate(500, 140)">
-                            <rect x="-70" y="-70" width="140" height="140" fill="var(--bg-surface)" stroke="var(--fg-base)" stroke-width="2" rx="8"/>
-                            <polygon points="0,-35 35,0 0,35 -35,0" fill="none" stroke="var(--fg-base)" stroke-width="2">
-                                <animateTransform attributeName="transform" type="rotate" from="0" to="90" dur="2s" repeatCount="indefinite"/>
-                            </polygon>
-                            <rect x="-55" y="-90" width="110" height="24" fill="var(--fg-base)" rx="4"/>
-                            <text x="0" y="-74" fill="var(--bg-surface)" text-anchor="middle" class="svg-mono">02. EXTRACT</text>
-                        </g>
+    <!-- ============ VARIATION ============ -->
+    <section class="section section-rule" id="variation" aria-labelledby="var-h">
+      <div class="grid">
+        <p class="eyebrow mono reveal" data-decode>REF.02 // DISTRIBUTION PHYSICS</p>
+        <h2 id="var-h" class="h2 reveal">Fifteen reps. Zero copies.</h2>
+        <p class="section-lede reveal">The platform demotes duplicates, and buyers read choreography. So nothing ships identical: every deployment is a variation set — distinct framings per person, staggered windows, an optional personal line. Fifteen professionals who each have something to say. Because, with our help, they do.</p>
+      </div>
+      <div class="var-demo reveal" aria-hidden="true">
+        <div class="var-card vc-1"><span class="mono vc-time">07:40</span><span class="vc-text">"This changes the math for every team running…"</span></div>
+        <div class="var-card vc-2"><span class="mono vc-time">11:15</span><span class="vc-text">"Watched this land in our space this morning —"</span></div>
+        <div class="var-card vc-3"><span class="mono vc-time">16:30</span><span class="vc-text">"My healthcare accounts are asking about this…"</span></div>
+      </div>
+    </section>
 
-                        <!-- Right Node: DEPLOY -->
-                        <g transform="translate(850, 140)">
-                            <circle r="70" fill="var(--bg-surface)" stroke="var(--fg-base)" stroke-width="2"/>
-                            <rect x="-26" y="-26" width="52" height="52" fill="none" stroke="var(--fg-base)" stroke-width="2" rx="4">
-                                <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="10s" repeatCount="indefinite"/>
-                            </rect>
-                            <rect x="-50" y="-90" width="100" height="24" fill="var(--fg-base)" rx="4"/>
-                            <text x="0" y="-74" fill="var(--bg-surface)" text-anchor="middle" class="svg-mono">03. DEPLOY</text>
-                        </g>
+    <!-- ============ TARGETS ============ -->
+    <section class="section section-rule" id="targets" aria-labelledby="targets-h">
+      <div class="grid">
+        <p class="eyebrow mono reveal" data-decode>REF.03 // DEPLOYMENT TARGETS</p>
+        <h2 id="targets-h" class="h2 reveal">Win the feed.</h2>
+      </div>
+      <div class="targets">
+        <article class="target reveal">
+          <p class="target-k mono">TARGET: SDR / AE</p>
+          <h3 class="target-h">Inbound-led outbound</h3>
+          <p class="target-t">A rep posts timely analysis on a shift their prospects already care about — then uses that attention as credible context for outreach. Tuesday's post becomes the reason Thursday's email gets a reply.</p>
+          <p class="target-o mono">OUTCOME: PIPELINE</p>
+        </article>
+        <article class="target reveal">
+          <p class="target-k mono">TARGET: FOUNDER</p>
+          <h3 class="target-h">Market authority</h3>
+          <p class="target-t">Leadership turns market movement into controlled, timely point of view — mapped to buyer urgency and competitor motion, not a quarterly calendar.</p>
+          <p class="target-o mono">OUTCOME: AUTHORITY</p>
+        </article>
+        <article class="target reveal">
+          <p class="target-k mono">TARGET: MARKETING</p>
+          <h3 class="target-h">Controlled distribution</h3>
+          <p class="target-t">The narrative stays centralized and brand-safe — review-ready, pre-vetted, inside your approval workflow — while the field moves at the speed the moment demands.</p>
+          <p class="target-o mono">OUTCOME: VELOCITY</p>
+        </article>
+      </div>
+    </section>
 
-                        <!-- Annotations -->
-                        <text x="320" y="125" fill="var(--fg-muted)" text-anchor="middle" class="svg-mono">RAW_DATA [8TB/S]</text>
-                        <text x="675" y="125" fill="var(--fg-muted)" text-anchor="middle" class="svg-mono">GTM_ACTIVATED</text>
-                    </svg>
-                </div>
+    <!-- ============ COVERAGE ============ -->
+    <section class="section section-rule" id="coverage" aria-labelledby="coverage-h">
+      <div class="grid">
+        <p class="eyebrow mono reveal" data-decode>REF.04 // INTELLIGENCE COVERAGE</p>
+        <h2 id="coverage-h" class="h2 reveal">Choose your coverage.</h2>
+        <p class="section-lede reveal">Engagements are scoped by market coverage, operating cadence, and activation depth. Output flexes with the signals worth acting on — not a content quota.</p>
+      </div>
+      <div class="cov-grid">
+        <article class="cov reveal">
+          <p class="cov-n mono">01 // RESPONSE</p>
+          <h3 class="cov-h">Signal Response</h3>
+          <p class="cov-t">One market lane monitored. Weekly intelligence becomes rep-ready deployment.</p>
+        </article>
+        <article class="cov cov-feature reveal">
+          <p class="cov-n mono"><i class="dot"></i>02 // SYSTEM</p>
+          <h3 class="cov-h">Revenue Signal System</h3>
+          <p class="cov-t">Multiple lanes, competitor tracking, coordinated SDR + AE deployment, rapid competitive response.</p>
+        </article>
+        <article class="cov reveal">
+          <p class="cov-n mono">03 // ENGINE</p>
+          <h3 class="cov-h">Category Intelligence Engine</h3>
+          <p class="cov-t">Always-on coverage across revenue, expansion, retention, and partner motion. Executive point of view included.</p>
+        </article>
+      </div>
+      <aside class="exclusive reveal">
+        <p class="exclusive-k mono">ACCESS IS CATEGORY-CONSTRAINED</p>
+        <p class="exclusive-h">One category. One client.</p>
+        <p class="exclusive-t">If we are building the signal layer for your category, we are not building it for your direct competitor. Availability is intentionally narrow — which is also why there is no public rate card. Fit, category availability, and operating layer are confirmed on request.</p>
+      </aside>
+    </section>
 
-                <div class="grid-3">
-                    <div class="manual-card reveal border radius-lg bg-surface flex-col">
-                        <div class="mono-text mb-6 border-b pb-3 text-muted">STEP 01.</div>
-                        <h3 class="mb-4">Continuous Intelligence</h3>
-                        <p class="text-body text-muted">We continuously monitor your ecosystem. Vendor funding rounds, strategic breaches, and major compliance regulations track straight into our analytical engine.</p>
-                    </div>
-                    <div class="manual-card reveal delay-1 border radius-lg bg-surface flex-col">
-                        <div class="mono-text mb-6 border-b pb-3 text-muted">STEP 02.</div>
-                        <h3 class="mb-4">Narrative Extraction</h3>
-                        <p class="text-body text-muted">Noise efficiently becomes pure signal. We isolate and identify the specific market shifts that dictate your buyers' behavior and organizational budget allocation.</p>
-                    </div>
-                    <div class="manual-card reveal delay-2 border radius-lg bg-surface flex-col">
-                        <div class="mono-text mb-6 border-b pb-3 text-muted">STEP 03.</div>
-                        <h3 class="mb-4">Revenue-Team Activation</h3>
-                        <p class="text-body text-muted">Signals become brand-safe deployment kits for SDRs, AEs, AMs, and partners, delivered where your team already works.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <!-- ============ FAQ ============ -->
+    <section class="section section-rule" id="faq" aria-labelledby="faq-h">
+      <div class="grid">
+        <p class="eyebrow mono reveal" data-decode>REF.05 // QUESTIONS</p>
+        <h2 id="faq-h" class="h2 reveal">Asked before you ask.</h2>
+      </div>
+      <div class="faq-list reveal">
+        <details class="faq">
+          <summary>Doesn't the platform punish many people posting the same thing?<span class="faq-x" aria-hidden="true"></span></summary>
+          <p>Yes — and most advocacy programs are built as if it doesn't. Identical links and captions across many profiles get demoted as duplicates, and audiences read the choreography. That is why variation is core to every deployment: distinct framings per person, staggered windows, optional personalization. We treat the algorithm's authenticity constraint as a design input, not an inconvenience.</p>
+        </details>
+        <details class="faq">
+          <summary>Our reps already don't do the things we ask them to do.<span class="faq-x" aria-hidden="true"></span></summary>
+          <p>Fair — it's the most common objection. Programs fail when they ask reps to become content creators, or to robotically share identical corporate posts. We do neither. Everything is done, every person's version is different, the ask is under two minutes, and each rep watches their own engagement and inbound grow. We design for adoption instead of assuming it.</p>
+        </details>
+        <details class="faq">
+          <summary>We're in a compliance-heavy industry. Our people can't post just anything.<span class="faq-x" aria-hidden="true"></span></summary>
+          <p>Good — this is the environment the engine is designed for, and we're precise about how it works. Review, supervision, and archiving obligations sit with your firm; no vendor can do that part for you, and you should be suspicious of any who claims otherwise. What we deliver is review-ready: pre-vetted against your guidelines, packaged for your principal-review workflow, on a rapid-review lane established with your compliance team in week one.</p>
+        </details>
+        <details class="faq">
+          <summary>Can't we build this ourselves with AI tools?<span class="faq-x" aria-hidden="true"></span></summary>
+          <p>You can assemble the parts — alerts, a chatbot, a clip tool. What that stack won't give you: editorial judgment on which signals matter to which buyers, brand-grade production at response speed, a variation system people actually follow, and a partner accountable for movement against your baseline. Tools automate tasks. We're accountable for a result.</p>
+        </details>
+        <details class="faq">
+          <summary>How do we know it's working?<span class="faq-x" aria-hidden="true"></span></summary>
+          <p>Before launch we capture your baseline — reply rates and meeting conversion from the prior 60 days — and every report benchmarks against it: reply-rate deltas, inbound from target accounts, meetings booked. No vanity impressions. Where your roster allows, we stagger activation so the comparison is closer to an experiment than a before/after story.</p>
+        </details>
+        <details class="faq">
+          <summary>What does it cost?<span class="faq-x" aria-hidden="true"></span></summary>
+          <p>There is no public rate card. Coverage is scoped to your market lanes, cadence, and activation depth — and category availability comes first. Both are confirmed on request, typically within 48 hours.</p>
+        </details>
+      </div>
+    </section>
 
-        <!-- Use Cases -->
-        <section id="use-cases" class="section border-b bg-muted">
-            <div class="container">
-                <div class="section-header reveal flex justify-between align-end mb-8 border-b pb-4">
-                    <div>
-                        <div class="mono-text mb-2 text-muted">REF.02 // DEPLOYMENT TARGETS</div>
-                        <h2>Win the feed.</h2>
-                    </div>
-                </div>
-
-                <div class="grid-3">
-                    <div class="manual-card reveal border radius-lg bg-surface flex-col">
-                        <div class="flex justify-between align-center mb-6 border-b pb-4">
-                            <span class="badge">TARGET: SDR / AE</span>
-                        </div>
-                        <h3 class="mb-4">Inbound-Led Outbound</h3>
-                        <p class="text-body text-muted mb-10">A rep posts timely analysis on a market shift their prospects already care about, then uses that attention as credible context for outbound.</p>
-                        <div class="mono-text text-xs mt-auto bg-dark text-white p-2 inline-block radius-sm self-start">OUTCOME: PIPELINE</div>
-                    </div>
-
-                    <div class="manual-card reveal delay-1 border radius-lg bg-surface flex-col">
-                        <div class="flex justify-between align-center mb-6 border-b pb-4">
-                            <span class="badge">TARGET: FOUNDER</span>
-                        </div>
-                        <h3 class="mb-4">Market Authority</h3>
-                        <p class="text-body text-muted mb-10">Your leadership team turns market movement into controlled, timely point-of-view, mapped to buyer urgency and competitor motion.</p>
-                        <div class="mono-text text-xs mt-auto bg-dark text-white p-2 inline-block radius-sm self-start">OUTCOME: LEADERSHIP</div>
-                    </div>
-
-                    <div class="manual-card reveal delay-2 border radius-lg bg-surface flex-col">
-                        <div class="flex justify-between align-center mb-6 border-b pb-4">
-                            <span class="badge">TARGET: MARKETING</span>
-                        </div>
-                        <h3 class="mb-4">Controlled Distribution</h3>
-                        <p class="text-body text-muted mb-10">Keep the narrative centralized and brand-safe while giving the field a faster way to distribute timely, relevant market insight.</p>
-                        <div class="mono-text text-xs mt-auto bg-dark text-white p-2 inline-block radius-sm self-start">OUTCOME: VELOCITY</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Pricing / Packages -->
-        <section id="pricing" class="section border-b">
-            <div class="container">
-                <div class="section-header reveal flex justify-between align-end mb-8 border-b pb-4">
-                    <div>
-                        <div class="mono-text mb-2 text-muted">REF.03 // INTELLIGENCE COVERAGE</div>
-                        <h2>Choose your coverage.</h2>
-                    </div>
-                    <p class="section-kicker text-body text-muted">
-                        Packages are defined by market coverage, operating cadence, and GTM activation depth. Output flexes with the signals worth acting on.
-                    </p>
-                </div>
-
-                <div class="access-panel reveal border bg-surface radius-lg">
-                    <div class="access-panel-head border-b">
-                        <div>
-                            <div class="mono-text text-muted mb-2">ACCESS IS CATEGORY-CONSTRAINED</div>
-                            <h3>One category per client.</h3>
-                        </div>
-                        <p class="text-body text-muted">We keep availability intentionally narrow. If we are building the signal layer for your category, we are not building it for your direct competitor.</p>
-                    </div>
-
-                    <div class="access-grid">
-                        <article class="access-card">
-                            <div class="mono-text text-muted mb-4">01 // STARTER</div>
-                            <h3>Signal Response</h3>
-                            <p>One market lane monitored. Weekly intel becomes SDR-ready activation.</p>
-                        </article>
-
-                        <article class="access-card access-card-featured">
-                            <div class="flex justify-between align-center gap-4 mb-4">
-                                <div class="mono-text text-muted-inverted">02 // GROWTH</div>
-                                <span class="badge inverted-badge">Recommended</span>
-                            </div>
-                            <h3>Revenue Signal System</h3>
-                            <p>Two market lanes, competitor tracking, and coordinated SDR + AE deployment.</p>
-                        </article>
-
-                        <article class="access-card">
-                            <div class="mono-text text-muted mb-4">03 // SCALE</div>
-                            <h3>Category Intelligence Engine</h3>
-                            <p>Always-on coverage across revenue, expansion, retention, and partner channels.</p>
-                        </article>
-                    </div>
-
-                    <div class="access-footer border-t">
-                        <span class="mono-text text-muted">No public rate card. Fit, category availability, and operating layer confirmed on request.</span>
-                        <a href="#apply" class="btn-primary">Request Access &rarr;</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Conversion Form -->
-        <section id="apply" class="section">
-            <div class="container max-w-2xl mx-auto">
-                <div class="manual-card border bg-surface text-center reveal radius-lg">
-                    <div class="mono-text mb-6 border-b pb-3 inline-block mx-auto text-muted">INITIALIZATION SEQUENCE</div>
-                    <h2 class="mb-10">Arm your revenue team.</h2>
-                    
-                    <form id="accessForm" class="tech-form text-left" novalidate>
-                        <div class="visually-hidden" aria-hidden="true">
-                            <label for="gotcha">Leave this field blank</label>
-                            <input type="text" id="gotcha" name="gotcha" tabindex="-1" autocomplete="off">
-                        </div>
-
-                        <div class="form-progress mb-8 flex justify-between mono-text border-b pb-4" aria-hidden="true">
-                            <span id="dot-1" class="active">01. AUTH</span>
-                            <span id="dot-2" class="text-muted">02. CLASS</span>
-                            <span id="dot-3" class="text-muted">03. TARGET</span>
-                        </div>
-
-                        <!-- Step 1 -->
-                        <div class="form-step active fade-in" id="step-1">
-                            <label for="workEmail" class="block mb-3 mono-text font-bold">WORK_EMAIL_ADDRESS</label>
-                            <input type="email" id="workEmail" name="work_email" autocomplete="email" class="tech-input mb-3" placeholder="name@company.com" required>
-                            <div class="mono-text text-xs text-error hidden mb-4 bg-dark text-white p-3 radius-sm" id="emailError" role="status">ERR: INVALID B2B EMAIL.</div>
-                            <button type="button" class="btn-primary w-full mt-6" id="nextBtn1">PROCEED &rarr;</button>
-                        </div>
-
-                        <!-- Step 2 -->
-                        <div class="form-step hidden fade-in" id="step-2">
-                            <label for="companyCategory" class="block mb-3 mono-text font-bold">COMPANY_CATEGORY</label>
-                            <select id="companyCategory" name="company_category" class="tech-input mb-8" required>
-                                <option value="">[ Select Category ]</option>
-                                <option value="cybersecurity">Cybersecurity</option>
-                                <option value="education">Education</option>
-                                <option value="healthcare">Healthcare</option>
-                                <option value="hr_workplace">HR and Workplace</option>
-                                <option value="compliance">Compliance</option>
-                                <option value="marketing">Marketing</option>
-                                <option value="other">Other</option>
-                            </select>
-                            <div class="flex gap-4">
-                                <button type="button" class="btn-outline w-full" id="backBtn1">&larr; BACK</button>
-                                <button type="button" class="btn-primary w-full" id="nextBtn2">PROCEED &rarr;</button>
-                            </div>
-                        </div>
-
-                        <!-- Step 3 -->
-                        <div class="form-step hidden fade-in" id="step-3">
-                            <label for="primaryGoal" class="block mb-3 mono-text font-bold">PRIMARY_GTM_OBJECTIVE</label>
-                            <select id="primaryGoal" name="primary_goal" class="tech-input mb-8" required>
-                                <option value="">[ Select Objective ]</option>
-                                <option value="outbound">Scale SDR Outbound Pipeline</option>
-                                <option value="founder">Build Founder Authority</option>
-                                <option value="enablement">Equip AEs for Deal Acceleration</option>
-                            </select>
-                            <div class="flex gap-4">
-                                <button type="button" class="btn-outline w-full" id="backBtn2">&larr; BACK</button>
-                                <button type="submit" class="btn-primary w-full flex justify-center align-center" id="submitBtn">
-                                    <span>EXECUTE</span>
-                                    <span class="loader-text hidden ml-2 blink">_PROCESSING</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <p id="formStatus" class="mono-text mt-6 hidden text-center bg-dark text-white p-3 radius-sm" role="status"></p>
-
-                        <!-- Success State -->
-                        <div class="form-step hidden text-center py-8 fade-in" id="step-success">
-                            <div class="text-3xl mb-6">&#x2713;</div>
-                            <h3 class="mb-4">Request Received.</h3>
-                            <p class="text-body text-muted">Awaiting category verification. Expected response interval: 48 hours.</p>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer py-8 border-t bg-surface">
-        <div class="container">
-            <div class="flex flex-wrap justify-between align-center gap-8 mb-8 border-b pb-8">
-                <div class="logo font-bold">Ideafridge.</div>
-                <div class="footer-links flex gap-6 mono-text">
-                    <a href="#engine" class="nav-item">ENGINE</a>
-                    <a href="#use-cases" class="nav-item">TARGETS</a>
-                    <a href="#pricing" class="nav-item">CONFIG</a>
-                </div>
-            </div>
-            <div class="flex flex-wrap justify-between align-center gap-4 mono-text text-muted text-xs">
-                <p>&copy; 2026 IDEAFRIDGE MEDIA, INC. ALL SYSTEMS NOMINAL.</p>
-                <div class="legal-links flex gap-6">
-                    <a href="privacy.html" class="nav-item">PRIVACY PROTOCOL</a>
-                    <a href="terms.html" class="nav-item">TERMS OF SERVICE</a>
-                </div>
-            </div>
+    <!-- ============ APPLY ============ -->
+    <section class="section section-rule final" id="apply" aria-labelledby="apply-h">
+      <p class="eyebrow mono reveal eyebrow-center" data-decode>INITIALIZATION SEQUENCE</p>
+      <h2 id="apply-h" class="final-h reveal">Arm your revenue team.</h2>
+      <p class="final-t reveal">One request. We confirm category availability and fit — and if your category is taken or the engine isn't right for where you are, we'll tell you that too. Expected response interval: 48 hours.</p>
+      <form class="lead-form reveal" id="lead-form" novalidate>
+        <label class="visually-hidden" for="email">Work email address</label>
+        <div class="lead-row">
+          <input type="email" id="email" name="email" inputmode="email" autocomplete="email"
+                 maxlength="254" required placeholder="WORK_EMAIL_ADDRESS" class="lead-input mono">
+          <button type="submit" class="btn btn-ink lead-btn">Proceed &rarr;</button>
         </div>
-    </footer>
+        <div class="hp" aria-hidden="true">
+          <label for="company_website">Leave this field blank</label>
+          <input type="text" id="company_website" name="company_website" tabindex="-1" autocomplete="off">
+        </div>
+        <p class="lead-msg mono" id="lead-msg" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
 
-    <script src="script.js" defer></script>
+  <footer class="site-foot">
+    <div class="foot-inner">
+      <p class="wordmark wordmark-sm">Ideafridge<span class="wm-period">.</span></p>
+      <nav class="foot-links mono" aria-label="Footer">
+        <a href="#engine">ENGINE</a>
+        <a href="#targets">TARGETS</a>
+        <a href="#coverage">COVERAGE</a>
+        <a href="https://ideafridge.com/privacy" rel="noopener">PRIVACY PROTOCOL</a>
+        <a href="https://ideafridge.com/terms" rel="noopener">TERMS</a>
+      </nav>
+      <p class="foot-meta mono">© <span id="year">2026</span> IDEAFRIDGE MEDIA, INC. ALL SYSTEMS NOMINAL.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
 </body>
 </html>
