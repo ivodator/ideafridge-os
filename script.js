@@ -129,10 +129,10 @@
   // JWT keys also work, but sb_publishable_ keys must not be sent as Bearer JWTs.
   var SUPABASE_ANON_KEY = "sb_publishable_a7UeootOqf0KFd9rrroytQ_dbTSqNOg";
   var LEADS_TABLE = "leads";
-  // The object inserted (see body below) sends { email, source }. Those column
-  // names must exist on your table. `created_at` is intentionally NOT sent —
-  // give that column a `default now()` so Postgres stamps the time server-side
-  // (a client-supplied timestamp is spoofable and unnecessary).
+  // The object inserted (see body below) sends { email }. That column must
+  // exist on your table. `created_at` is intentionally NOT sent — give that
+  // column a `default now()` so Postgres stamps the time server-side (a
+  // client-supplied timestamp is spoofable and unnecessary).
   // ───────────────────────────────────────────────────────────────────────────
 
   var LEADS_ENDPOINT = SUPABASE_URL + "/rest/v1/" + LEADS_TABLE;
@@ -205,7 +205,7 @@
       fetch(LEADS_ENDPOINT, {
         method: "POST",
         headers: headers,
-        body: JSON.stringify({ email: email, source: "ideafridge.com" }),
+        body: JSON.stringify({ email: email }),
         mode: "cors",
         credentials: "omit", // cross-origin to Supabase — never attach cookies
         cache: "no-store",
