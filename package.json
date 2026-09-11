@@ -1,8 +1,0 @@
-{
-  "name": "ideafridge-website",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "description": "A static website with a Supabase contact endpoint. No build step or package installation is required.",
-  "scripts": { "test": "node --test tests/contact.test.js" }
-}
