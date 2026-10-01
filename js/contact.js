@@ -18,6 +18,7 @@ export function initContact() {
   const status = document.querySelector('#form-status');
   const submit = form.querySelector('button[type="submit"]');
   const buttonLabel = submit.querySelector('span');
+  const idleLabel = buttonLabel.textContent;
   const configured = isConfigured();
   let botToken = ''; let widgetId; let widgetPromise; let submitting = false;
   let requestId = crypto.randomUUID();
@@ -114,7 +115,7 @@ export function initContact() {
     } catch (error) {
       status.textContent = error.name === 'AbortError' ? 'The request timed out. Please try again.' : 'Your request could not be sent. Check your connection and try again.';
     } finally {
-      clearTimeout(timeout); submitting = false; submit.disabled = false; buttonLabel.textContent = 'Request to connect'; form.removeAttribute('aria-busy');
+      clearTimeout(timeout); submitting = false; submit.disabled = false; buttonLabel.textContent = idleLabel; form.removeAttribute('aria-busy');
       botToken = '';
       if (widgetId !== undefined && window.turnstile) window.turnstile.reset(widgetId);
     }

@@ -1,0 +1,9 @@
+/* One idea. Many voices. Kept separate for a clean, reversible installation. */
+.voices-art{display:block;overflow:visible;color:var(--ink,#171817)}
+.voices-art path{fill:none;stroke:currentColor;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.voices-art .idea-line{stroke-width:3.2}
+.voices-art .voice-line{stroke-width:2.8}
+.voices-art .voice-line.accent,.voices-art .idea-line.accent{stroke:var(--sage,#8c9680)}
+.voices-art .voice-detail{stroke:var(--sage,#8c9680);stroke-width:1;stroke-opacity:.65}
+.voices-art .voice-rule{stroke-width:.65;stroke-opacity:.35}
+@media(max-width:650px){.voices-art .idea-line{stroke-width:2.6}.voices-art .voice-line{stroke-width:2.1}.voices-art .voice-detail{stroke-width:.8}}

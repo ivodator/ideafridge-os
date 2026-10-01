@@ -1,0 +1,14 @@
+/* Signal imprint: texture is confined to the artwork, never the hero background. */
+.signal-imprint{position:relative;display:block;isolation:isolate;width:108%;margin-left:-4%;aspect-ratio:600/530;color:#222421}
+.signal-imprint canvas,.signal-imprint .signal-fallback{position:absolute;inset:0;display:block;width:100%;height:100%}
+.signal-imprint .signal-fallback img{display:block;width:100%;height:100%;object-fit:contain}
+.signal-imprint canvas{visibility:hidden;pointer-events:none}
+.signal-imprint.is-ready canvas{visibility:visible}
+.signal-imprint.is-ready .signal-fallback{visibility:hidden}
+@media(max-width:650px){
+  .signal-imprint{width:100%;margin-left:0;aspect-ratio:420/340}
+}
+@media(prefers-reduced-motion:reduce){
+  .signal-imprint.is-ready canvas{visibility:hidden}
+  .signal-imprint.is-ready .signal-fallback{visibility:visible}
+}
