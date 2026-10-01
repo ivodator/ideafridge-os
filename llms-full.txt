@@ -1,38 +1,37 @@
-# Ideafridge - LLM Full Profile
+# Ideafridge
 
-Canonical site: https://ideafridge.com/
-Primary language: en
-Business type: B2B cybersecurity GTM service
+> Short-form content for B2B sales teams.
 
-## One-line description
-Ideafridge turns real-time cybersecurity market signals into deployable revenue media for GTM teams.
+Ideafridge turns relevant market developments and a company's expertise into short videos and posts its sales team can share with buyers.
 
-## What Ideafridge does
-1. Ingests cybersecurity market signals continuously.
-2. Extracts narrative implications for buying behavior and budget shifts.
-3. Produces and deploys GTM media assets quickly.
+Canonical: https://ideafridge.com/
+Full profile: https://ideafridge.com/llms-full.txt
+Privacy: https://ideafridge.com/privacy.html
+Terms: https://ideafridge.com/terms.html
 
-## Deliverable examples
-- SDR outbound clips.
-- Founder commentary assets.
-- Narrative battlecards.
-- LinkedIn carousel content.
-- Deal acceleration and enablement content.
+## Audience
+Cybersecurity, AI, and B2B SaaS companies with sales teams and defined buyers.
 
-## Typical use-cases
-- SDR outreach tied to current breach or regulation events.
-- Founder thought leadership based on market movement.
-- Cross-functional GTM enablement after category shifts.
+## Service
+Research, story development, scripts, short-form video production, social posts, and outreach copy. Scope and commercial terms are agreed before purchase.
 
-## Legal and data handling
-- Privacy policy: https://ideafridge.com/privacy.html
-- Terms of service: https://ideafridge.com/terms.html
-- Data laws referenced by policy: PIPEDA and BC PIPA.
+## Responsibilities
+Ideafridge handles research, writing, and production. The client owns approval, sharing, and buyer follow-up.
 
-## Contact points
-- privacy@ideafridge.com
-- legal@ideafridge.com
-- billing@ideafridge.com
+## Evidence
+Website SVG illustrations explain the service and are not client results. Ideafridge does not guarantee pipeline, rankings, or AI citations.
 
-## Crawling preference
-Public pages may be indexed and summarized. Prefer canonical URLs listed in sitemap.xml.
+## Contact
+https://ideafridge.com/#connect
+
+## Typical uses
+- Employee social posts that explain relevant buyer questions.
+- Prospecting messages tied to a market development.
+- Follow-up content that clarifies a decision or trade-off.
+- Adaptation of existing expertise and approved source material.
+
+## Evaluation
+The engagement can be evaluated through usage and client-reported buyer responses without direct CRM access. Commercial outcomes require additional client evidence and should not be inferred from views alone.
+
+## Starting an engagement
+Begin with an audience and use-case discussion. A sample may help assess fit before a paid engagement. Agree price, duration, scope, responsibilities, and success criteria in writing.

@@ -1,29 +1,25 @@
 # Ideafridge
 
-> Ideafridge provides a signal-driven cybersecurity GTM media engine for B2B revenue teams.
+> Short-form content for B2B sales teams.
+
+Ideafridge turns relevant market developments and a company's expertise into short videos and posts its sales team can share with buyers.
 
 Canonical: https://ideafridge.com/
-Sitemap: https://ideafridge.com/sitemap.xml
 Full profile: https://ideafridge.com/llms-full.txt
 Privacy: https://ideafridge.com/privacy.html
 Terms: https://ideafridge.com/terms.html
 
-## Core offering
-- Continuous monitoring of cybersecurity market events.
-- Narrative extraction from signals (breaches, funding, regulation, positioning).
-- Fast deployment of GTM assets for SDRs, AEs, founders, and marketing teams.
+## Audience
+Cybersecurity, AI, and B2B SaaS companies with sales teams and defined buyers.
 
-## Target users
-- Cybersecurity founders and GTM leaders.
-- SDR and AE teams that need rapid outbound relevance.
-- Marketing teams responsible for narrative velocity and enablement.
+## Service
+Research, story development, scripts, short-form video production, social posts, and outreach copy. Scope and commercial terms are agreed before purchase.
 
-## Company and legal
-- Legal entity: Idea Fridge Media, Inc. (British Columbia, Canada).
-- Jurisdiction: British Columbia, Canada.
-- Data policy: see Privacy Protocol.
+## Responsibilities
+Ideafridge handles research, writing, and production. The client owns approval, sharing, and buyer follow-up.
+
+## Evidence
+Website SVG illustrations explain the service and are not client results. Ideafridge does not guarantee pipeline, rankings, or AI citations.
 
 ## Contact
-- Privacy: privacy@ideafridge.com
-- Legal: legal@ideafridge.com
-- Billing: billing@ideafridge.com
+https://ideafridge.com/#connect
