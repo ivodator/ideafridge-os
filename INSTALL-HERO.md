@@ -1,6 +1,6 @@
-# Install the new hero
+# Install the updated website
 
-This ZIP contains the complete website. The new hero artwork is already installed. Everything else on the page is preserved.
+This ZIP contains the complete website with the refined Chorus hero and consistent SVG arrow icons. The existing copy, typography, layout and service configuration are preserved.
 
 ## Preview
 
@@ -12,38 +12,41 @@ For the complete website, run this from the website folder:
 python -m http.server 8000
 ```
 
-Then open `http://localhost:8000`. Opening the full homepage directly from disk does not load its ES modules correctly.
+Then open `http://localhost:8000`. The full homepage uses ES modules, so opening it directly from disk is not a complete preview.
 
-## Full website
+## Full website update
 
-Copy the contents of `ideafridge-os-main` into the same website root as your existing version, preserving the `assets`, `css` and `js` directories. This package does not deploy automatically.
+Copy the contents of `ideafridge-os-main` into the same website root as your existing version. Preserve the `assets`, `css` and `js` directories. This package does not publish automatically.
 
-## Hero-only update from the previous package
+## Update only the changed production files
 
-Replace:
+Replace these files together:
 
+- `index.html`
+- `privacy.html`
+- `terms.html`
+- `css/styles.css`
 - `js/hero-signal.js`
+- `js/vector-motion.js`
 - `assets/signal-imprint-desktop.svg`
 - `assets/signal-imprint-mobile.svg`
 
-In `index.html`, update the existing `.signal-imprint` element's `aria-label` to:
+The three HTML pages replace font arrow characters with inline SVG line icons. The shared stylesheet sets their size and alignment. Privacy Policy and Terms text is unchanged.
 
-> One idea takes shape as a series of ink ribbons, then becomes three related expressions.
+The hero renderer and fallback assets contain the refined continuous ribbon animation. The shared motion controller also corrects a live reduced-motion preference change, so the static artwork and control labels update together. Headline words, timing and other section choreography are unchanged.
 
-The supplied `index.html` already includes that accessibility description. Its visible copy and page structure are unchanged.
+Keep `css/hero-signal.css`, `js/main.js`, `js/config.js`, `js/contact.js` and the other existing assets. No backend changes are needed.
 
-Keep the existing `css/hero-signal.css`, `css/styles.css`, `js/vector-motion.js`, `js/main.js`, `js/config.js` and `js/contact.js` unchanged. The new artwork uses their existing hooks and controls.
+The ZIP also includes updated preview, snippet, release notes and asset-generator files. These are not additional production dependencies.
 
-The ZIP also updates `hero-preview.html`, `snippets/hero-signal.html`, this guide, the release notes and the static asset generator. These are not additional production dependencies.
+## Future artwork edits
 
-## Future artwork changes
-
-`js/hero-signal.js` contains the geometry and 12.8-second choreography. `chorusSVG()` produces the same resolved composition for the static fallback. After changing the shape, regenerate both fallback assets:
+`js/hero-signal.js` contains the geometry and 13.6-second choreography. `chorusSVG()` produces the resolved static composition from the same geometry. After changing the shape, regenerate both fallback assets:
 
 ```sh
 node tools/build-signal-fallbacks.mjs
 ```
 
-The standalone preview embeds a copy of the renderer. Preview later edits through the full homepage unless you also rebuild the standalone preview.
+The standalone preview embeds a snapshot of the renderer. Preview future edits through the homepage unless you also rebuild the standalone preview.
 
-Supabase, Cloudflare, the contact form, CSP, domain settings, Privacy Policy and Terms are unchanged.
+Supabase configuration, Cloudflare Turnstile, the contact handler, CSP and domain settings are unchanged. Nothing is deployed by this package.

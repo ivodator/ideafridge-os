@@ -18,6 +18,7 @@ export function initVectorMotion() {
   const roots = [...document.querySelectorAll('[data-motion-scene]')];
   if (!roots.length) return;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  let reducedMotion = reduced.matches;
   const narrow = matchMedia('(max-width: 650px)');
   const controls = [...document.querySelectorAll('.motion-toggle')];
   const words = [...document.querySelectorAll('[data-word]')];
@@ -61,7 +62,7 @@ export function initVectorMotion() {
     focus:root.querySelector('[data-focus]'),
     selected:root.querySelector('[data-selection]')
   }));
-  if(!reduced.matches)scenes.forEach(scene=>{scene.voices?.render(0);scene.signal?.render(0);});
+  if(!reducedMotion)scenes.forEach(scene=>{scene.voices?.render(0);scene.signal?.render(0);});
   const resetStatic = () => {
     originals.forEach(({el,attrs})=>{
       attrs.forEach(([name,value])=>value===null?el.removeAttribute(name):el.setAttribute(name,value));
@@ -162,7 +163,7 @@ export function initVectorMotion() {
     }
     set(scene.selected,'opacity',.5+.5*selected,true);
   };
-  const active=()=>!paused&&!reduced.matches&&!document.hidden&&scenes.some(s=>s.visible);
+  const active=()=>!paused&&!reducedMotion&&!document.hidden&&scenes.some(s=>s.visible);
   const tick=now=>{
     frame=0;
     if(!active()){last=0;return;}
@@ -183,10 +184,10 @@ export function initVectorMotion() {
   };
   const updateControls=()=>controls.forEach(button=>{
     button.hidden=false;
-    button.disabled=reduced.matches;
-    button.setAttribute('aria-pressed',String(paused||reduced.matches));
-    button.setAttribute('aria-label',reduced.matches?'Reduced motion enabled':paused?'Resume animations':'Pause animations');
-    button.querySelector('span').textContent=reduced.matches?'Reduced motion':paused?'Play motion':'Pause motion';
+    button.disabled=reducedMotion;
+    button.setAttribute('aria-pressed',String(paused||reducedMotion));
+    button.setAttribute('aria-label',reducedMotion?'Reduced motion enabled':paused?'Resume animations':'Pause animations');
+    button.querySelector('span').textContent=reducedMotion?'Reduced motion':paused?'Play motion':'Pause motion';
     button.querySelector('path').setAttribute('d',paused?'M3 2 L10 6 L3 10 Z':'M4 2 V10 M8 2 V10');
   });
   controls.forEach(button=>button.addEventListener('click',()=>{
@@ -203,8 +204,9 @@ export function initVectorMotion() {
     sync();
   },{threshold:[0,.04]});
   scenes.forEach(scene=>observer.observe(scene.root));
-  reduced.addEventListener('change',()=>{
-    if(reduced.matches){resetStatic();wordTime=0;processTime=0;scenes.forEach(s=>s.time=0);}
+  reduced.addEventListener('change',event=>{
+    reducedMotion=event.matches;
+    if(reducedMotion){resetStatic();wordTime=0;processTime=0;scenes.forEach(s=>s.time=0);}
     updateControls();sync();
   });
   narrow.addEventListener('change',()=>{

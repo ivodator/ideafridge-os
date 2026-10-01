@@ -1,29 +1,43 @@
-# Ideafridge hero reset: Chorus
+# Ideafridge hero refinement: Chorus
 
-Only the hero artwork has changed. The headline, word rotation, site copy, layout, typography, color scheme, approach and distribution animations, footer, legal pages and contact integration remain as supplied in the previous package.
+The accepted ribbon direction has been refined. The headline, its word loop, typography, page layout, content, other section choreography and integrations are preserved. This package also includes SVG arrow icons and a live reduced-motion correction.
 
-## The idea
+## What improved
 
-One recognizable ink mark opens, becomes three related expressions, holds, then returns. Its repeated curved ribbons connect the central idea with its outward expressions. Strong black shapes and deliberate white space carry the composition.
+- One continuous field of ribbons separates into three related forms. Every strip remains visible and follows its own path. There are no duplicate shapes fading into place.
+- A restrained travelling fold changes the curvature and thickness of the source ribbons before they separate.
+- Tapered strokes and small variations in near-black tone create a sense of material while preserving the monochrome treatment.
+- The three groups move with a small stagger, settle fully, then gather into the original form.
+- The static states remain legible brand graphics. The artwork never disappears to restart the loop.
 
-## Motion
+## Reference review
 
-The 12.8-second cycle includes an opening, a settled beat, the emergence of two companion marks, a longer hold and a quiet return. Companion marks become visible only after they clear the central mark. Their paths stay separate during the transitions.
+The live OpenAI, ElevenLabs and Cohere homepages were reviewed for the September 2026 brief. Useful cues included strong editorial hierarchy, generous space, tactile abstract forms, product relevance and transitions between clearly composed states. These are design observations from the references, not a claim that all AI companies use one visual trend.
 
-The headline retains its existing words, timing and animation. The hero uses a longer independent phrase. It does not pulse in response to the rotating words.
+The implementation is original and retains Ideafridge's ink ribbon motif. It does not use another company's illustration, logo, animation code, orb or product interface.
 
-- Nine filled ribbon paths per mark, at most three marks.
-- No particles, halftone textures, video or extra animation library.
-- Native Canvas drawing, driven by the existing shared animation clock.
-- Responsive geometry with a more compact mobile composition.
-- Shared pause/resume and offscreen suspension remain supported.
-- Reduced motion and disabled JavaScript use a complete static SVG.
-- No redraw during unchanged states. Device pixel ratio is capped at 2.
+## Sequence and implementation
 
-## Files
+The cycle is 13.6 seconds. It includes a travelling fold, a settled source state, a staged separation, a longer hold and a return. The headline's existing independent timing is unchanged.
 
-`hero-preview.html` opens directly from disk. The full homepage uses ES modules, so preview it through a local web server. See `INSTALL-HERO.md` for installation.
+Desktop uses 27 ribbons, with nine in each final form. Mobile uses 21 ribbons, seven in each final form, and its own spacing and dimensions. The geometry is drawn with native Canvas paths and driven by the existing shared animation clock. There is no extra animation loop, video, 3D library or remote dependency.
 
-The existing `hero-signal.js` and `signal-imprint-*.svg` filenames are retained so the new artwork fits the existing integration. These files now contain Chorus, not the previous halftone animation.
+Pause/resume, offscreen suspension and document visibility are handled by the existing controller. Unchanged states do not redraw. Pixel ratio is capped at 2. Reduced motion and disabled JavaScript use responsive SVG fallbacks generated from the same geometry.
 
-This package does not deploy anything. Supabase, Cloudflare Turnstile, the form handler, security policy, domain configuration and legal pages have not changed.
+## Included files
+
+The ZIP includes the complete website, a standalone `hero-preview.html`, `INSTALL-HERO.md`, a replacement figure snippet and a static asset generator. Existing filenames are retained for compatibility.
+
+Supabase configuration, Cloudflare Turnstile, form handling, security policy, domain file and legal text are unchanged. Nothing is deployed by this package.
+
+## Mobile arrow correction
+
+The diagonal CTA arrows on Let's talk, Let's chat and Discuss a pilot now use inline SVG paths. The same treatment is used for the legal-page links and the approach scroll arrow. Their 18-pixel size, 1.5-pixel stroke and inherited text color stay consistent across fonts and operating systems. They are hidden from screen readers and do not receive keyboard focus.
+
+## Reduced-motion correction
+
+The controller now updates its motion state from the media-query change event rather than reading the preference on every animation frame. Switching reduced motion on updates the static artwork, headline and pause-control state together. Switching it off resumes the existing animation system.
+
+## Verification
+
+Passed 36 local browser checks covering responsive widths from 320 to 1920 pixels, headline stability, pause/resume, live reduced-motion changes, static fallback, offscreen suspension, SVG icons and an intercepted form error response. A separate geometry check sampled 544 desktop/mobile frames with no intersections between adjacent ribbons and an exact loop return. No live contact request was submitted.
