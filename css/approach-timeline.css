@@ -1,0 +1,39 @@
+/* Approach timeline: four steps on one rail, with who does each. Base styles are the
+   finished state. Where scroll-linked animation is supported, the rail fills and each
+   step lights up as the section scrolls through the viewport. No script. */
+.timeline{list-style:none;margin:76px 0 0;padding:0;position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:40px;view-timeline-name:--tl}
+.timeline::before,.timeline::after{content:"";position:absolute;left:0;right:0;top:5px;height:1px;background:#cdd1c6}
+.timeline::after{top:4px;height:3px;border-radius:3px;background:var(--ink);transform-origin:left center}
+.tl-step{position:relative;padding-top:46px}
+.tl-dot{position:absolute;z-index:1;left:0;top:0;width:11px;height:11px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 6px var(--soft)}
+.tl-step .small-label{font-size:12px;line-height:1.6;letter-spacing:.06em;margin-bottom:14px}
+.tl-step h3{font-size:26px;margin-bottom:13px}
+.tl-step p{font-size:16px;line-height:1.7;color:var(--muted);max-width:300px;margin-bottom:20px}
+.tl-who{display:inline-block;font-size:12px;font-weight:550;line-height:1.5;padding:5px 12px;border-radius:100px;border:1px solid #c4c9bb;color:var(--ink)}
+.tl-who.is-client{background:var(--ink);border-color:var(--ink);color:#fff}
+
+@keyframes tl-fill{from{scale:0 1}}
+@keyframes tl-fill-v{from{scale:1 0}}
+@keyframes tl-on-1{0%{opacity:.32}6%{opacity:1}}
+@keyframes tl-on-2{0%,21%{opacity:.32}29%{opacity:1}}
+@keyframes tl-on-3{0%,47%{opacity:.32}55%{opacity:1}}
+@keyframes tl-on-4{0%,73%{opacity:.32}81%{opacity:1}}
+@keyframes tl-on-v{from{opacity:.32}}
+@supports (animation-timeline:view()){
+  .timeline::after,.tl-step{animation:tl-fill linear both;animation-timeline:--tl;animation-range:cover 18% cover 44%}
+  .tl-1{animation-name:tl-on-1}.tl-2{animation-name:tl-on-2}.tl-3{animation-name:tl-on-3}.tl-4{animation-name:tl-on-4}
+}
+@media(max-width:1150px){.timeline{gap:28px}.tl-step h3{font-size:22px}.tl-step p{font-size:15px}}
+@media(max-width:900px){
+  .timeline{grid-template-columns:1fr;gap:38px;padding-left:36px;margin-top:52px}
+  .timeline::before,.timeline::after{left:5px;right:auto;top:8px;bottom:0;width:1px;height:auto}
+  .timeline::after{left:4px;width:3px;transform-origin:center top}
+  .tl-step{padding-top:0}
+  .tl-dot{left:-36px;top:4px}
+  .tl-step h3{font-size:25px}
+  .tl-step p{font-size:16px;max-width:420px;margin-bottom:16px}
+  @supports (animation-timeline:view()){
+    .timeline::after{animation-name:tl-fill-v;animation-range:cover 18% cover 62%}
+    .tl-step{animation-name:tl-on-v;animation-timeline:view();animation-range:entry 40% cover 32%}
+  }
+}

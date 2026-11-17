@@ -1,0 +1,40 @@
+/* Reach scene: a rep sends the clip, the buyer replies. Base styles are the finished
+   thread; js/main.js arms it (.will-play) and plays it once when scrolled into view. */
+.thread{max-width:460px;margin-inline:auto;color:var(--ink);text-align:left}
+.th-card{background:var(--paper);border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 1px 2px rgba(23,24,23,.04),0 24px 48px -24px rgba(23,24,23,.2)}
+.th-card p{margin:0}
+.th-head{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line)}
+.th-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#c9cfbf,#8c9680);flex:none}
+.th-head p{display:flex;flex-direction:column;line-height:1.35;font-size:12px;color:var(--muted)}
+.th-head strong{font-size:14px;font-weight:600;color:var(--ink)}
+.th-body{display:flex;flex-direction:column;gap:8px;padding:18px 20px 24px}
+.th-day{align-self:center;font-size:11px;line-height:1.4;color:var(--muted);padding-bottom:6px}
+.th-out,.th-in{max-width:84%;padding:11px 15px;border-radius:18px;font-size:14px;line-height:1.5}
+.th-out{align-self:flex-end;background:var(--ink);color:#fff;border-bottom-right-radius:6px}
+.th-clip{align-self:flex-end;display:flex;align-items:center;gap:12px;max-width:84%;padding:8px 16px 8px 8px;border:1px solid var(--line);border-radius:16px;background:var(--soft)}
+.th-thumb{width:44px;height:60px;border-radius:9px;flex:none;display:grid;place-items:center;background:radial-gradient(120% 75% at 30% 22%,#59654e 0%,#2a2e26 55%,#171817 100%)}
+.th-thumb svg{width:16px;fill:#fff;margin-left:2px}
+.th-clip p{display:flex;flex-direction:column;gap:2px;font-size:12px;line-height:1.35;color:var(--muted)}
+.th-clip strong{font-size:13px;font-weight:600;color:var(--ink)}
+.th-seen{align-self:flex-end;font-size:11px;line-height:1.4;color:var(--muted)}
+.th-slot{display:grid;margin-top:8px}
+.th-slot>*{grid-area:1/1;justify-self:start;align-self:start}
+.th-in{background:var(--soft);border-bottom-left-radius:6px}
+.th-typing{display:flex;gap:5px;padding:15px 16px;border-radius:18px;background:var(--soft);opacity:0}
+.th-typing i{width:6px;height:6px;border-radius:50%;background:#8a8e85}
+.reach-visual{margin-left:0}
+.reach-visual figcaption{margin-top:18px}
+
+@keyframes th-pop{from{opacity:0;translate:0 10px}}
+@keyframes th-typing{0%{opacity:0}12%,85%{opacity:1}100%{opacity:0}}
+@keyframes th-dot{0%,100%{translate:0 0}40%{translate:0 -4px}}
+.thread.will-play:not(.is-playing) .th-item{opacity:0}
+.thread.is-playing .th-item{animation:th-pop .5s cubic-bezier(.22,.68,0,1) .2s both}
+.thread.is-playing .th-2{animation-delay:.8s}
+.thread.is-playing .th-3{animation-delay:1.5s}
+.thread.is-playing .th-4{animation-delay:3.6s}
+.thread.is-playing .th-typing{animation:th-typing 1.5s linear 2s both}
+.thread.is-playing .th-typing i{animation:th-dot .7s ease-in-out 2s 2 both}
+.thread.is-playing .th-typing i:nth-child(2){animation-delay:2.12s}
+.thread.is-playing .th-typing i:nth-child(3){animation-delay:2.24s}
+@media(max-width:650px){.th-body{padding:16px 16px 20px}.th-head{padding:14px 16px}.th-out,.th-in,.th-clip{max-width:90%}}

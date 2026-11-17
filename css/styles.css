@@ -118,3 +118,28 @@ svg{display:block;width:100%;height:auto}.container{width:100%;max-width:var(--m
 /* Consistent line icons across desktop and mobile. No font or emoji glyphs. */
 .ui-arrow{display:block;width:18px;height:18px;flex:0 0 18px;overflow:visible}
 .hero-bottom a{align-items:center}
+
+/* November 2026: dark footer closing on an oversized, cropped wordmark. */
+.site-footer{background:var(--ink);color:#a5a99f;font-size:13px;overflow:clip}
+.site-footer .footer-inner{border-top:0;align-items:baseline;padding-block:64px 48px}
+.footer-tagline{margin:0;color:var(--paper);font-size:18px;letter-spacing:-.02em;line-height:1.4}
+.site-footer a:focus-visible{outline-color:var(--paper)}
+.site-footer a:not(.wordmark):hover{color:var(--paper)}
+.footer-wordmark-wrap{container-type:inline-size}
+.site-footer .footer-wordmark{display:block;width:max-content;font-size:21.4cqi;letter-spacing:-.06em;line-height:.8;color:var(--soft);white-space:nowrap;margin-bottom:-.14em;user-select:none}
+.site-footer .footer-wordmark:focus-visible{outline-offset:-6px}
+.approach-section .section-heading{max-width:980px}
+@media(max-width:650px){.site-footer .footer-inner{padding-block:44px 34px;gap:22px}.footer-tagline{font-size:17px}}
+
+/* Footer door: the wordmark sits dark, then a seam of light opens from its centre as it
+   scrolls into view. Scroll-linked, so it needs no script; browsers without view timelines,
+   and reduced motion, simply show the lit wordmark. The sage full stop stays lit throughout. */
+@property --door{syntax:'<percentage>';inherits:false;initial-value:50%}
+@keyframes door-open{from{--door:0%}to{--door:50%}}
+@supports (animation-timeline:view()) and (background-clip:text){
+  .site-footer .footer-wordmark{color:transparent;background:linear-gradient(90deg,#2a2c29 calc(50% - var(--door)),var(--soft) calc(50% - var(--door)),var(--soft) calc(50% + var(--door)),#2a2c29 calc(50% + var(--door)));-webkit-background-clip:text;background-clip:text;animation:door-open linear both;animation-timeline:view();animation-range:entry 15% entry 75%}
+}
+
+/* Phone polish: 44px tap targets, 12px minimum text, and a balanced reach heading. */
+.site-footer a:not(.wordmark){padding-block:12px}
+@media(max-width:650px){.hero-bottom{font-size:12px}.hero-bottom a{min-height:44px}.reach-copy h2 br{display:none}.reach-copy h2{text-wrap:balance}}
