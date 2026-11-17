@@ -42,3 +42,5 @@
 .cs-progress i{animation:cs-fill 2.4s linear 2.3s both}
 .cs-post{animation:cs-rise .8s cubic-bezier(.22,.68,0,1) 3s both}
 @media(max-width:650px){.cs-inner{aspect-ratio:600/560}.cs-news{width:58%}.cs-post{width:57%;left:0}.cs-caption{font-size:2.5cqi;white-space:nowrap}.hero-visual figcaption{margin-top:14px}}
+/* Tablets: stack the hero so the scene gets room instead of a cramped second column. */
+@media(min-width:651px) and (max-width:900px){.hero{grid-template-columns:1fr;min-height:0;row-gap:12px}.hero-description{max-width:520px}.hero-visual{max-width:560px}}

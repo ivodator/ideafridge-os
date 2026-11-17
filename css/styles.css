@@ -143,3 +143,17 @@ svg{display:block;width:100%;height:auto}.container{width:100%;max-width:var(--m
 /* Phone polish: 44px tap targets, 12px minimum text, and a balanced reach heading. */
 .site-footer a:not(.wordmark){padding-block:12px}
 @media(max-width:650px){.hero-bottom{font-size:12px}.hero-bottom a{min-height:44px}.reach-copy h2 br{display:none}.reach-copy h2{text-wrap:balance}}
+
+/* Design pass 2: balanced approach heading and a card-on-dark closing block with grain. */
+.approach-section .section-heading{max-width:none}
+.approach-section .section-heading h2{text-wrap:balance}
+.approach-section .section-heading h2 .muted{display:block}
+
+
+/* The contact card sits on the same dark, grained field as the footer. */
+.closing,.site-footer{background-color:var(--ink);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.closing{--edge:clamp(8px,1.6vw,24px);padding-top:var(--edge)}
+.connect-section{padding-block:0;padding-inline:var(--edge)}
+.connect-grid{background:var(--paper);border-top:0;border-radius:clamp(18px,2.2vw,32px);padding:clamp(48px,7vw,104px) max(20px,calc(var(--gutter) - var(--edge)))}
+/* Header links and button never wrap. */
+.site-header nav a,.header-cta{white-space:nowrap}
